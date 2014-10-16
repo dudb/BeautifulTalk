@@ -20,3 +20,26 @@ So it will have an effect on closing anonymous users as well as chatting with my
 - VisualStudio 2013
 - MongoDB 2.6.5
 - RabbitMQ server 3.3.5
+
+[Done]
+- Login with OAuth2.0
+- Messaging with RabbitMQ Topic.
+- Update recommend users.
+- Add friend.
+- Create room.
+- Send & Receive Messages.
+- Resend & Delete failed Messages.
+ 
+[Todo]
+- Authorization with refresh token.
+- Parallel processing entirely.
+- Message reading check logic.
+- Modify user profile.
+- Message encryption.
+- Delete room.
+- Create grouped room.
+- Attach files(images, media, files)
+- Add emoticon.
+- Create room on secret mode.
+- Create grouped room on secret mode.
+- Secret Chattnig.

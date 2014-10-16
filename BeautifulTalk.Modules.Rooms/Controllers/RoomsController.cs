@@ -28,22 +28,19 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
         private SubscriptionToken m_FriendDoubleClickedEvtToken;
         private readonly IRoomsDictionaryBehavior<string, ChattingShellView> m_ChattingRoomsDictionary;
         private RoomCollection m_Rooms;
-        private IDictionary<string, byte[]> m_ThumbnailDictionary;
         private IUnityContainer m_Container;
         private IEventAggregator m_EventAggregator;
         private ITabHeaderNotificationProvider<Int32> m_TabHeaderNotification;
 
         public RoomsController(IUnityContainer container, IEventAggregator eventAggregator,
-            RoomCollection rooms, IDictionary<string, byte[]> thumbnailDictionary, ITabHeaderNotificationProvider<Int32> tabHeaderNotification)
+            RoomCollection rooms, ITabHeaderNotificationProvider<Int32> tabHeaderNotification)
         {
             if (null == container) throw new ArgumentNullException("container");
             if (null == eventAggregator) throw new ArgumentNullException("eventAggregator");
             if (null == rooms) throw new ArgumentNullException("rooms");
-            if (null == thumbnailDictionary) throw new ArgumentNullException("thumbnailDictionary");
             if (null == tabHeaderNotification) throw new ArgumentNullException("tabHeaderNotification");
             
             this.m_Rooms = rooms;
-            this.m_ThumbnailDictionary = thumbnailDictionary;
             this.m_Container = container;
             this.m_EventAggregator = eventAggregator;
             this.m_TabHeaderNotification = tabHeaderNotification;

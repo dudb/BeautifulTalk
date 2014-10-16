@@ -4,7 +4,7 @@
 library
 C#
 .cs
-D:\VS_Workspace\BeautifulTalk\BeautifulTalk.Modules.Rooms\obj\Debug\
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Rooms\obj\Debug\
 BeautifulTalk.Modules.Rooms
 none
 false
@@ -13,7 +13,7 @@ DEBUG;TRACE
 1812915755
 
 29311711268
-34313638310
+341794288056
 Views\RoomsView.xaml;
 
 False

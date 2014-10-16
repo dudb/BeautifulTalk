@@ -12,20 +12,20 @@ namespace BeautifulTalk.Modules.Friends.Models
     public class Friend : BindableBase
     {
         private string m_Id;
-        private byte[] m_Thumbnail;
+        private string m_strThumbnailPath;
         private string m_strNickName;
         private string m_strComment;
-        private Brush m_AnonymousBackground;
+        private Brush m_AnonymousThumbnail;
         public string Sid { get; set; }
         public string Id 
         {
             get { return this.m_Id; }
             set { SetProperty(ref this.m_Id, value); }
         }
-        public byte[] Thumbnail 
+        public string ThumbnailPath
         {
-            get { return this.m_Thumbnail; }
-            set { SetProperty(ref m_Thumbnail, value); }
+            get { return this.m_strThumbnailPath; }
+            set { SetProperty(ref m_strThumbnailPath, value); }
         }
         public string NickName
         {
@@ -38,21 +38,21 @@ namespace BeautifulTalk.Modules.Friends.Models
             set { SetProperty(ref m_strComment, value); }
         }
 
-        public Brush AnonymousBackground
+        public Brush AnonymousThumbnail
         {
-            get { return this.m_AnonymousBackground; }
-            set { SetProperty(ref this.m_AnonymousBackground, value); }
+            get { return this.m_AnonymousThumbnail; }
+            set { SetProperty(ref this.m_AnonymousThumbnail, value); }
         }
 
-        public Friend(byte[] thumbnailSource, string strId, string strSid, string strNickName, string strComment)
+        public Friend(string strThumbnailPath, string strId, string strSid, string strNickName, string strComment)
         {
-            this.Thumbnail = thumbnailSource;
+            this.ThumbnailPath = strThumbnailPath;
             this.Id = strId;
             this.Sid = strSid;
             this.NickName = strNickName;
             this.Comment = strComment;
 
-            if (null == thumbnailSource) { this.AnonymousBackground = ColorGenerator.Instance.GetRandomBrush(); }
+            if (string.IsNullOrEmpty(strThumbnailPath)) { this.AnonymousThumbnail = ColorGenerator.Instance.GetRandomBrush(); }
         }
     }
 }

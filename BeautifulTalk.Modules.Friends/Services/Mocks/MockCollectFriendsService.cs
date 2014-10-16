@@ -32,60 +32,24 @@ namespace BeautifulTalk.Modules.Friends.Services.Mocks
 
             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
             {
-                friends.Add(new Friend
-                (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/1.png"),
-                "", "Paul", "Bye! See you!", TDD));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/2.png"),
-                    "", "Jacob", "Really?", CI));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/3.png"),
-                    "", "Michael", "When is your birthday?", CI));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/4.png"),
-                    "", "Alexander", "Oh, i see...", SA));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/5.png"),
-                    "", "William", "Anyway, i will get there", SE));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/6.png"),
-                    "", "Joshua", "Shut up!!!", DP));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/7.png"),
-                    "", "Daniel", "Can i see?", TDD));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/8.png"),
-                    "", "Jayden ", "i wanaa go home....ohoh", DP));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/9.png"),
-                    "", "Noah ", "tell me how am i supposed live without you..?", SA));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/10.png"),
-                    "", "Anthony", "Bye! bye...bye...", CI));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/11.png"),
-                    "", "Christopher", "i'm Crying now...", SE));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/12.png"),
-                    "", "Aiden", "Did you see that?", SA));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/13.png"),
-                    "", "Matthew", "Maybe. On september?", SE));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/14.png"),
-                    "", "David", "How are you David?", SA));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/15.png"),
-                    "", "Andrew", "Just 3 days remain..", DP));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/16.png"),
-                    "", "Joseph ", "Remember!", TDD));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/17.png"),
-                    "", "Logan", "Perfect! wonderful!!", CI));
-                friends.Add(new Friend
-                    (ToBitmapImgConverter.LoadImage(@"/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/18.png"),
-                    "", "Ryan", "let me see your info..", SA));
+                friends.Add(new Friend(null,"", "Paul", "Bye! See you!", TDD));
+                friends.Add(new Friend(null,"", "Jacob", "Really?", CI));
+                friends.Add(new Friend(null,"", "Michael", "When is your birthday?", CI));
+                friends.Add(new Friend(null,"", "Alexander", "Oh, i see...", SA));
+                friends.Add(new Friend(null,"", "William", "Anyway, i will get there", SE));
+                friends.Add(new Friend(null,"", "Joshua", "Shut up!!!", DP));
+                friends.Add(new Friend(null,"", "Daniel", "Can i see?", TDD));
+                friends.Add(new Friend(null,"", "Jayden ", "i wanaa go home....ohoh", DP));
+                friends.Add(new Friend(null,"", "Noah ", "tell me how am i supposed live without you..?", SA));
+                friends.Add(new Friend(null,"", "Anthony", "Bye! bye...bye...", CI));
+                friends.Add(new Friend(null,"", "Christopher", "i'm Crying now...", SE));
+                friends.Add(new Friend(null,"", "Aiden", "Did you see that?", SA));
+                friends.Add(new Friend(null,"", "Matthew", "Maybe. On september?", SE));
+                friends.Add(new Friend(null,"", "David", "How are you David?", SA));
+                friends.Add(new Friend(null,"", "Andrew", "Just 3 days remain..", DP));
+                friends.Add(new Friend(null,"", "Joseph ", "Remember!", TDD));
+                friends.Add(new Friend(null,"", "Logan", "Perfect! wonderful!!", CI));
+                friends.Add(new Friend(null,"", "Ryan", "let me see your info..", SA));
             }));
         }
     }

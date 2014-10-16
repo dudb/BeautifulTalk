@@ -1,6 +1,7 @@
 ﻿using BeautifulDB.Entities;
 using BeautifulDB.Helpers;
 using BeautifulTalk.Modules.Chatting.Models;
+using BeautifulTalkInfrastructure.Generators;
 using BeautifulTalkInfrastructure.Logger;
 using BeautifulTalkInfrastructure.ProtocolFormat;
 using MongoDB.Driver;
@@ -10,15 +11,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace BeautifulTalk.Modules.Chatting.Services
 {
     public class LoadMessagesService : ILoadMessagesService
     {
         private readonly string m_strMySid;
-        public LoadMessagesService(string strMySid)
+        private readonly IDictionary<string, Brush> m_AnonymousThumbnailDictionary;
+        public LoadMessagesService(string strMySid, IDictionary<string, Brush> anonymousThumbnailDictionary)
         {
             this.m_strMySid = strMySid;
+            this.m_AnonymousThumbnailDictionary = anonymousThumbnailDictionary;
         }
         public IEnumerable<Msg> LoadMessages(string strRoomSID, long lCriterion)
         {
@@ -83,18 +87,26 @@ namespace BeautifulTalk.Modules.Chatting.Services
                 var FindUserQuery = Query<UserEntity>.EQ(u => u.Sid, strSenderSID);
                 var FindedUser = UserCollection.FindOne(FindUserQuery);
 
-                if (this.m_strMySid == strSenderSID)
+                if (null != FindedUser)
                 {
-                    WillAddMsg = new ChatMsg(msgEntity.Id.ToString(), msgEntity.Sid, msgEntity.RoomSid, msgEntity.Content, ContentType,
-                        msgEntity.SendTime, MsgStatus, nReadMembersCount, FindedUser.NickName, null);
-                }
-                else
-                {
-                    WillAddMsg = new OpponentMsg(msgEntity.Id.ToString(), msgEntity.Sid, msgEntity.RoomSid, msgEntity.Content, ContentType,
-                        msgEntity.SendTime, MsgStatus, nReadMembersCount, FindedUser.NickName, null);
-                }
+                    if (this.m_strMySid == strSenderSID)
+                    {
+                        WillAddMsg = new ChatMsg(msgEntity.Id.ToString(), msgEntity.Sid, msgEntity.RoomSid, msgEntity.Content, ContentType,
+                            msgEntity.SendTime, MsgStatus, nReadMembersCount, FindedUser.NickName, null, this.m_AnonymousThumbnailDictionary[this.m_strMySid]);
+                    }
+                    else
+                    {
+                        if (false == this.m_AnonymousThumbnailDictionary.ContainsKey(strSenderSID))
+                        {
+                            this.m_AnonymousThumbnailDictionary.Add(strSenderSID, ColorGenerator.Instance.GetRandomBrush());
+                        }
 
-                msgs.Add(WillAddMsg);
+                        WillAddMsg = new OpponentMsg(msgEntity.Id.ToString(), msgEntity.Sid, msgEntity.RoomSid, msgEntity.Content, ContentType,
+                            msgEntity.SendTime, MsgStatus, nReadMembersCount, FindedUser.NickName, null, this.m_AnonymousThumbnailDictionary[strSenderSID]);
+                    }
+
+                    msgs.Add(WillAddMsg);
+                }
             }
         }
 
@@ -121,18 +133,26 @@ namespace BeautifulTalk.Modules.Chatting.Services
                 var FindUserQuery = Query<UserEntity>.EQ(u => u.Sid, strSenderSID);
                 var FindedUser = UserCollection.FindOne(FindUserQuery);
 
-                if (this.m_strMySid == strSenderSID)
+                if (null != FindedUser)
                 {
-                    WillAddMsg = new ChatMsg(msgEntity.Id.ToString(), msgEntity.Sid, msgEntity.RoomSid, msgEntity.Content, ContentType,
-                        msgEntity.SendTime, MsgStatus, nReadMembersCount, FindedUser.NickName, null);
-                }
-                else
-                {
-                    WillAddMsg = new OpponentMsg(msgEntity.Id.ToString(), msgEntity.Sid, msgEntity.RoomSid, msgEntity.Content, ContentType,
-                        msgEntity.SendTime, MsgStatus, nReadMembersCount, FindedUser.NickName, null);
-                }
+                    if (this.m_strMySid == strSenderSID)
+                    {
+                        WillAddMsg = new ChatMsg(msgEntity.Id.ToString(), msgEntity.Sid, msgEntity.RoomSid, msgEntity.Content, ContentType,
+                            msgEntity.SendTime, MsgStatus, nReadMembersCount, FindedUser.NickName, null, this.m_AnonymousThumbnailDictionary[this.m_strMySid]);
+                    }
+                    else
+                    {
+                        if (false == this.m_AnonymousThumbnailDictionary.ContainsKey(strSenderSID))
+                        {
+                            this.m_AnonymousThumbnailDictionary.Add(strSenderSID, ColorGenerator.Instance.GetRandomBrush());
+                        }
 
-                msgs.Add(WillAddMsg);
+                        WillAddMsg = new OpponentMsg(msgEntity.Id.ToString(), msgEntity.Sid, msgEntity.RoomSid, msgEntity.Content, ContentType,
+                            msgEntity.SendTime, MsgStatus, nReadMembersCount, FindedUser.NickName, null, this.m_AnonymousThumbnailDictionary[strSenderSID]);
+                    }
+
+                    msgs.Add(WillAddMsg);
+                }
             }
         }
     }

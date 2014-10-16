@@ -41,7 +41,7 @@ namespace BeautifulTalk.Modules.Friends.Services
                         {
                             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
                             {
-                                friends.Add(new Friend(FindedUser.Thumbnail, FindedUser.UserId, FindedUser.Sid, FindedUser.NickName, FindedUser.Comment));
+                                friends.Add(new Friend(FindedUser.ThumbnailPath, FindedUser.UserId, FindedUser.Sid, FindedUser.NickName, FindedUser.Comment));
                             }));
                         }
                     });

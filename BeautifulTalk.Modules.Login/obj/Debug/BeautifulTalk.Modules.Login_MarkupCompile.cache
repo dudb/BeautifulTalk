@@ -4,7 +4,7 @@
 library
 C#
 .cs
-D:\VS_Workspace\BeautifulTalk\BeautifulTalk.Modules.Login\obj\Debug\
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Login\obj\Debug\
 BeautifulTalk.Modules.Login
 none
 false
@@ -13,7 +13,7 @@ DEBUG;TRACE
 41422091864
 
 3235317714
-891968066027
+89885854267
 Resources\NavigateAnimations.xaml;Views\InterestView.xaml;Views\LoginView.xaml;Views\RequiredInfoView.xaml;
 
 False

@@ -6,6 +6,7 @@ using BeautifulTalk.Modules.Chatting.Services.Mocks;
 using BeautifulTalk.Modules.Chatting.Views;
 using BeautifulTalkInfrastructure.AliveInformation;
 using BeautifulTalkInfrastructure.DataModels;
+using BeautifulTalkInfrastructure.Generators;
 using BeautifulTalkInfrastructure.Interfaces;
 using BeautifulTalkInfrastructure.Logger;
 using BeautifulTalkInfrastructure.ProtocolFormat;
@@ -32,12 +33,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace BeautifulTalk.Modules.Chatting.ViewModels
 {
     public class ChattingViewModel : BindableBase, IChattingViewModel
     {
+        private IDictionary<string, Brush> m_AnonymousThumbnailDictionary;
         private IChattingViewBehavior m_ChattingView;
         private readonly ILoadMessagesService m_LoadMsgService;
         private readonly ISendMessageService m_SendMessageService;
@@ -62,11 +65,13 @@ namespace BeautifulTalk.Modules.Chatting.ViewModels
             if (null == strRoomSID) throw new ArgumentNullException("strRoomSID");
             if (null == roomsController) throw new ArgumentNullException("roomsController");
 
+            this.m_AnonymousThumbnailDictionary = new Dictionary<string, Brush>();
+            this.m_AnonymousThumbnailDictionary.Add(AuthRepository.MQKeyInfo.UserSid, ColorGenerator.Instance.GetRandomBrush());
             this.RoomSID = strRoomSID;
             this.m_RoomsController = roomsController;
             
             this.m_SendMessageService = new SendMessageService();
-            this.m_LoadMsgService = new LoadMessagesService(AuthRepository.MQKeyInfo.UserSid);
+            this.m_LoadMsgService = new LoadMessagesService(AuthRepository.MQKeyInfo.UserSid, this.m_AnonymousThumbnailDictionary);
 
             this.InitialLoadedCommand = new DelegateCommand<IChattingViewBehavior>(ExecuteInitialLoadedCommand);
             this.InitialFocusCommand = new DelegateCommand<UIElement>(ExecuteInitialFocusCommand);
@@ -122,8 +127,8 @@ namespace BeautifulTalk.Modules.Chatting.ViewModels
             var NewMessage = new MessageEntity(this.RoomSID, strText, (int)MsgStatus.Sending, (int)ContentType.Text, AuthRepository.MQKeyInfo.UserSid, 0, null);
             MessageCollection.Save(NewMessage);
 
-            var SendMessage = new ChatMsg(NewMessage.Id.ToString(), null, this.RoomSID, strText, ContentType.Text, 0, MsgStatus.Sending, 0, AuthRepository.MQKeyInfo.NickName,
-            ToBitmapImgConverter.LoadImage(@"pack://application:,,,/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/2.png"));
+            var SendMessage = new ChatMsg(NewMessage.Id.ToString(), null, this.RoomSID, strText, ContentType.Text, 0, MsgStatus.Sending, 0, 
+                AuthRepository.MQKeyInfo.NickName, AuthRepository.MQKeyInfo.ThumbnailPath, this.m_AnonymousThumbnailDictionary[AuthRepository.MQKeyInfo.UserSid]);
             
             this.Messages.Add(SendMessage);
             this.EndSendTextCommand(SendMessage);
@@ -231,9 +236,19 @@ namespace BeautifulTalk.Modules.Chatting.ViewModels
 
             if (null != FindedUser)
             {
+                string strFindedUserSid = FindedUser.Sid;
+
+                if (string.IsNullOrEmpty(rcvMsg.ThumbnailPath)) 
+                {
+                    if (false == this.m_AnonymousThumbnailDictionary.ContainsKey(strFindedUserSid))
+                    {
+                        this.m_AnonymousThumbnailDictionary.Add(strFindedUserSid, ColorGenerator.Instance.GetRandomBrush());
+                    }
+                }
+
                 var RcvMessage = new OpponentMsg(NewMessage.Id.ToString(), rcvMsg.Sid, rcvMsg.RoomSid, rcvMsg.Content, rcvMsg.ContentType,
-                    rcvMsg.SendTime, MsgStatus.Received, rcvMsg.ReadMembersCount, FindedUser.NickName,
-                    ToBitmapImgConverter.LoadImage(@"pack://application:,,,/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/6.png"));
+                    rcvMsg.SendTime, MsgStatus.Received, rcvMsg.ReadMembersCount, FindedUser.NickName, rcvMsg.ThumbnailPath,
+                    this.m_AnonymousThumbnailDictionary[strFindedUserSid]);
 
                 this.Messages.Add(RcvMessage);
                 this.EndReceiveMsgCommand(RcvMessage);

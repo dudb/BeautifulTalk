@@ -1056,7 +1056,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Viewbox x:Name="AnonymousViewBox" Width="50" Height="50" Margin="12,0,0,0">
-                    <Border Background="{Binding AnonymousBackground}" Width="235" Height="235">
+                    <Border Background="{Binding AnonymousThumbnail}" Width="235" Height="235">
                         <Grid>
                             <Path x:Name="face" Data="F1M24.835,2.515C24.25,3.329,23.743,4.342,23.5,5.585L23.081,5.424C23.407,4.381,23.958,3.378,24.835,2.515 M2.974,52.562C4.509,65.29 15.464,78.487 25.405,78.487 36.828,78.487 47.685,64.618 49.376,52.562 50.019,52.104 51.077,50.998 51.462,48.483 51.462,48.483 53.903,39.755 50.672,40.691 51.803,37.324 55.531,24.215 48.294,16.067 48.294,16.067 44.912,11.443 36.672,8.991 36.384,8.753 36.092,8.509 35.756,8.275 35.756,8.275 35.936,8.485 36.204,8.85 35.736,8.718 35.239,8.602 34.747,8.485 34.303,8.017 33.797,7.534 33.231,7.023 33.231,7.023 33.728,7.534 34.328,8.387 34.099,8.338 33.899,8.28 33.675,8.241 33.3,7.671 32.846,7.086 32.267,6.491 32.267,6.491 32.51,6.95 32.827,7.671 31.306,6.555 28.256,3.977 28.256,1.092 28.256,1.092 26.351,1.984 25.235,3.611 25.673,2.271 26.409,1.029 27.608,0 27.608,0 26.351,0.644 25.196,2.037 24.294,2.544 22.243,3.948 21.551,6.443L20.898,6.111C21.219,5.405 21.667,4.659 22.282,3.909 22.282,3.909 21.39,4.703 20.61,5.97L19.289,5.307C19.684,4.571 20.201,3.811 20.902,3.071 20.902,3.071 20.191,3.616 19.44,4.537 19.65,3.68 19.616,2.695 16.945,5.619 16.945,5.619 4.914,10.838 1.434,21.642 1.434,21.642 -0.612,26.52 2.102,40.871 -1.753,39.049 0.874,48.478 0.874,48.478 1.269,50.998 2.326,52.099 2.974,52.562" Fill="White" Height="78.487" Width="52.641" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,80"/>
                             <Path x:Name="body" Data="F1M108.553,20.204C105.41,13.231 86.259,7.198 86.259,7.198 76.044,3.596 75.976,0 75.976,0 55.88,39.594 40.636,0.107 40.636,0.107 39.238,5.448 18.571,11.725 18.571,11.725 12.538,14.049 9.98,17.529 9.98,17.529 1.042,30.769 0,60.261 0,60.261 0.117,66.986 3.011,67.688 3.011,67.688 23.566,76.859 55.782,78.486 55.782,78.486 88.88,79.183 112.968,69.086 112.968,69.086 116.462,66.884 116.564,65.134 116.564,65.134 119.006,44.009 108.553,20.204 108.553,20.204" Fill="White" Height="78.52" Width="116.934" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,70,0,0"/>
@@ -1210,7 +1210,7 @@
     </ItemsPanelTemplate>
 
     <DataTemplate x:Key="BeautifulFreak.ListBox.RecommendDataTemplate">
-        <Grid x:Name="BackPanel" Margin="12" Width="120" Height="120" Background="{Binding AnonymousBackground}">
+        <Grid x:Name="BackPanel" Margin="12" Width="120" Height="120" Background="{Binding AnonymousThumbnail}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
@@ -1223,7 +1223,7 @@
                     </Grid>
                 </Border>
             </Viewbox>
-            <Image x:Name="ThumbnailImage" Width="32" Height="32" Margin="5" Source="{Binding Thumbnail, Converter={StaticResource BeautifulFreak.ListBox.RecommendSummaryThumbnailCvt}}" Stretch="Uniform"/>
+            <Image x:Name="ThumbnailImage" Width="32" Height="32" Margin="5" Source="{Binding ThumbnailPath, Converter={StaticResource BeautifulFreak.ListBox.RecommendSummaryThumbnailCvt}}" Stretch="Uniform"/>
             <Grid Grid.Row="1">
                 <StackPanel Orientation="Vertical" >
                     <TextBlock FontSize="15" Foreground="White" Text="{Binding NickName}" TextTrimming="CharacterEllipsis" Margin="6,2,0,0"/>
@@ -1254,7 +1254,7 @@
             </Grid>
         </Grid>
         <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding Thumbnail}" Value="{x:Null}">
+            <DataTrigger Binding="{Binding ThumbnailPath}" Value="{x:Null}">
                 <Setter TargetName="ThumbnailImage" Property="Visibility" Value="Hidden"/>
             </DataTrigger>
             <EventTrigger RoutedEvent="Loaded">
@@ -1350,7 +1350,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Viewbox x:Name="AnonymousViewBox" Width="40" Height="40" Margin="12,0,0,0">
-                    <Border Background="{Binding AnonymousBackground}" Width="235" Height="235">
+                    <Border Background="{Binding AnonymousThumbnail}" Width="235" Height="235">
                         <Grid>
                             <Path x:Name="face" Data="F1M24.835,2.515C24.25,3.329,23.743,4.342,23.5,5.585L23.081,5.424C23.407,4.381,23.958,3.378,24.835,2.515 M2.974,52.562C4.509,65.29 15.464,78.487 25.405,78.487 36.828,78.487 47.685,64.618 49.376,52.562 50.019,52.104 51.077,50.998 51.462,48.483 51.462,48.483 53.903,39.755 50.672,40.691 51.803,37.324 55.531,24.215 48.294,16.067 48.294,16.067 44.912,11.443 36.672,8.991 36.384,8.753 36.092,8.509 35.756,8.275 35.756,8.275 35.936,8.485 36.204,8.85 35.736,8.718 35.239,8.602 34.747,8.485 34.303,8.017 33.797,7.534 33.231,7.023 33.231,7.023 33.728,7.534 34.328,8.387 34.099,8.338 33.899,8.28 33.675,8.241 33.3,7.671 32.846,7.086 32.267,6.491 32.267,6.491 32.51,6.95 32.827,7.671 31.306,6.555 28.256,3.977 28.256,1.092 28.256,1.092 26.351,1.984 25.235,3.611 25.673,2.271 26.409,1.029 27.608,0 27.608,0 26.351,0.644 25.196,2.037 24.294,2.544 22.243,3.948 21.551,6.443L20.898,6.111C21.219,5.405 21.667,4.659 22.282,3.909 22.282,3.909 21.39,4.703 20.61,5.97L19.289,5.307C19.684,4.571 20.201,3.811 20.902,3.071 20.902,3.071 20.191,3.616 19.44,4.537 19.65,3.68 19.616,2.695 16.945,5.619 16.945,5.619 4.914,10.838 1.434,21.642 1.434,21.642 -0.612,26.52 2.102,40.871 -1.753,39.049 0.874,48.478 0.874,48.478 1.269,50.998 2.326,52.099 2.974,52.562" Fill="White" Height="78.487" Width="52.641" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,80"/>
                             <Path x:Name="body" Data="F1M108.553,20.204C105.41,13.231 86.259,7.198 86.259,7.198 76.044,3.596 75.976,0 75.976,0 55.88,39.594 40.636,0.107 40.636,0.107 39.238,5.448 18.571,11.725 18.571,11.725 12.538,14.049 9.98,17.529 9.98,17.529 1.042,30.769 0,60.261 0,60.261 0.117,66.986 3.011,67.688 3.011,67.688 23.566,76.859 55.782,78.486 55.782,78.486 88.88,79.183 112.968,69.086 112.968,69.086 116.462,66.884 116.564,65.134 116.564,65.134 119.006,44.009 108.553,20.204 108.553,20.204" Fill="White" Height="78.52" Width="116.934" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,70,0,0"/>
@@ -1358,7 +1358,7 @@
                     </Border>
                 </Viewbox>
                 <Image x:Name="ThumbnailImage" Width="40" Height="40"
-                       Source="{Binding Thumbnail, Converter={StaticResource BeautifulFreak.ListBox.FriendThumbnailCvt}}" Stretch="Uniform"/>
+                       Source="{Binding ThumbnailPath, Converter={StaticResource BeautifulFreak.ListBox.FriendThumbnailCvt}}" Stretch="Uniform"/>
                 <Grid Grid.Column="1" Margin="12,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -1370,7 +1370,7 @@
             </Grid>
         </StackPanel>
         <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding Thumbnail}" Value="{x:Null}">
+            <DataTrigger Binding="{Binding ThumbnailPath}" Value="{x:Null}">
                 <Setter TargetName="ThumbnailImage" Property="Visibility" Value="Hidden"/>
             </DataTrigger>
         </DataTemplate.Triggers>
@@ -1490,8 +1490,16 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="1" Grid.RowSpan="2"  Width="40" Height="40" Source="{Binding Thumbnail, Converter={StaticResource BeautifulFreak.ListBox.byteArrayToBitmapSourceConverter}}" 
-                   VerticalAlignment="Top" Stretch="UniformToFill">
+            <Viewbox x:Name="AnonymousViewBox" Grid.Column="1" Grid.RowSpan="2" Width="40" Height="40" VerticalAlignment="Top">
+                <Border Background="{Binding AnonymousThumbnail}" Width="235" Height="235">
+                    <Grid>
+                        <Path x:Name="face" Data="F1M24.835,2.515C24.25,3.329,23.743,4.342,23.5,5.585L23.081,5.424C23.407,4.381,23.958,3.378,24.835,2.515 M2.974,52.562C4.509,65.29 15.464,78.487 25.405,78.487 36.828,78.487 47.685,64.618 49.376,52.562 50.019,52.104 51.077,50.998 51.462,48.483 51.462,48.483 53.903,39.755 50.672,40.691 51.803,37.324 55.531,24.215 48.294,16.067 48.294,16.067 44.912,11.443 36.672,8.991 36.384,8.753 36.092,8.509 35.756,8.275 35.756,8.275 35.936,8.485 36.204,8.85 35.736,8.718 35.239,8.602 34.747,8.485 34.303,8.017 33.797,7.534 33.231,7.023 33.231,7.023 33.728,7.534 34.328,8.387 34.099,8.338 33.899,8.28 33.675,8.241 33.3,7.671 32.846,7.086 32.267,6.491 32.267,6.491 32.51,6.95 32.827,7.671 31.306,6.555 28.256,3.977 28.256,1.092 28.256,1.092 26.351,1.984 25.235,3.611 25.673,2.271 26.409,1.029 27.608,0 27.608,0 26.351,0.644 25.196,2.037 24.294,2.544 22.243,3.948 21.551,6.443L20.898,6.111C21.219,5.405 21.667,4.659 22.282,3.909 22.282,3.909 21.39,4.703 20.61,5.97L19.289,5.307C19.684,4.571 20.201,3.811 20.902,3.071 20.902,3.071 20.191,3.616 19.44,4.537 19.65,3.68 19.616,2.695 16.945,5.619 16.945,5.619 4.914,10.838 1.434,21.642 1.434,21.642 -0.612,26.52 2.102,40.871 -1.753,39.049 0.874,48.478 0.874,48.478 1.269,50.998 2.326,52.099 2.974,52.562" Fill="White" Height="78.487" Width="52.641" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,80"/>
+                        <Path x:Name="body" Data="F1M108.553,20.204C105.41,13.231 86.259,7.198 86.259,7.198 76.044,3.596 75.976,0 75.976,0 55.88,39.594 40.636,0.107 40.636,0.107 39.238,5.448 18.571,11.725 18.571,11.725 12.538,14.049 9.98,17.529 9.98,17.529 1.042,30.769 0,60.261 0,60.261 0.117,66.986 3.011,67.688 3.011,67.688 23.566,76.859 55.782,78.486 55.782,78.486 88.88,79.183 112.968,69.086 112.968,69.086 116.462,66.884 116.564,65.134 116.564,65.134 119.006,44.009 108.553,20.204 108.553,20.204" Fill="White" Height="78.52" Width="116.934" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,70,0,0"/>
+                    </Grid>
+                </Border>
+            </Viewbox>
+            <Image x:Name="ThumbnailImage" Grid.Column="1" Grid.RowSpan="2"  Width="40" Height="40" VerticalAlignment="Top" Stretch="UniformToFill"
+                   Source="{Binding ThumbnailPath, Converter={StaticResource BeautifulFreak.ListBox.byteArrayToBitmapSourceConverter}}">
             </Image>
             <TextBlock Text="{Binding Sender}" FontWeight="Bold" Margin="0,0,4,0" HorizontalAlignment="Right"/>
             <Grid Grid.Row="1" Margin="0,0,4,0" VerticalAlignment="Top">
@@ -1530,6 +1538,9 @@
         </Grid>
 
         <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding ThumbnailPath, Converter={StaticResource BeautifulFreak.ListBox.byteArrayToBitmapSourceConverter}}" Value="{x:Null}">
+                <Setter TargetName="ThumbnailImage" Property="Visibility" Value="Collapsed"/>
+            </DataTrigger>
             <DataTrigger Binding="{Binding MsgStatus}" Value="{x:Static msgStatus:MsgStatus.Failed}">
                 <Setter TargetName="DateTail" Property="Visibility" Value="Collapsed"/>
                 <Setter TargetName="RetryTail" Property="Visibility" Value="Visible"/>
@@ -1561,7 +1572,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Image Grid.RowSpan="2"  Width="40" Height="40" Source="{Binding Thumbnail, Converter={StaticResource BeautifulFreak.ListBox.byteArrayToBitmapSourceConverter}}"
+            <Image Grid.RowSpan="2"  Width="40" Height="40" Source="{Binding ThumbnailPath, Converter={StaticResource BeautifulFreak.ListBox.byteArrayToBitmapSourceConverter}}"
                    VerticalAlignment="Top" Stretch="UniformToFill"/>
             <TextBlock Grid.Column="1" Text="{Binding Sender}" FontWeight="Bold" Margin="4,0,0,0"/>
             <Grid Grid.Row="1" Grid.Column="1" Margin="4,0,0,0" VerticalAlignment="Top">

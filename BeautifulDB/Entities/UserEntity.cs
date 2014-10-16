@@ -11,7 +11,7 @@ namespace BeautifulDB.Entities
     {
         public ObjectId Id { get; private set; }
         public IList<string> InterestIds { get; set; }
-        public byte[] Thumbnail { get; set; }
+        public string ThumbnailPath { get; set; }
         public string UserId { get; set; }
         public string NickName { get; set; }
         public string Comment { get; set; }

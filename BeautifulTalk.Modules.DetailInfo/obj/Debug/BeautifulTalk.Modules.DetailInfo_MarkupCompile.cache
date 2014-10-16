@@ -4,7 +4,7 @@
 library
 C#
 .cs
-D:\VS_Workspace\BeautifulTalk\BeautifulTalk.Modules.DetailInfo\obj\Debug\
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.DetailInfo\obj\Debug\
 BeautifulTalk.Modules.DetailInfo
 none
 false
@@ -13,7 +13,7 @@ DEBUG;TRACE
 11152166102
 
 4-659961961
-75756029171
+75182515443
 Views\DetailInfoView.xaml;
 
 False

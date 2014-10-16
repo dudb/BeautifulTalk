@@ -39,7 +39,6 @@ namespace BeautifulTalk.Modules.Rooms.ViewModels
         private IUnityContainer m_UnityContainer;
         private IEventAggregator m_EventAggregator;
 
-        private IDictionary<string, byte[]> m_ThumbnailDictionary;
         private IRoomMsgListener m_RoomMsgListener;
         private IRoomsControlable m_RoomsController;
         private ICollectRoomsService m_CollectRoomService;
@@ -58,7 +57,6 @@ namespace BeautifulTalk.Modules.Rooms.ViewModels
             if (null == unityContainer) throw new ArgumentNullException("unityContainer");
             if (null == eventAggregator) throw new ArgumentNullException("eventAggregator");
 
-            this.m_ThumbnailDictionary = new Dictionary<string, byte[]>();
             this.m_Logger = logger;
             this.m_UnityContainer = unityContainer;
             this.m_EventAggregator = eventAggregator;
@@ -66,13 +64,11 @@ namespace BeautifulTalk.Modules.Rooms.ViewModels
             this.Rooms = new RoomCollection();
             
             this.m_CollectRoomService = this.m_UnityContainer.Resolve<ICollectRoomsService>
-                (new ParameterOverride("thumbnailDictionary", this.m_ThumbnailDictionary),
-                    new ParameterOverride("tabHeaderNotification", this));
+                (new ParameterOverride("tabHeaderNotification", this));
 
             this.m_RoomsController = this.m_UnityContainer.Resolve<IRoomsControlable>
                 (new ParameterOverride("rooms", this.Rooms),
-                    new ParameterOverride("thumbnailDictionary", this.m_ThumbnailDictionary),
-                        new ParameterOverride("tabHeaderNotification", this));
+                    new ParameterOverride("tabHeaderNotification", this));
             
             m_CollectRoomService.CollectRooms(this.Rooms, AuthRepository.MQKeyInfo.UserSid);
 

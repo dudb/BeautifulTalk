@@ -47,7 +47,7 @@ namespace BeautifulTalk.Modules.Friends.Services
                             Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
                             {
                                 recommendFriends.Add
-                                    (new RecommendFriendSummary(RecommendUser.Thumbnail, RecommendUser.UserId,
+                                    (new RecommendFriendSummary(RecommendUser.ThumbnailPath, RecommendUser.UserId,
                                         RecommendUser.Sid, RecommendUser.Comment, RecommendUser.NickName));
                             }));
                         }

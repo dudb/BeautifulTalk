@@ -7,3 +7,12 @@ D:\VS_Workspace\BeautifulTalk\BeautifulDB\bin\Debug\MongoDB.Driver.xml
 D:\VS_Workspace\BeautifulTalk\BeautifulDB\obj\Debug\BeautifulDB.csprojResolveAssemblyReference.cache
 D:\VS_Workspace\BeautifulTalk\BeautifulDB\obj\Debug\BeautifulDB.dll
 D:\VS_Workspace\BeautifulTalk\BeautifulDB\obj\Debug\BeautifulDB.pdb
+D:\Opnesource\BeautifulTalk\BeautifulDB\bin\Debug\BeautifulDB.dll
+D:\Opnesource\BeautifulTalk\BeautifulDB\bin\Debug\BeautifulDB.pdb
+D:\Opnesource\BeautifulTalk\BeautifulDB\bin\Debug\MongoDB.Bson.dll
+D:\Opnesource\BeautifulTalk\BeautifulDB\bin\Debug\MongoDB.Driver.dll
+D:\Opnesource\BeautifulTalk\BeautifulDB\bin\Debug\MongoDB.Bson.xml
+D:\Opnesource\BeautifulTalk\BeautifulDB\bin\Debug\MongoDB.Driver.xml
+D:\Opnesource\BeautifulTalk\BeautifulDB\obj\Debug\BeautifulDB.csprojResolveAssemblyReference.cache
+D:\Opnesource\BeautifulTalk\BeautifulDB\obj\Debug\BeautifulDB.dll
+D:\Opnesource\BeautifulTalk\BeautifulDB\obj\Debug\BeautifulDB.pdb

@@ -131,7 +131,7 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
                     {
                         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
                         {
-                            this.Friends.Add(new Friend(FindedUser.Thumbnail, FindedUser.UserId, FindedUser.Sid, FindedUser.NickName, FindedUser.Comment));
+                            this.Friends.Add(new Friend(FindedUser.ThumbnailPath, FindedUser.UserId, FindedUser.Sid, FindedUser.NickName, FindedUser.Comment));
                         }));
                     }
                 }

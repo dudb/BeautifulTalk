@@ -16,14 +16,11 @@ namespace BeautifulTalk.Modules.Rooms.Services
 {
     public class CollectRoomsService : ICollectRoomsService
     {
-        private IDictionary<string, byte[]> m_ThumbnailDictionary;
         private ITabHeaderNotificationProvider<Int32> m_TabHeaderNotification;
-        public CollectRoomsService(IDictionary<string, byte[]> thumbnailDictionary, ITabHeaderNotificationProvider<Int32> tabHeaderNotification)
+        public CollectRoomsService(ITabHeaderNotificationProvider<Int32> tabHeaderNotification)
         {
-            if (null == thumbnailDictionary) throw new ArgumentNullException("thumbnailDictionary");
             if (null == tabHeaderNotification) throw new ArgumentNullException("tabHeaderNotification");
 
-            this.m_ThumbnailDictionary = thumbnailDictionary;
             this.m_TabHeaderNotification = tabHeaderNotification;
         }
         public void CollectRooms(RoomCollection rooms, string strMySid)

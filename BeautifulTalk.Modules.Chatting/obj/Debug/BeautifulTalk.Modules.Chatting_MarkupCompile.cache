@@ -4,7 +4,7 @@
 library
 C#
 .cs
-D:\VS_Workspace\BeautifulTalk\BeautifulTalk.Modules.Chatting\obj\Debug\
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Chatting\obj\Debug\
 BeautifulTalk.Modules.Chatting
 none
 false
@@ -13,7 +13,7 @@ DEBUG;TRACE
 2556016749
 
 28-1466048337
-83731074606
+83-351137154
 ChattingShellView.xaml;Views\ChattingView.xaml;
 
 False

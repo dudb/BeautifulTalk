@@ -4,7 +4,7 @@
 library
 C#
 .cs
-D:\VS_Workspace\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\
 BeautifulTalk.Modules.Configuration
 none
 false
@@ -13,7 +13,7 @@ DEBUG;TRACE
 1-162432751
 
 9-2089351303
-241501796009
+24928282281
 Views\ConfigurationView.xaml;
 
 False

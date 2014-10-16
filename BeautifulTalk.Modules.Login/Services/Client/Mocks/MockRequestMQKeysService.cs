@@ -1,4 +1,5 @@
 ﻿using BeautifulTalkInfrastructure.AliveInformation;
+using BeautifulTalkInfrastructure.Generators;
 using BeautifulTalkInfrastructure.ProtocolFormat;
 using Microsoft.Practices.Prism.Logging;
 using System;
@@ -21,7 +22,7 @@ namespace BeautifulTalk.Modules.Login.Services.Client.Mocks
             MockMQKeySet.Message = "successed sign in";
             MockMQKeySet.MqKey = "service@shop.com";
             MockMQKeySet.MqSid = "service@shop.com";
-            MockMQKeySet.NickName = "Anonymous";
+            MockMQKeySet.NickName = "Anonymous User";
             MockMQKeySet.Status = 200;
             MockMQKeySet.Type = 1;
             MockMQKeySet.UserSid = Guid.NewGuid().ToString();

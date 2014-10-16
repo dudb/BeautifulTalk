@@ -14,12 +14,12 @@ namespace BeautifulTalk.Modules.Friends.Converters
         {
             if (null == value)
             {
-                return ToBitmapImgConverter.DecodeImage(ToBitmapImgConverter.LoadImage
-                    (@"pack://application:,,,/BeautifulTalk.Modules.Friends;component/Resources/Images/base_recommenduser.png"));
+                return null;
             }
             else
             {
-                return value;
+                //Download image logic
+                return null;
             }
         }
 

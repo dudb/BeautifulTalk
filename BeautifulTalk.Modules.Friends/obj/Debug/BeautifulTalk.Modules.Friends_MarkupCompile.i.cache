@@ -4,7 +4,7 @@
 library
 C#
 .cs
-D:\VS_Workspace\BeautifulTalk\BeautifulTalk.Modules.Friends\obj\Debug\
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Friends\obj\Debug\
 BeautifulTalk.Modules.Friends
 none
 false
@@ -13,7 +13,7 @@ DEBUG;TRACE
 3-1085943193
 
 33-1068664585
-331367000961
+33284789201
 Views\FriendsMainView.xaml;Views\FriendsView.xaml;Views\RecommendView.xaml;
 
 False

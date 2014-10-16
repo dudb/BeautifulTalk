@@ -3,6 +3,7 @@ using BeautifulDB.Helpers;
 using BeautifulTalk.Modules.Login.Makers;
 using BeautifulTalk.Modules.Login.Models;
 using BeautifulTalkInfrastructure.AliveInformation;
+using BeautifulTalkInfrastructure.Generators;
 using BeautifulTalkInfrastructure.Logger;
 using BeautifulTalkInfrastructure.ProtocolFormat;
 using BeautifulTalkInfrastructure.PubSubEvents;

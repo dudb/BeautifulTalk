@@ -12,7 +12,7 @@ namespace BeautifulTalk.Modules.Rooms.Models
 {
     public class Room : BindableBase
     {
-        private Brush m_AnonymousBackground;
+        private Brush m_AnonymousThumbnail;
         private IList<string> m_ActiveMemberNames;
         private Int32 m_UnReadMsgCount;
         private string m_LastMsgSummary;
@@ -46,10 +46,10 @@ namespace BeautifulTalk.Modules.Rooms.Models
             set { SetProperty(ref this.m_ThumbnailPath, value); }
         }
 
-        public Brush AnonymousBackground
+        public Brush AnonymousThumbnail
         {
-            get { return this.m_AnonymousBackground; }
-            set { SetProperty(ref this.m_AnonymousBackground, value); }
+            get { return this.m_AnonymousThumbnail; }
+            set { SetProperty(ref this.m_AnonymousThumbnail, value); }
         }
         public Room(string strSid, IList<string> arActiveMemberNames, int nUnReadMsgCount, 
             string strLastMsgSummary, long lLastMsgDate, string strThumbnailPath)
@@ -61,7 +61,7 @@ namespace BeautifulTalk.Modules.Rooms.Models
             this.LastMsgDate = lLastMsgDate;
             this.ThumbnailPath = strThumbnailPath;
 
-            if (string.IsNullOrEmpty(strThumbnailPath)) { this.AnonymousBackground = ColorGenerator.Instance.GetRandomBrush(); }
+            if (string.IsNullOrEmpty(strThumbnailPath)) { this.AnonymousThumbnail = ColorGenerator.Instance.GetRandomBrush(); }
         }
     }
 }

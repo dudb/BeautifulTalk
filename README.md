@@ -23,7 +23,7 @@ So it will have an effect on closing anonymous users as well as chatting with my
 
 [Done]
 - Login with OAuth2.0
-- Messaging with RabbitMQ Topic.
+- Messaging with RabbitMQ Topic exchange.
 - Update recommend users.
 - Add friend.
 - Create room.

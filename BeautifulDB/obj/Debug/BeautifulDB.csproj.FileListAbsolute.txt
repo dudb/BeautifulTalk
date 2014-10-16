@@ -1,0 +1,9 @@
+D:\VS_Workspace\BeautifulTalk\BeautifulDB\bin\Debug\BeautifulDB.dll
+D:\VS_Workspace\BeautifulTalk\BeautifulDB\bin\Debug\BeautifulDB.pdb
+D:\VS_Workspace\BeautifulTalk\BeautifulDB\bin\Debug\MongoDB.Bson.dll
+D:\VS_Workspace\BeautifulTalk\BeautifulDB\bin\Debug\MongoDB.Driver.dll
+D:\VS_Workspace\BeautifulTalk\BeautifulDB\bin\Debug\MongoDB.Bson.xml
+D:\VS_Workspace\BeautifulTalk\BeautifulDB\bin\Debug\MongoDB.Driver.xml
+D:\VS_Workspace\BeautifulTalk\BeautifulDB\obj\Debug\BeautifulDB.csprojResolveAssemblyReference.cache
+D:\VS_Workspace\BeautifulTalk\BeautifulDB\obj\Debug\BeautifulDB.dll
+D:\VS_Workspace\BeautifulTalk\BeautifulDB\obj\Debug\BeautifulDB.pdb

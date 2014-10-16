@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="BeautifulTalk.Modules.Login.Views.RequiredInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:converter="clr-namespace:BeautifulTalk.Modules.Login.Converters"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Margin="0,0,0,46" FontFamily="Gainsboro">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/BeautifulTalk.Modules.Login;component/Resources/NavigateAnimations.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource FadeIn}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <Grid>
+        <Grid.Resources>
+            <converter:RequiredInfoParamsConverter x:Key="requiredInfoParamsConverter"/>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="38"/>
+        </Grid.RowDefinitions>
+        <TextBlock TextWrapping="Wrap" FontFamily="Gainsboro">
+            <Bold FontSize="14">1. Fill in your new ID and Password.</Bold><LineBreak/><LineBreak/>
+            <Run>Once you make id and password,</Run><LineBreak/>
+            <Run Text="you can use them to login "/><Bold Foreground="{StaticResource BeautifulFreak.Colors.Special}">BeautifulTalk.</Bold><LineBreak/>
+            <Run>Just fill in a blank with correct rules.</Run><LineBreak/><LineBreak/>
+            <Run Text="you must put "/><Bold Foreground="{StaticResource BeautifulFreak.Colors.Special}">e-mail type on ID blank.</Bold>
+        </TextBlock>
+        <TextBox x:Name="IDTextBox" Grid.Row="1" Text="{Binding RequiredInfoModel.Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Style="{StaticResource BeautifulFreak.TextBox}">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding NextCommand}">
+                    <KeyBinding.CommandParameter>
+                        <MultiBinding Converter="{StaticResource requiredInfoParamsConverter}">
+                            <Binding ElementName="IDTextBox" Path="Text"/>
+                            <Binding ElementName="PasswordTextBox" Path="Text"/>
+                            <Binding ElementName="NickNameTextBox" Path="Text"/>
+                        </MultiBinding>
+                    </KeyBinding.CommandParameter>
+                </KeyBinding>
+            </TextBox.InputBindings>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding InitialFocusCommand}" CommandParameter="{Binding ElementName=IDTextBox}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <TextBlock Grid.Row="2">
+            <LineBreak/><Run Text="and then type password "/><Bold Foreground="{StaticResource BeautifulFreak.Colors.Special}">on Password blank.</Bold>
+        </TextBlock>
+
+        <TextBox x:Name="PasswordTextBox" Text="{Binding RequiredInfoModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Grid.Row="3" Style="{StaticResource BeautifulFreak.TextBox}">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding NextCommand}">
+                    <KeyBinding.CommandParameter>
+                        <MultiBinding Converter="{StaticResource requiredInfoParamsConverter}">
+                            <Binding ElementName="IDTextBox" Path="Text"/>
+                            <Binding ElementName="PasswordTextBox" Path="Text"/>
+                            <Binding ElementName="NickNameTextBox" Path="Text"/>
+                        </MultiBinding>
+                    </KeyBinding.CommandParameter>
+                </KeyBinding>
+            </TextBox.InputBindings>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <TextBlock Grid.Row="4">
+            <LineBreak/><Run Text="finally, type "/><Bold Foreground="{StaticResource BeautifulFreak.Colors.Special}">Nickname below blank.</Bold>
+        </TextBlock>
+        <TextBox x:Name="NickNameTextBox" Text="{Binding RequiredInfoModel.NickName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Grid.Row="5" Style="{StaticResource BeautifulFreak.TextBox}">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding NextCommand}">
+                    <KeyBinding.CommandParameter>
+                        <MultiBinding Converter="{StaticResource requiredInfoParamsConverter}">
+                            <Binding ElementName="IDTextBox" Path="Text"/>
+                            <Binding ElementName="PasswordTextBox" Path="Text"/>
+                            <Binding ElementName="NickNameTextBox" Path="Text"/>
+                        </MultiBinding>
+                    </KeyBinding.CommandParameter>
+                </KeyBinding>
+            </TextBox.InputBindings>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+                    <i:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
+        <Grid Grid.Row="6"/>
+        <Grid Grid.Row="7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Previous" Command="{Binding PreviousCommand}" Style="{StaticResource BeautifulFreak.Button}"/>
+            <Button Grid.Column="2" Content="Next" Command="{Binding NextCommand}" Style="{StaticResource BeautifulFreak.Button}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource requiredInfoParamsConverter}">
+                        <Binding ElementName="IDTextBox" Path="Text"/>
+                        <Binding ElementName="PasswordTextBox" Path="Text"/>
+                        <Binding ElementName="NickNameTextBox" Path="Text"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

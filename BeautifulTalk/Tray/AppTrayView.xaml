@@ -1,0 +1,23 @@
+﻿<Tray:TaskbarIcon x:Class="BeautifulTalk.Tray.AppTrayView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Tray="http://www.hardcodet.net/taskbar"
+             xmlns:TrayViewModel="clr-namespace:BeautifulTalk.Tray"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             IconSource="pack://application:,,,/BeautifulTalk;component/Resources/Images/beautifulfreak_logo.ico"
+             ToolTipText="BeautifulTalk"
+             DoubleClickCommand="{Binding ActivateMainWindowCommand}">
+    <Tray:TaskbarIcon.DataContext>
+        <TrayViewModel:AppTrayViewModel />
+    </Tray:TaskbarIcon.DataContext>
+    <Tray:TaskbarIcon.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Show Window" Command="{Binding ActivateMainWindowCommand}" />
+            <Separator />
+            <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
+        </ContextMenu>
+    </Tray:TaskbarIcon.ContextMenu>
+</Tray:TaskbarIcon>

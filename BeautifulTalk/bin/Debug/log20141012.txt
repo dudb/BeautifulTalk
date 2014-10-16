@@ -1,0 +1,6 @@
+connection_ConnectionShutdown
+
+Could not determine JSON object type for type MongoDB.Bson.ObjectId.
+
+Could not determine JSON object type for type MongoDB.Bson.ObjectId.
+

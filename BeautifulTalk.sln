@@ -1,0 +1,95 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautifulTalk", "BeautifulTalk\BeautifulTalk.csproj", "{AF271194-F0E7-47CA-A7FA-A2276C1B167C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautifulTalkInfrastructure", "BeautifulTalkInfrastructure\BeautifulTalkInfrastructure.csproj", "{D1531A3D-475B-4031-ADEA-E53A1E4EAFDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonControl", "CommonControl\CommonControl.csproj", "{2E28C6F1-2321-488D-8239-F4D3BB7BB7B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{339ADCF4-762E-4716-A160-23B6BF1EDE15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautifulTalk.Modules.Login", "BeautifulTalk.Modules.Login\BeautifulTalk.Modules.Login.csproj", "{DA331819-8A80-415A-B67E-6D0755E17178}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautifulTalk.Modules.Chatting", "BeautifulTalk.Modules.Chatting\BeautifulTalk.Modules.Chatting.csproj", "{D1B88738-6B15-490D-A2BE-98F4400AC363}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautifulTalk.Modules.Configuration", "BeautifulTalk.Modules.Configuration\BeautifulTalk.Modules.Configuration.csproj", "{87D2B75C-ED46-4CCF-AF3C-1D0B12A2F243}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonUtility", "CommonUtility\CommonUtility.csproj", "{57AEDEC7-ED07-4339-8B97-E90ED5199AD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautifulTalk.Modules.Rooms", "BeautifulTalk.Modules.Rooms\BeautifulTalk.Modules.Rooms.csproj", "{DAE4BADA-DEB4-45F0-97A2-B94E5AB8ACDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautifulTalk.Modules.Friends", "BeautifulTalk.Modules.Friends\BeautifulTalk.Modules.Friends.csproj", "{F7A5BFB4-09ED-4111-AEDB-085660C75E56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautifulDB", "BeautifulDB\BeautifulDB.csproj", "{67617160-D86E-4757-B49E-1739D62E326C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeautifulTalk.Modules.DetailInfo", "BeautifulTalk.Modules.DetailInfo\BeautifulTalk.Modules.DetailInfo.csproj", "{AA1C3497-CF40-4226-8E49-340CBE7B95FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF271194-F0E7-47CA-A7FA-A2276C1B167C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF271194-F0E7-47CA-A7FA-A2276C1B167C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF271194-F0E7-47CA-A7FA-A2276C1B167C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF271194-F0E7-47CA-A7FA-A2276C1B167C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1531A3D-475B-4031-ADEA-E53A1E4EAFDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1531A3D-475B-4031-ADEA-E53A1E4EAFDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1531A3D-475B-4031-ADEA-E53A1E4EAFDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1531A3D-475B-4031-ADEA-E53A1E4EAFDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E28C6F1-2321-488D-8239-F4D3BB7BB7B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E28C6F1-2321-488D-8239-F4D3BB7BB7B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E28C6F1-2321-488D-8239-F4D3BB7BB7B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E28C6F1-2321-488D-8239-F4D3BB7BB7B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA331819-8A80-415A-B67E-6D0755E17178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA331819-8A80-415A-B67E-6D0755E17178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA331819-8A80-415A-B67E-6D0755E17178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA331819-8A80-415A-B67E-6D0755E17178}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1B88738-6B15-490D-A2BE-98F4400AC363}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1B88738-6B15-490D-A2BE-98F4400AC363}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1B88738-6B15-490D-A2BE-98F4400AC363}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1B88738-6B15-490D-A2BE-98F4400AC363}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87D2B75C-ED46-4CCF-AF3C-1D0B12A2F243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87D2B75C-ED46-4CCF-AF3C-1D0B12A2F243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87D2B75C-ED46-4CCF-AF3C-1D0B12A2F243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87D2B75C-ED46-4CCF-AF3C-1D0B12A2F243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57AEDEC7-ED07-4339-8B97-E90ED5199AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57AEDEC7-ED07-4339-8B97-E90ED5199AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57AEDEC7-ED07-4339-8B97-E90ED5199AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57AEDEC7-ED07-4339-8B97-E90ED5199AD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAE4BADA-DEB4-45F0-97A2-B94E5AB8ACDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAE4BADA-DEB4-45F0-97A2-B94E5AB8ACDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAE4BADA-DEB4-45F0-97A2-B94E5AB8ACDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAE4BADA-DEB4-45F0-97A2-B94E5AB8ACDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A5BFB4-09ED-4111-AEDB-085660C75E56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A5BFB4-09ED-4111-AEDB-085660C75E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A5BFB4-09ED-4111-AEDB-085660C75E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A5BFB4-09ED-4111-AEDB-085660C75E56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67617160-D86E-4757-B49E-1739D62E326C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67617160-D86E-4757-B49E-1739D62E326C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67617160-D86E-4757-B49E-1739D62E326C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67617160-D86E-4757-B49E-1739D62E326C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA1C3497-CF40-4226-8E49-340CBE7B95FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA1C3497-CF40-4226-8E49-340CBE7B95FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA1C3497-CF40-4226-8E49-340CBE7B95FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA1C3497-CF40-4226-8E49-340CBE7B95FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DA331819-8A80-415A-B67E-6D0755E17178} = {339ADCF4-762E-4716-A160-23B6BF1EDE15}
+		{D1B88738-6B15-490D-A2BE-98F4400AC363} = {339ADCF4-762E-4716-A160-23B6BF1EDE15}
+		{87D2B75C-ED46-4CCF-AF3C-1D0B12A2F243} = {339ADCF4-762E-4716-A160-23B6BF1EDE15}
+		{DAE4BADA-DEB4-45F0-97A2-B94E5AB8ACDA} = {339ADCF4-762E-4716-A160-23B6BF1EDE15}
+		{F7A5BFB4-09ED-4111-AEDB-085660C75E56} = {339ADCF4-762E-4716-A160-23B6BF1EDE15}
+		{AA1C3497-CF40-4226-8E49-340CBE7B95FD} = {339ADCF4-762E-4716-A160-23B6BF1EDE15}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45
+	EndGlobalSection
+EndGlobal

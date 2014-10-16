@@ -1,0 +1,112 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:converters="clr-namespace:BeautifulTalk.Modules.Login.Converters"
+             xmlns:BusyIndicator="clr-namespace:CommonControl.BusyIndicator;assembly=CommonControl"
+             xmlns:region="http://www.codeplex.com/CompositeWPF"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" x:Class="BeautifulTalk.Modules.Login.Views.LoginView"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" >
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/BeautifulTalk.Modules.Login;component/Resources/NavigateAnimations.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource FadeIn}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    
+    <Grid>
+        <Grid.Resources>
+            <converters:LoginParamsConverter x:Key="loginParamsConverter"/>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="38"/>
+			<RowDefinition Height="1"/>
+			<RowDefinition Height="37"/>
+			<RowDefinition Height="52"/>
+			<RowDefinition Height="22"/>
+			<RowDefinition Height="18"/>
+			<RowDefinition Height="10"/>
+            <RowDefinition Height="18"/>
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="37"/>
+			<RowDefinition Height="46"/>
+		</Grid.RowDefinitions>
+
+        <Viewbox Stretch="Uniform" Margin="30">
+            <Path Data="F1M139.705,15.865C180.942,43.908 192.034,99.49 164.478,140.011 153.728,155.82 138.685,166.997 121.887,173.091L121.887,173.09 118.563,195.177 97.891,178.213C78.146,179.677 57.684,174.684 39.917,162.603 -1.318,134.559 -12.411,78.977 15.145,38.457 42.702,-2.063 98.469,-12.177 139.705,15.865" Fill="#FF6A91B1" RenderTransformOrigin="0.5,0.5" Height="195" Width="180"/>
+        </Viewbox>
+        <ComboBox x:Name="IdCombobox" Text="{Binding LoginModel.Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+			ItemsSource="{Binding ConnectedIdentifications}" Grid.Row="1" IsEditable="True" 
+			SelectedIndex="0" Style="{StaticResource BeautifulFreak.ComboBox}">
+			<ComboBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding LoginCommand}">
+                    <KeyBinding.CommandParameter>
+                        <MultiBinding Converter="{StaticResource loginParamsConverter}">
+                            <Binding ElementName="IdCombobox" Path="Text"/>
+                            <Binding ElementName="PwdTextbox" Path="Text"/>
+                            <Binding ElementName="BusyIndicator"/>
+                        </MultiBinding>
+                    </KeyBinding.CommandParameter>
+                </KeyBinding>
+            </ComboBox.InputBindings>
+			<i:Interaction.Triggers>
+                <i:EventTrigger EventName="KeyUp">
+					<i:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+				</i:EventTrigger>
+				<i:EventTrigger EventName="SelectionChanged">
+					<i:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+		</ComboBox>
+		<Rectangle Grid.Row="2"/>
+		<TextBox x:Name="PwdTextbox" Grid.Row="3" Text="{Binding LoginModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Style="{StaticResource BeautifulFreak.TextBox}">
+			<TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding LoginCommand}">
+                    <KeyBinding.CommandParameter>
+                        <MultiBinding Converter="{StaticResource loginParamsConverter}">
+                            <Binding ElementName="IdCombobox" Path="Text"/>
+                            <Binding ElementName="PwdTextbox" Path="Text"/>
+                            <Binding ElementName="BusyIndicator"/>
+                        </MultiBinding>
+                    </KeyBinding.CommandParameter>
+                </KeyBinding>
+            </TextBox.InputBindings>
+			<i:Interaction.Triggers>
+                <i:EventTrigger EventName="TextChanged">
+					<i:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+				</i:EventTrigger>
+				<i:EventTrigger EventName="Loaded">
+					<i:InvokeCommandAction Command="{Binding InitialFocusCommand}" CommandParameter="{Binding ElementName=PwdTextbox}"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+        </TextBox>
+        <Button Content="Login" Grid.Row="4" Command="{Binding LoginCommand}" Margin="0,6,0,6" Style="{StaticResource BeautifulFreak.Button}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource loginParamsConverter}">
+                    <Binding ElementName="IdCombobox" Path="Text"/>
+                    <Binding ElementName="PwdTextbox" Path="Text"/>
+                    <Binding ElementName="BusyIndicator"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+        <CheckBox x:Name="AutoLoginCheckbox" IsChecked="{Binding LoginModel.IsAutoLogin, Mode=TwoWay}" Style="{StaticResource BeautifulFreak.CheckBox}"
+                  Content="Auto Login" Grid.Row="5"/>
+		<BusyIndicator:SmoothBusyIndicator x:Name="BusyIndicator"  Grid.Row="7"/>
+        <Button Content="Sign Up" Grid.Row="9" Command="{Binding NavigateRequiredInfoViewCommand}" Style="{StaticResource BeautifulFreak.Button}"/>
+        <Button Content="Find Password" Grid.Row="11" Style="{StaticResource BeautifulFreak.Button}"/>
+	</Grid>
+</UserControl>

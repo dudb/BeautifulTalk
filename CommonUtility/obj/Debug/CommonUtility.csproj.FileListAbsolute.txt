@@ -1,0 +1,4 @@
+D:\VS_Workspace\BeautifulTalk\CommonUtility\bin\Debug\CommonUtility.dll
+D:\VS_Workspace\BeautifulTalk\CommonUtility\bin\Debug\CommonUtility.pdb
+D:\VS_Workspace\BeautifulTalk\CommonUtility\obj\Debug\CommonUtility.dll
+D:\VS_Workspace\BeautifulTalk\CommonUtility\obj\Debug\CommonUtility.pdb

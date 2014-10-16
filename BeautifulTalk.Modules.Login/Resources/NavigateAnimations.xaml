@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+    <Storyboard x:Key="FadeIn">
+        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.Opacity)">
+            <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0"/>
+            <SplineDoubleKeyFrame KeyTime="00:00:00.5000000" Value="1"/>
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+</ResourceDictionary>

@@ -1,0 +1,20 @@
+﻿<Base:ShellViewBase x:Class="BeautifulTalk.Views.BusinessShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:regions="http://www.codeplex.com/CompositeWPF"
+        xmlns:businessRegionNames="clr-namespace:BeautifulTalkInfrastructure.RegionNames;assembly=BeautifulTalkInfrastructure"
+        xmlns:Base="clr-namespace:BeautifulTalkInfrastructure.ShellBases;assembly=BeautifulTalkInfrastructure"
+        Style="{StaticResource BusinessWindowStyle}" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl x:Name="PrimaryBusinessTabControl" 
+                    regions:RegionManager.RegionName="{x:Static businessRegionNames:BusinessRegionNames.TabbingRegion}"
+                    ItemContainerStyle="{StaticResource BeautifulFreak.TabControl.TabItemStyle}"
+                    SelectedIndex="0" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Padding="0"/>
+        <ContentControl regions:RegionManager.RegionName="{x:Static businessRegionNames:BusinessRegionNames.AdditionalRegion}" Grid.Row="1" Height="60"/>
+    </Grid>
+</Base:ShellViewBase>

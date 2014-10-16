@@ -1,0 +1,1963 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+                    xmlns:navigationViews="clr-namespace:CommonControl.Navigation;assembly=CommonControl"
+                    xmlns:friendsViews="clr-namespace:BeautifulTalk.Modules.Friends.Views;assembly=BeautifulTalk.Modules.Friends"
+                    xmlns:chattingViews="clr-namespace:BeautifulTalk.Modules.Chatting.Views;assembly=BeautifulTalk.Modules.Chatting"
+                    xmlns:roomsCvts="clr-namespace:BeautifulTalk.Modules.Rooms.Converters;assembly=BeautifulTalk.Modules.Rooms"
+                    xmlns:friendsCvts="clr-namespace:BeautifulTalk.Modules.Friends.Converters;assembly=BeautifulTalk.Modules.Friends"
+                    xmlns:chattingCvts="clr-namespace:BeautifulTalk.Modules.Chatting.Converters;assembly=BeautifulTalk.Modules.Chatting"
+                    xmlns:chattingDateFormats="clr-namespace:BeautifulTalk.Modules.Chatting.Infrastructures;assembly=BeautifulTalk.Modules.Chatting"
+                    xmlns:commonControls="clr-namespace:CommonControl.BusyIndicator;assembly=CommonControl"
+                    xmlns:msgStatus="clr-namespace:BeautifulTalkInfrastructure.ProtocolFormat;assembly=BeautifulTalkInfrastructure"
+                    xmlns:msgSelector="clr-namespace:BeautifulTalk.Modules.Chatting.Selectors;assembly=BeautifulTalk.Modules.Chatting">
+    
+    <!-- BitmapImage -->
+    <BitmapImage x:Key="BeautifulFreak.Warning" UriSource="/BeautifulTalk;component/Resources/Images/beautifulfreak_warning.png"/>
+    
+    <!-- Colors -->
+    <SolidColorBrush x:Key="BeautifulFreak.Colors.Base.Background" Color="#6A91B1"/>
+    <SolidColorBrush x:Key="BeautifulFreak.Colors.Base.MouseOver" Color="#7CA1BF"/>
+    <SolidColorBrush x:Key="BeautifulFreak.Colors.FriendItemContainer.MouseOver" Color="WhiteSmoke"/>
+    <SolidColorBrush x:Key="BeautifulFreak.Colors.FriendItemContainer.Selected" Color="#FF6A91B1"/>
+    <SolidColorBrush x:Key="BeautifulFreak.Colors.RoomItemContainer.MouseOver" Color="WhiteSmoke"/>
+    <SolidColorBrush x:Key="BeautifulFreak.Colors.RoomItemContainer.Selected" Color="#FF6A91B1"/>
+    <SolidColorBrush x:Key="BeautifulFreak.Colors.Special" Color="#DB6352"/>
+
+    <!-- TextBox -->
+    <Style TargetType="{x:Type TextBox}" x:Key="BeautifulFreak.TextBox">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="MinWidth" Value="120"/>
+        <Setter Property="MinHeight" Value="22"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="CaretBrush" Value="Black"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border Name="Border" Padding="3" BorderBrush="#6A91B1" BorderThickness="1" >
+                        <Grid>
+                            <ScrollViewer Margin="7,7,0,7" x:Name="PART_ContentHost"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" Value="#99000000"/>
+                            <Setter Property="TextElement.Background" Value="#996A91B1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <AdornedElementPlaceholder Name="TextBoxErrorPlaceHolder"/>
+                        <Border Width="26" HorizontalAlignment="Right" Margin="0,0,26,0" 
+                                ToolTip="{Binding ElementName=TextBoxErrorPlaceHolder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                            <Border.Background>
+                                <ImageBrush ImageSource="{StaticResource BeautifulFreak.Warning}" Stretch="Uniform"/>
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}" x:Key="BeautifulFreak.TextBox.Input">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="MinWidth" Value="120" />
+        <Setter Property="MinHeight" Value="20" />
+        <Setter Property="AllowDrop" Value="true" />
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="CaretBrush" Value="Black"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border Name="Border" Padding="3" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer Margin="7,7,0,7" x:Name="PART_ContentHost"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UIElement.IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" Value="LightGray"/>
+                            <Setter Property="TextElement.Background" Value="WhiteSmoke"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- ComboBox -->
+    <ControlTemplate TargetType="ToggleButton" x:Key="ComboBoxToggleButtonTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.ColumnSpan="2" Name="Border" CornerRadius="0" BorderBrush="{StaticResource BeautifulFreak.Colors.Base.Background}" BorderThickness="1" />
+            <Border Grid.Column="1" Margin="1, 1, 1, 1" Name="ButtonBorder" CornerRadius="0" Background="{StaticResource BeautifulFreak.Colors.Base.Background}" />
+
+            <Path Name="Arrow" Grid.Column="1" 
+            Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
+            HorizontalAlignment="Center" Fill="White"
+            VerticalAlignment="Center" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="UIElement.IsMouseOver" Value="True">
+                <Setter Property="Panel.Background" TargetName="ButtonBorder" Value="#FF279AD0"/>
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                <Setter Property="Panel.Background" TargetName="ButtonBorder" Value="#FF279AD0"/>
+            </Trigger>
+            <Trigger Property="UIElement.IsEnabled" Value="False">
+                <Setter Property="Panel.Background" TargetName="Border" Value="#996A91B1"/>
+                <Setter Property="Panel.Background" TargetName="ButtonBorder" Value="#996A91B1"/>
+                <Setter Property="TextElement.Foreground" Value="#99000000"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="BeautifulFreak.ComboBox"  TargetType="{x:Type ComboBox}">
+        <Setter Property="UIElement.SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FrameworkElement.OverridesDefaultStyle" Value="True"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="TextElement.Foreground" Value="Black"/>
+        <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <ToggleButton Name="ToggleButton" Grid.Column="2"
+                ClickMode="Press" Focusable="False"
+                IsChecked="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                Template="{StaticResource ComboBoxToggleButtonTemplate}"/>
+
+                        <ContentPresenter Name="ContentSite" Margin="5, 3, 23, 3" IsHitTestVisible="False"
+                              HorizontalAlignment="Left" VerticalAlignment="Center"                              
+                              Content="{TemplateBinding ComboBox.SelectionBoxItem}" 
+                              ContentTemplate="{TemplateBinding ComboBox.SelectionBoxItemTemplate}"
+                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"/>
+                        <TextBox Name="PART_EditableTextBox" Margin="10, 3, 23, 3"    Foreground="Black"                 
+                     IsReadOnly="{TemplateBinding IsReadOnly}"
+                     Visibility="Hidden" Background="Transparent"
+                     HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                     Focusable="True" TextWrapping="Wrap" MaxLength="30" >
+                            <TextBox.Template>
+                                <ControlTemplate TargetType="TextBox" >
+                                    <Border Name="PART_ContentHost" Focusable="False"/>
+                                </ControlTemplate>
+                            </TextBox.Template>
+                        </TextBox>
+
+                        <Popup Name="Popup" Placement="Bottom"
+                   Focusable="False" AllowsTransparency="True"
+                   IsOpen="{TemplateBinding ComboBox.IsDropDownOpen}"
+                   PopupAnimation="Slide">
+                            <Grid Name="DropDown" SnapsToDevicePixels="True"
+                    MinWidth="{TemplateBinding FrameworkElement.ActualWidth}"
+                    MaxHeight="{TemplateBinding ComboBox.MaxDropDownHeight}">
+                                <Border Name="DropDownBorder" Background="White" Margin="0, 1, 0, 0" CornerRadius="0" BorderThickness="1" 
+                                        BorderBrush="{StaticResource BeautifulFreak.Colors.Base.Background}" />
+                                <ScrollViewer Margin="4" SnapsToDevicePixels="True">
+                                    <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                                </ScrollViewer>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ItemsControl.HasItems" Value="False">
+                            <Setter Property="FrameworkElement.MinHeight" TargetName="DropDownBorder" Value="95"/>
+                        </Trigger>
+                        <Trigger Property="UIElement.IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" Value="#99000000"/>
+                        </Trigger>
+                        <Trigger Property="ItemsControl.IsGrouping" Value="True">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+                        </Trigger>
+                        <Trigger Property="ComboBox.IsEditable" Value="True">
+                            <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
+                            <Setter Property="UIElement.Visibility" TargetName="PART_EditableTextBox" Value="Visible"/>
+                            <Setter Property="UIElement.Visibility" TargetName="ContentSite" Value="Hidden"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <AdornedElementPlaceholder Name="ComboBoxErrorPlaceHolder"/>
+                        <Border Width="26" HorizontalAlignment="Right" Margin="0,0,26,0" 
+                                ToolTip="{Binding ElementName=ComboBoxErrorPlaceHolder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                            <Border.Background>
+                                <ImageBrush ImageSource="{StaticResource BeautifulFreak.Warning}" Stretch="Uniform"/>
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- Button -->
+    <ImageBrush x:Key="Base.Close" ImageSource="/BeautifulTalk;component/Resources/Images/base_close.png"/>
+    <ImageBrush x:Key="MouseOver.Close" ImageSource="/BeautifulTalk;component/Resources/Images/mouseover_close.png"/>
+    <ImageBrush x:Key="Base.Expand" ImageSource="/BeautifulTalk;component/Resources/Images/base_expand.png"/>
+    <ImageBrush x:Key="MouseOver.Expand" ImageSource="/BeautifulTalk;component/Resources/Images/mouseover_expand.png"/>
+    <ImageBrush x:Key="Base.Collapse" ImageSource="/BeautifulTalk;component/Resources/Images/base_collapse.png"/>
+    <ImageBrush x:Key="MouseOver.Collapse" ImageSource="/BeautifulTalk;component/Resources/Images/mouseover_collapse.png"/>
+    <ImageBrush x:Key="Base.Minimize" ImageSource="/BeautifulTalk;component/Resources/Images/base_minimize.png"/>
+    <ImageBrush x:Key="MouseOver.Minimize" ImageSource="/BeautifulTalk;component/Resources/Images/mouseover_minimize.png"/>
+    
+    <Style x:Key="BeautifulFreak.Button" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="#6A91B1"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderTransformOrigin="0.5,0.5">
+                        </ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="#FF279AD0"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="RenderTransform" TargetName="contentPresenter">
+                                <Setter.Value>
+                                    <TranslateTransform Y="1" X="1" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="border" Value="#996A91B1"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="WhiteSmoke"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BeautifulFreak.Button.Close" TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Background" Value="{StaticResource Base.Close}"/>
+        <Setter Property="MinWidth" Value="10"/>
+        <Setter Property="MinHeight" Value="10"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderTransformOrigin="0.5,0.5">
+                        </ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource MouseOver.Close}"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="RenderTransform" TargetName="border">
+                                <Setter.Value>
+                                    <TranslateTransform X="1" Y="1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BeautifulFreak.Button.Minimize" TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Background" Value="{StaticResource Base.Minimize}"/>
+        <Setter Property="MinWidth" Value="10"/>
+        <Setter Property="MinHeight" Value="10"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource MouseOver.Minimize}"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="RenderTransform" TargetName="border">
+                                <Setter.Value>
+                                    <TranslateTransform X="1" Y="1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BeautifulFreak.Button.ExpandCollapse" TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="MinWidth" Value="10"/>
+        <Setter Property="MinHeight" Value="10"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Border x:Name="expandBorder" BorderBrush="{x:Null}" BorderThickness="{TemplateBinding BorderThickness}" 
+                                SnapsToDevicePixels="true" Background="{StaticResource Base.Expand}"/>
+                        <Border x:Name="collapseBorder" BorderBrush="{x:Null}" BorderThickness="{TemplateBinding BorderThickness}" 
+                                SnapsToDevicePixels="true" Background="{StaticResource Base.Collapse}" Visibility="Hidden"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=WindowState}" Value="Normal"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="false"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" TargetName="expandBorder" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="collapseBorder" Value="Hidden"/>
+                            <Setter Property="Background" TargetName="expandBorder" Value="{StaticResource Base.Expand}"/>
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=WindowState}" Value="Maximized"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="false"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" TargetName="expandBorder" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="collapseBorder" Value="Visible"/>
+                            <Setter Property="Background" TargetName="collapseBorder" Value="{StaticResource Base.Collapse}"/>
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=WindowState}" Value="Normal"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" TargetName="expandBorder" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="collapseBorder" Value="Hidden"/>
+                            <Setter Property="Background" TargetName="expandBorder" Value="{StaticResource MouseOver.Expand}"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=WindowState}" Value="Normal"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" TargetName="expandBorder" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="collapseBorder" Value="Hidden"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="RenderTransform" TargetName="expandBorder">
+                                <Setter.Value>
+                                    <TranslateTransform X="1" Y="1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=WindowState}" Value="Maximized"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" TargetName="expandBorder" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="collapseBorder" Value="Visible"/>
+                            <Setter Property="Background" TargetName="collapseBorder" Value="{StaticResource MouseOver.Collapse}"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </MultiDataTrigger>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=WindowState}" Value="Maximized"/>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Visibility" TargetName="expandBorder" Value="Hidden"/>
+                            <Setter Property="Visibility" TargetName="collapseBorder" Value="Visible"/>
+                            
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="RenderTransform" TargetName="collapseBorder">
+                                <Setter.Value>
+                                    <TranslateTransform X="1" Y="1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ImageBrush x:Key="Base.Back" ImageSource="pack://application:,,,/BeautifulTalk;component/Resources/Images/base_back.png"/>
+    <ImageBrush x:Key="MouseOver.Back" ImageSource="pack://application:,,,/BeautifulTalk;component/Resources/Images/mouseover_back.png"/>
+    <ImageBrush x:Key="Base.Forward" ImageSource="pack://application:,,,/BeautifulTalk;component/Resources/Images/base_forward.png"/>
+    <ImageBrush x:Key="MouseOver.Forward" ImageSource="pack://application:,,,/BeautifulTalk;component/Resources/Images/mouseover_forward.png"/>
+    <ImageBrush x:Key="Base.Refresh" ImageSource="pack://application:,,,/BeautifulTalk;component/Resources/Images/base_refresh.png"/>
+    <ImageBrush x:Key="MouseOver.Refresh" ImageSource="pack://application:,,,/BeautifulTalk;component/Resources/Images/mouseover_refresh.png"/>
+
+    <Style x:Key="BeautifulFreak.Button.Forward" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource Base.Forward}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderTransformOrigin="0.5,0.5">
+                        </ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource MouseOver.Forward}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="RenderTransform" TargetName="border">
+                                <Setter.Value>
+                                    <TranslateTransform X="1" Y="1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BeautifulFreak.Button.Back" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource Base.Back}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderTransformOrigin="0.5,0.5"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource MouseOver.Back}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="RenderTransform" TargetName="border">
+                                <Setter.Value>
+                                    <TranslateTransform X="1" Y="1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="border" Value="LightGray"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BeautifulFreak.Button.Refresh" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource Base.Refresh}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="{StaticResource MouseOver.Refresh}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="RenderTransform" TargetName="border">
+                                <Setter.Value>
+                                    <TranslateTransform X="1" Y="1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="border" Value="LightGray"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ImageBrush x:Key="Base.Retry" ImageSource="/BeautifulTalk.Modules.Chatting;component/Resources/Images/base_retry.png" Stretch="Uniform"/>
+    <ImageBrush x:Key="Base.Trash" ImageSource="/BeautifulTalk.Modules.Chatting;component/Resources/Images/base_trash.png" Stretch="Uniform"/>
+    
+    <Style x:Key="BeautifulFreak.Button.Retry" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource Base.Retry}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="true" Margin="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource Base.Retry}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource Base.Retry}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource Base.Retry}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Base.Retry}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="BeautifulFreak.Button.Trash" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource Base.Trash}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="true" Margin="{TemplateBinding Padding}">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource Base.Trash}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource Base.Trash}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="border" Value="{StaticResource Base.Trash}"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Base.Trash}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="BeautifulFreak.Button.Send" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Foreground" Value="#6A91B1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderTransformOrigin="0.5,0.5">
+
+                        </ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="#FFE7E8EA"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="RenderTransform" TargetName="contentPresenter">
+                                <Setter.Value>
+                                    <TranslateTransform X="1" Y="1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <ImageBrush x:Key="Base.Send" ImageSource="/BeautifulTalk;component/Resources/Images/beautifulfreak_attach.png" Stretch="Uniform"/>
+    <ImageBrush x:Key="Base.Emoticon" ImageSource="/BeautifulTalk;component/Resources/Images/beautifulfreak_emoticon.png" Stretch="Uniform"/>
+
+    <Style x:Key="BeautifulFreak.Button.Attach" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderTransformOrigin="0.5,0.5">
+                            <ContentPresenter.Content>
+                                <Image Margin="4" Source="/BeautifulTalk;component/Resources/Images/beautifulfreak_attach.png" Stretch="Uniform"/>
+                            </ContentPresenter.Content>
+                        </ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="#FFE7E8EA"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="RenderTransform" TargetName="contentPresenter">
+                                <Setter.Value>
+                                    <TranslateTransform X="1" Y="1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="border" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="BeautifulFreak.Button.Emoticon" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="0" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RenderTransformOrigin="0.5,0.5">
+                            <ContentPresenter.Content>
+                                <Image Margin="4" Source="/BeautifulTalk;component/Resources/Images/beautifulfreak_emoticon.png" Stretch="Uniform"/>
+                            </ContentPresenter.Content>
+                        </ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="#FFE7E8EA"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="RenderTransform" TargetName="contentPresenter">
+                                <Setter.Value>
+                                    <TranslateTransform X="1" Y="1"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="border" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- CheckBox -->
+    <Style x:Key="BeautifulFreak.CheckBox" TargetType="{x:Type CheckBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BeautifulFreak.Colors.Base.Background}"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="checkBoxBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid x:Name="markGrid">
+                                <Path x:Name="optionMark" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Fill="White" Margin="5" Opacity="0" Stretch="None"/>
+                                <Rectangle x:Name="indeterminateMark" Fill="{StaticResource BeautifulFreak.Colors.Base.Background}" Margin="5" Opacity="0"/>
+                            </Grid>
+                        </Border>
+                        <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="Padding" Value="8,-1,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="LightGray"/>
+                            <Setter Property="Foreground" Value="LightGray"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
+                            <Setter Property="Opacity" TargetName="indeterminateMark" Value="0"/>
+                            <Setter Property="Background" TargetName="checkBoxBorder" Value="#6A91B1"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter Property="Opacity" TargetName="optionMark" Value="0"/>
+                            <Setter Property="Opacity" TargetName="indeterminateMark" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- ScrollViewer -->
+    <ControlTemplate x:Key="BeautifulFreak.ScrollViewerControlTemplate" TargetType="{x:Type ScrollViewer}">
+        <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Rectangle x:Name="Corner" Grid.Column="1" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1"/>
+            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="False" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Margin="{TemplateBinding Padding}" Grid.Row="0"/>
+            <ScrollBar x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}" Style="{DynamicResource VerticalScrollBarStyle}"/>
+            <ScrollBar x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}" Style="{DynamicResource HorizontalScrollBarStyle}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <SolidColorBrush x:Key="ScrollBar.Static.Background" Color="#FF7D8FA2"/>
+    <SolidColorBrush x:Key="ScrollBar.Disabled.Background" Color="#F0F0F0"/>
+    <SolidColorBrush x:Key="ScrollBar.MouseOver.Thumb" Color="#CC415A74"/>
+    <SolidColorBrush x:Key="ScrollBar.Pressed.Thumb" Color="#FF37506A"/>
+    <SolidColorBrush x:Key="ScrollBar.Static.Thumb" Color="#FF415A74"/>
+    <Style x:Key="ScrollBarThumbVertical" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Rectangle x:Name="rectangle" Fill="{StaticResource ScrollBar.Static.Thumb}" Height="{TemplateBinding Height}" SnapsToDevicePixels="True" Width="{TemplateBinding Width}"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Fill" TargetName="rectangle" Value="{StaticResource ScrollBar.MouseOver.Thumb}"/>
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="true">
+                            <Setter Property="Fill" TargetName="rectangle" Value="{StaticResource ScrollBar.Pressed.Thumb}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ScrollBarThumbHorizontal" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Rectangle x:Name="rectangle" Fill="{StaticResource ScrollBar.Static.Thumb}" Height="{TemplateBinding Height}" SnapsToDevicePixels="True" Width="{TemplateBinding Width}"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Fill" TargetName="rectangle" Value="{StaticResource ScrollBar.MouseOver.Thumb}"/>
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="true">
+                            <Setter Property="Fill" TargetName="rectangle" Value="{StaticResource ScrollBar.Pressed.Thumb}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="VerticalScrollBarStyle" TargetType="{x:Type ScrollBar}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+        <Setter Property="Background" Value="{StaticResource ScrollBar.Static.Background}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Width" Value="6"/>
+        <Setter Property="MinWidth" Value="6"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                        <Grid.RowDefinitions>
+                            <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                            <RowDefinition Height="0.00001*"/>
+                            <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                        </Grid.RowDefinitions>
+                        <Border Width="2" Background="{TemplateBinding Background}" Grid.Row="1"/>
+                        <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="1">
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource ScrollBarThumbVertical}"/>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineDownButton}" Value="true"/>
+                                <Condition Binding="{Binding IsPressed, ElementName=PART_LineDownButton}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineUpButton}" Value="true"/>
+                                <Condition Binding="{Binding IsPressed, ElementName=PART_LineUpButton}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineDownButton}" Value="true"/>
+                                <Condition Binding="{Binding IsPressed, ElementName=PART_LineDownButton}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineUpButton}" Value="true"/>
+                                <Condition Binding="{Binding IsPressed, ElementName=PART_LineUpButton}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="HorizontalScrollBarStyle" TargetType="{x:Type ScrollBar}">
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
+        <Setter Property="Background" Value="{StaticResource ScrollBar.Static.Background}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Height" Value="6"/>
+        <Setter Property="MinHeight" Value="6"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                        <Grid.RowDefinitions>
+                            <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                            <RowDefinition Height="0.00001*"/>
+                            <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
+                        </Grid.RowDefinitions>
+                        <Border Height="2" Background="{TemplateBinding Background}" Grid.Row="1"/>
+                        <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}" Grid.Row="1">
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource ScrollBarThumbVertical}"/>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineDownButton}" Value="true"/>
+                                <Condition Binding="{Binding IsPressed, ElementName=PART_LineDownButton}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineUpButton}" Value="true"/>
+                                <Condition Binding="{Binding IsPressed, ElementName=PART_LineUpButton}" Value="true"/>
+                            </MultiDataTrigger.Conditions>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineDownButton}" Value="true"/>
+                                <Condition Binding="{Binding IsPressed, ElementName=PART_LineDownButton}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding IsMouseOver, ElementName=PART_LineUpButton}" Value="true"/>
+                                <Condition Binding="{Binding IsPressed, ElementName=PART_LineUpButton}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ListBox -->
+    <ItemsPanelTemplate x:Key="BeautifulFreak.ListBox.InterestItemsPanelTemplate">
+        <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
+    </ItemsPanelTemplate>
+
+    <Style x:Key="BeautifulFreak.ListBox.InterestItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Margin" Value="1"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneWayToSource}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" 
+                            Margin="{TemplateBinding Margin}" SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <ContentPresenter.Content>
+                                <Grid Width="66" Height="66">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="5"/>
+                                        <RowDefinition Height="21"/>
+                                    </Grid.RowDefinitions>
+                                    <Image x:Name="ThumbnailImage" Width="32" Height="32" Source="{Binding BaseThumbnail}" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+                                    <TextBlock Grid.Row="2" Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                </Grid>
+                            </ContentPresenter.Content>
+                        </ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="#6A91B1"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource BeautifulFreak.Colors.Special}"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" TargetName="Bd" Value="LightGray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BeautifulFreak.ListBox.Interests" TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource BeautifulFreak.ListBox.InterestItemContainerStyle}"/>
+        <Setter Property="ItemsPanel" Value="{StaticResource BeautifulFreak.ListBox.InterestItemsPanelTemplate}"/>
+        <Setter Property="FontFamily" Value="Gainsboro"/>
+        <Setter Property="Foreground" Value="#FF373737"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Margin="{TemplateBinding Margin}">
+                        <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}" Margin="{TemplateBinding Margin}" Template="{StaticResource BeautifulFreak.ScrollViewerControlTemplate}">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="LightGray"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true"/>
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <roomsCvts:RoomThumbnailConverter x:Key="BeautifulFreak.ListBox.RoomThumbnailCvt"/>
+    <roomsCvts:RoomMembersNameConverter x:Key="BeautifulFreak.ListBox.RoomMembersNameCvt"/>
+    <roomsCvts:RoomMembersCountConverter x:Key="BeautifulFreak.ListBox.RoomMembersCountCvt"/>
+    <roomsCvts:RoomLastMsgDateConverter x:Key="BeautifulFreak.ListBox.RoomLastMsgDateCvt"/>
+
+    <ItemsPanelTemplate x:Key="BeautifulFreak.ListBox.RoomsItemsPanelTemplate">
+        <VirtualizingStackPanel Orientation="Vertical" IsItemsHost="True"/>
+    </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="BeautifulFreak.ListBox.RoomsDataTemplate">
+        <StackPanel x:Name="ChattingListBackPanel" Orientation="Vertical" Height="75">
+            <Grid Margin="0,12,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Viewbox x:Name="AnonymousViewBox" Width="50" Height="50" Margin="12,0,0,0">
+                    <Border Background="{Binding AnonymousBackground}" Width="235" Height="235">
+                        <Grid>
+                            <Path x:Name="face" Data="F1M24.835,2.515C24.25,3.329,23.743,4.342,23.5,5.585L23.081,5.424C23.407,4.381,23.958,3.378,24.835,2.515 M2.974,52.562C4.509,65.29 15.464,78.487 25.405,78.487 36.828,78.487 47.685,64.618 49.376,52.562 50.019,52.104 51.077,50.998 51.462,48.483 51.462,48.483 53.903,39.755 50.672,40.691 51.803,37.324 55.531,24.215 48.294,16.067 48.294,16.067 44.912,11.443 36.672,8.991 36.384,8.753 36.092,8.509 35.756,8.275 35.756,8.275 35.936,8.485 36.204,8.85 35.736,8.718 35.239,8.602 34.747,8.485 34.303,8.017 33.797,7.534 33.231,7.023 33.231,7.023 33.728,7.534 34.328,8.387 34.099,8.338 33.899,8.28 33.675,8.241 33.3,7.671 32.846,7.086 32.267,6.491 32.267,6.491 32.51,6.95 32.827,7.671 31.306,6.555 28.256,3.977 28.256,1.092 28.256,1.092 26.351,1.984 25.235,3.611 25.673,2.271 26.409,1.029 27.608,0 27.608,0 26.351,0.644 25.196,2.037 24.294,2.544 22.243,3.948 21.551,6.443L20.898,6.111C21.219,5.405 21.667,4.659 22.282,3.909 22.282,3.909 21.39,4.703 20.61,5.97L19.289,5.307C19.684,4.571 20.201,3.811 20.902,3.071 20.902,3.071 20.191,3.616 19.44,4.537 19.65,3.68 19.616,2.695 16.945,5.619 16.945,5.619 4.914,10.838 1.434,21.642 1.434,21.642 -0.612,26.52 2.102,40.871 -1.753,39.049 0.874,48.478 0.874,48.478 1.269,50.998 2.326,52.099 2.974,52.562" Fill="White" Height="78.487" Width="52.641" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,80"/>
+                            <Path x:Name="body" Data="F1M108.553,20.204C105.41,13.231 86.259,7.198 86.259,7.198 76.044,3.596 75.976,0 75.976,0 55.88,39.594 40.636,0.107 40.636,0.107 39.238,5.448 18.571,11.725 18.571,11.725 12.538,14.049 9.98,17.529 9.98,17.529 1.042,30.769 0,60.261 0,60.261 0.117,66.986 3.011,67.688 3.011,67.688 23.566,76.859 55.782,78.486 55.782,78.486 88.88,79.183 112.968,69.086 112.968,69.086 116.462,66.884 116.564,65.134 116.564,65.134 119.006,44.009 108.553,20.204 108.553,20.204" Fill="White" Height="78.52" Width="116.934" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,70,0,0"/>
+                        </Grid>
+                    </Border>
+                </Viewbox>
+                <Image x:Name="ThumbnailImage" Width="50" Height="50" Margin="12,0,0,0" Source="{Binding ThumbnailPath, Converter={StaticResource BeautifulFreak.ListBox.RoomThumbnailCvt}}" Stretch="UniformToFill"/>
+                <StackPanel Grid.Column="1" Orientation="Vertical" Margin="12,0,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding ActiveMemberNames, Converter={StaticResource BeautifulFreak.ListBox.RoomMembersNameCvt}}" TextTrimming="CharacterEllipsis" FontWeight="Bold"/>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <Image Source="/BeautifulTalk;component/Resources/Images/beautifulfreak_memberscount.png" Height="18" Width="18" VerticalAlignment="Top"/>
+                            <TextBlock Margin="2,0,0,0" Text="{Binding ActiveMemberNames, Converter={StaticResource BeautifulFreak.ListBox.RoomMembersCountCvt}}" 
+                                        HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock Text="{Binding LastMsgSummary}" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
+                <Grid Grid.Column="2" Margin="12,0,12,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding LastMsgDate, Converter={StaticResource BeautifulFreak.ListBox.RoomLastMsgDateCvt}}" VerticalAlignment="Top"/>
+                    <Border x:Name="UnReadCountBorder" Grid.Row="1" HorizontalAlignment="Right" Background="{StaticResource BeautifulFreak.Colors.Special}" CornerRadius="{Binding ElementName=UnReadCountBorder, Path=ActualHeight}" MinWidth="{Binding ElementName=UnReadCountBorder, Path=ActualHeight}" VerticalAlignment="Stretch">
+                        <ContentControl Content="{Binding UnReadMsgCount}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,0,2,0" Foreground="White"/>
+                    </Border>
+                </Grid>
+            </Grid>
+            <Separator Background="#FFE7E8EA" Height="1" Margin="0"/>
+        </StackPanel>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding ThumbnailPath, Converter={StaticResource BeautifulFreak.ListBox.RoomThumbnailCvt}}" Value="{x:Null}">
+                <Setter TargetName="ThumbnailImage" Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding UnReadMsgCount}" Value="0">
+                <Setter TargetName="UnReadCountBorder" Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <Style x:Key="BeautifulFreak.ListBox.RoomsItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" 
+                            Margin="{TemplateBinding Margin}" SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        </ContentPresenter>
+                        <Border.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding DataContext.ItemDoubleClickedCommand,
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                              CommandParameter="{Binding}"/>
+                        </Border.InputBindings>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource BeautifulFreak.Colors.RoomItemContainer.MouseOver}"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource BeautifulFreak.Colors.RoomItemContainer.Selected}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BeautifulFreak.ListBox.Rooms" TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource BeautifulFreak.ListBox.RoomsItemContainerStyle}"/>
+        <Setter Property="ItemsPanel" Value="{StaticResource BeautifulFreak.ListBox.RoomsItemsPanelTemplate}"/>
+        <Setter Property="ItemTemplate" Value="{StaticResource BeautifulFreak.ListBox.RoomsDataTemplate}"/>
+        <Setter Property="FontFamily" Value="Gainsboro"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Margin="{TemplateBinding Margin}">
+                        <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}" Margin="{TemplateBinding Margin}" Template="{DynamicResource BeautifulFreak.ScrollViewerControlTemplate}">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="LightGray"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true"/>
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <friendsCvts:RecommendSummaryThumbnailConverter x:Key="BeautifulFreak.ListBox.RecommendSummaryThumbnailCvt"/>
+    <friendsCvts:FriendThumbnailConverter x:Key="BeautifulFreak.ListBox.FriendThumbnailCvt"/>
+    <friendsCvts:AddRecommendFriendParamsConverter x:Key="BeautifulFreak.ListBox.AddRecommendFriendParamsCvt"/>
+
+    <ItemsPanelTemplate x:Key="BeautifulFreak.ListBox.RecommendItemsPanelTemplate">
+        <WrapPanel IsItemsHost="True">
+            <i:Interaction.Behaviors>
+                <ei:FluidMoveBehavior AppliesTo="Children" Duration="0:0:0.2">
+                    <ei:FluidMoveBehavior.EaseY>
+                        <ExponentialEase EasingMode="EaseInOut"/>
+                    </ei:FluidMoveBehavior.EaseY>
+                    <ei:FluidMoveBehavior.EaseX>
+                        <ExponentialEase EasingMode="EaseInOut"/>
+                    </ei:FluidMoveBehavior.EaseX>
+                </ei:FluidMoveBehavior>
+            </i:Interaction.Behaviors>
+        </WrapPanel>
+    </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="BeautifulFreak.ListBox.RecommendDataTemplate">
+        <Grid x:Name="BackPanel" Margin="12" Width="120" Height="120" Background="{Binding AnonymousBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Viewbox x:Name="AnonymousViewBox" Width="32" Height="32" Margin="5">
+                <Border Width="235" Height="235">
+                    <Grid>
+                        <Path x:Name="face" Data="F1M24.835,2.515C24.25,3.329,23.743,4.342,23.5,5.585L23.081,5.424C23.407,4.381,23.958,3.378,24.835,2.515 M2.974,52.562C4.509,65.29 15.464,78.487 25.405,78.487 36.828,78.487 47.685,64.618 49.376,52.562 50.019,52.104 51.077,50.998 51.462,48.483 51.462,48.483 53.903,39.755 50.672,40.691 51.803,37.324 55.531,24.215 48.294,16.067 48.294,16.067 44.912,11.443 36.672,8.991 36.384,8.753 36.092,8.509 35.756,8.275 35.756,8.275 35.936,8.485 36.204,8.85 35.736,8.718 35.239,8.602 34.747,8.485 34.303,8.017 33.797,7.534 33.231,7.023 33.231,7.023 33.728,7.534 34.328,8.387 34.099,8.338 33.899,8.28 33.675,8.241 33.3,7.671 32.846,7.086 32.267,6.491 32.267,6.491 32.51,6.95 32.827,7.671 31.306,6.555 28.256,3.977 28.256,1.092 28.256,1.092 26.351,1.984 25.235,3.611 25.673,2.271 26.409,1.029 27.608,0 27.608,0 26.351,0.644 25.196,2.037 24.294,2.544 22.243,3.948 21.551,6.443L20.898,6.111C21.219,5.405 21.667,4.659 22.282,3.909 22.282,3.909 21.39,4.703 20.61,5.97L19.289,5.307C19.684,4.571 20.201,3.811 20.902,3.071 20.902,3.071 20.191,3.616 19.44,4.537 19.65,3.68 19.616,2.695 16.945,5.619 16.945,5.619 4.914,10.838 1.434,21.642 1.434,21.642 -0.612,26.52 2.102,40.871 -1.753,39.049 0.874,48.478 0.874,48.478 1.269,50.998 2.326,52.099 2.974,52.562" Fill="White" Height="78.487" Width="52.641" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,80"/>
+                        <Path x:Name="body" Data="F1M108.553,20.204C105.41,13.231 86.259,7.198 86.259,7.198 76.044,3.596 75.976,0 75.976,0 55.88,39.594 40.636,0.107 40.636,0.107 39.238,5.448 18.571,11.725 18.571,11.725 12.538,14.049 9.98,17.529 9.98,17.529 1.042,30.769 0,60.261 0,60.261 0.117,66.986 3.011,67.688 3.011,67.688 23.566,76.859 55.782,78.486 55.782,78.486 88.88,79.183 112.968,69.086 112.968,69.086 116.462,66.884 116.564,65.134 116.564,65.134 119.006,44.009 108.553,20.204 108.553,20.204" Fill="White" Height="78.52" Width="116.934" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,70,0,0"/>
+                    </Grid>
+                </Border>
+            </Viewbox>
+            <Image x:Name="ThumbnailImage" Width="32" Height="32" Margin="5" Source="{Binding Thumbnail, Converter={StaticResource BeautifulFreak.ListBox.RecommendSummaryThumbnailCvt}}" Stretch="Uniform"/>
+            <Grid Grid.Row="1">
+                <StackPanel Orientation="Vertical" >
+                    <TextBlock FontSize="15" Foreground="White" Text="{Binding NickName}" TextTrimming="CharacterEllipsis" Margin="6,2,0,0"/>
+                    <TextBlock x:Name="CommentTextBlock" Foreground="White" Text="{Binding Comment}" TextTrimming="CharacterEllipsis" Margin="6,2,0,0">
+                    </TextBlock>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+                        <i:Interaction.Behaviors>
+                            <ei:FluidMoveSetTagBehavior Tag="DataContext"/>
+                        </i:Interaction.Behaviors>
+                    </Grid>
+                </StackPanel>
+                <Button x:Name="AddButton" Content="Add" Command="{Binding DataContext.AddFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type friendsViews:RecommendView}}}" 
+                           Style="{StaticResource BeautifulFreak.Button}" Visibility="Collapsed" VerticalAlignment="Bottom">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource BeautifulFreak.ListBox.AddRecommendFriendParamsCvt}">
+                            <Binding ElementName="AddButton"/>
+                            <Binding Path="UserSID"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                    <i:Interaction.Behaviors>
+                        <ei:FluidMoveBehavior Duration="0:0:0.2" InitialTag="DataContext" AppliesTo="Self">
+                            <ei:FluidMoveBehavior.EaseY>
+                                <ExponentialEase EasingMode="EaseIn"/>
+                            </ei:FluidMoveBehavior.EaseY>
+                        </ei:FluidMoveBehavior>
+                    </i:Interaction.Behaviors>
+                </Button>
+            </Grid>
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Thumbnail}" Value="{x:Null}">
+                <Setter TargetName="ThumbnailImage" Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation From="0" To="1" Duration="0:0:0.5" Storyboard.TargetProperty="Opacity"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Visibility" TargetName="AddButton" Value="Visible"/>
+            </MultiTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <Style x:Key="BeautifulFreak.ListBox.RecommendItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}"
+                            Margin="{TemplateBinding Margin}" SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        </ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BeautifulFreak.ListBox.Recommend" TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource BeautifulFreak.ListBox.RecommendItemContainerStyle}"/>
+        <Setter Property="ItemsPanel" Value="{StaticResource BeautifulFreak.ListBox.RecommendItemsPanelTemplate}"/>
+        <Setter Property="ItemTemplate" Value="{StaticResource BeautifulFreak.ListBox.RecommendDataTemplate}"/>
+        <Setter Property="FontFamily" Value="Gainsboro"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Margin="{TemplateBinding Margin}">
+                        <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}" Margin="{TemplateBinding Margin}" Template="{StaticResource BeautifulFreak.ScrollViewerControlTemplate}">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="LightGray"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true"/>
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ItemsPanelTemplate x:Key="BeautifulFreak.ListBox.FriendsItemsPanelTemplate">
+        <VirtualizingStackPanel Orientation="Vertical" IsItemsHost="True"/>
+    </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="BeautifulFreak.ListBox.FriendsDataTemplate">
+        <StackPanel x:Name="FriendsBackPanel" Orientation="Vertical">
+            <Grid Margin="0,12,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Viewbox x:Name="AnonymousViewBox" Width="40" Height="40" Margin="12,0,0,0">
+                    <Border Background="{Binding AnonymousBackground}" Width="235" Height="235">
+                        <Grid>
+                            <Path x:Name="face" Data="F1M24.835,2.515C24.25,3.329,23.743,4.342,23.5,5.585L23.081,5.424C23.407,4.381,23.958,3.378,24.835,2.515 M2.974,52.562C4.509,65.29 15.464,78.487 25.405,78.487 36.828,78.487 47.685,64.618 49.376,52.562 50.019,52.104 51.077,50.998 51.462,48.483 51.462,48.483 53.903,39.755 50.672,40.691 51.803,37.324 55.531,24.215 48.294,16.067 48.294,16.067 44.912,11.443 36.672,8.991 36.384,8.753 36.092,8.509 35.756,8.275 35.756,8.275 35.936,8.485 36.204,8.85 35.736,8.718 35.239,8.602 34.747,8.485 34.303,8.017 33.797,7.534 33.231,7.023 33.231,7.023 33.728,7.534 34.328,8.387 34.099,8.338 33.899,8.28 33.675,8.241 33.3,7.671 32.846,7.086 32.267,6.491 32.267,6.491 32.51,6.95 32.827,7.671 31.306,6.555 28.256,3.977 28.256,1.092 28.256,1.092 26.351,1.984 25.235,3.611 25.673,2.271 26.409,1.029 27.608,0 27.608,0 26.351,0.644 25.196,2.037 24.294,2.544 22.243,3.948 21.551,6.443L20.898,6.111C21.219,5.405 21.667,4.659 22.282,3.909 22.282,3.909 21.39,4.703 20.61,5.97L19.289,5.307C19.684,4.571 20.201,3.811 20.902,3.071 20.902,3.071 20.191,3.616 19.44,4.537 19.65,3.68 19.616,2.695 16.945,5.619 16.945,5.619 4.914,10.838 1.434,21.642 1.434,21.642 -0.612,26.52 2.102,40.871 -1.753,39.049 0.874,48.478 0.874,48.478 1.269,50.998 2.326,52.099 2.974,52.562" Fill="White" Height="78.487" Width="52.641" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,80"/>
+                            <Path x:Name="body" Data="F1M108.553,20.204C105.41,13.231 86.259,7.198 86.259,7.198 76.044,3.596 75.976,0 75.976,0 55.88,39.594 40.636,0.107 40.636,0.107 39.238,5.448 18.571,11.725 18.571,11.725 12.538,14.049 9.98,17.529 9.98,17.529 1.042,30.769 0,60.261 0,60.261 0.117,66.986 3.011,67.688 3.011,67.688 23.566,76.859 55.782,78.486 55.782,78.486 88.88,79.183 112.968,69.086 112.968,69.086 116.462,66.884 116.564,65.134 116.564,65.134 119.006,44.009 108.553,20.204 108.553,20.204" Fill="White" Height="78.52" Width="116.934" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,70,0,0"/>
+                        </Grid>
+                    </Border>
+                </Viewbox>
+                <Image x:Name="ThumbnailImage" Width="40" Height="40"
+                       Source="{Binding Thumbnail, Converter={StaticResource BeautifulFreak.ListBox.FriendThumbnailCvt}}" Stretch="Uniform"/>
+                <Grid Grid.Column="1" Margin="12,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding NickName}" FontWeight="Bold" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding Comment}" Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}"/>
+                </Grid>
+            </Grid>
+        </StackPanel>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Thumbnail}" Value="{x:Null}">
+                <Setter TargetName="ThumbnailImage" Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <Style x:Key="BeautifulFreak.ListBox.FriendsItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" 
+                            Margin="{TemplateBinding Margin}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        </ContentPresenter>
+                        <Border.InputBindings>
+                            <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding DataContext.ItemDoubleClickedCommand,
+                                        RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type friendsViews:FriendsView}}}"
+                                              CommandParameter="{Binding}"/>
+                        </Border.InputBindings>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource BeautifulFreak.Colors.FriendItemContainer.MouseOver}"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource BeautifulFreak.Colors.FriendItemContainer.Selected}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BeautifulFreak.ListBox.Friends" TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource BeautifulFreak.ListBox.FriendsItemContainerStyle}"/>
+        <Setter Property="ItemsPanel" Value="{StaticResource BeautifulFreak.ListBox.FriendsItemsPanelTemplate}"/>
+        <Setter Property="ItemTemplate" Value="{StaticResource BeautifulFreak.ListBox.FriendsDataTemplate}"/>
+        <Setter Property="FontFamily" Value="Gainsboro"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Margin="{TemplateBinding Margin}">
+                        <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}" Margin="{TemplateBinding Margin}" Template="{StaticResource BeautifulFreak.ScrollViewerControlTemplate}">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="LightGray"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true"/>
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <chattingCvts:ToDatetimeConverter x:Key="BeautifulFreak.ListBox.longToDatetimeConverter"/>
+    <chattingCvts:FilteringMsgConverter x:Key="BeautifulFreak.ListBox.filterMsgConverter"/>
+    <chattingCvts:ToBitmapSourceConverter x:Key="BeautifulFreak.ListBox.byteArrayToBitmapSourceConverter"/>
+
+    <ItemsPanelTemplate x:Key="BeautifulFreak.ListBox.MsgItemsPanelTemplate">
+        <VirtualizingStackPanel Orientation="Vertical" IsItemsHost="True"/>
+    </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="BeautifulFreak.ListBox.DateMsgDataTemplate">
+        <Border Background="#FFDEDEC2" BorderBrush="Beige" Margin="12" BorderThickness="1">
+            <TextBlock Text="{Binding Date, Converter={StaticResource BeautifulFreak.ListBox.longToDatetimeConverter}, ConverterParameter={x:Static chattingDateFormats:DatetimeFormats.DateMsg}}" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10"/>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="BeautifulFreak.ListBox.ChatMsgDataTemplate">
+        <Grid Margin="12" HorizontalAlignment="Right">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="1" Grid.RowSpan="2"  Width="40" Height="40" Source="{Binding Thumbnail, Converter={StaticResource BeautifulFreak.ListBox.byteArrayToBitmapSourceConverter}}" 
+                   VerticalAlignment="Top" Stretch="UniformToFill">
+            </Image>
+            <TextBlock Text="{Binding Sender}" FontWeight="Bold" Margin="0,0,4,0" HorizontalAlignment="Right"/>
+            <Grid Grid.Row="1" Margin="0,0,4,0" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border BorderThickness="1" Grid.Column="1" BorderBrush="LightGray">
+                    <Label Padding="5" HorizontalAlignment="Right">
+                        <Label.Content>
+                            <MultiBinding Converter="{StaticResource BeautifulFreak.ListBox.filterMsgConverter}">
+                                <Binding Path="ContentType"/>
+                                <Binding Path="Content"/>
+                            </MultiBinding>
+                        </Label.Content>
+                    </Label>
+                </Border>
+                <Border Margin="60,0,0,2" BorderBrush="LightGray" VerticalAlignment="Bottom" BorderThickness="1,1,0,1">
+                    <Grid>
+                        <TextBlock x:Name="DateTail" Padding="2" FontSize="10">
+                            <Run Text="{Binding ReadMembersCount}" Foreground="{StaticResource BeautifulFreak.Colors.Special}" FontWeight="Bold"/>
+                            <Run Text="{Binding SendTime, Converter={StaticResource BeautifulFreak.ListBox.longToDatetimeConverter}, ConverterParameter={x:Static chattingDateFormats:DatetimeFormats.ChatMsgTail}}"/>
+                        </TextBlock>
+                        <commonControls:SmoothBusyIndicator x:Name="SendingTail" Height="16" Padding="6"/>
+                        <StackPanel x:Name="RetryTail" Orientation="Horizontal" Height="16" Margin="2,0,2,0">
+                            <Button Style="{StaticResource BeautifulFreak.Button.Trash}" Width="16" 
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type chattingViews:ChattingView}}, Path=DataContext.DeletePendingMsgCommand}"
+                                    CommandParameter="{Binding}"/>
+                            <Button Style="{StaticResource BeautifulFreak.Button.Retry}" Width="16" 
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type chattingViews:ChattingView}}, Path=DataContext.ReSendCommand}"
+                                    CommandParameter="{Binding}"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding MsgStatus}" Value="{x:Static msgStatus:MsgStatus.Failed}">
+                <Setter TargetName="DateTail" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="RetryTail" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="SendingTail" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="SendingTail" Property="IsBusy" Value="False"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MsgStatus}"  Value="{x:Static msgStatus:MsgStatus.Sent}">
+                <Setter TargetName="DateTail" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="RetryTail" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="SendingTail" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="SendingTail" Property="IsBusy" Value="False"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MsgStatus}"  Value="{x:Static msgStatus:MsgStatus.Sending}">
+                <Setter TargetName="DateTail" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="RetryTail" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="SendingTail" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="SendingTail" Property="IsBusy" Value="True"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <DataTemplate x:Key="BeautifulFreak.ListBox.OpponentMsgDataTemplate">
+        <Grid Margin="12" HorizontalAlignment="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.RowSpan="2"  Width="40" Height="40" Source="{Binding Thumbnail, Converter={StaticResource BeautifulFreak.ListBox.byteArrayToBitmapSourceConverter}}"
+                   VerticalAlignment="Top" Stretch="UniformToFill"/>
+            <TextBlock Grid.Column="1" Text="{Binding Sender}" FontWeight="Bold" Margin="4,0,0,0"/>
+            <Grid Grid.Row="1" Grid.Column="1" Margin="4,0,0,0" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Border BorderThickness="1" BorderBrush="LightGray">
+                    <Label Padding="5" HorizontalAlignment="Left" >
+                        <Label.Content>
+                            <MultiBinding Converter="{StaticResource BeautifulFreak.ListBox.filterMsgConverter}">
+                                <Binding Path="ContentType"/>
+                                <Binding Path="Content"/>
+                            </MultiBinding>
+                        </Label.Content>
+                    </Label>
+                </Border>
+                <Border Grid.Column="1" Margin="0,0,60,2" BorderBrush="LightGray" VerticalAlignment="Bottom" BorderThickness="0,1,1,1">
+                    <TextBlock Padding="2" FontSize="10">
+                        <Run Text="{Binding SendTime, Converter={StaticResource BeautifulFreak.ListBox.longToDatetimeConverter}, ConverterParameter={x:Static chattingDateFormats:DatetimeFormats.ChatMsgTail}}"/>
+                        <Run Text="{Binding ReadMembersCount}" Foreground="{StaticResource BeautifulFreak.Colors.Special}" FontWeight="Bold"/>
+                    </TextBlock>
+                </Border>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <msgSelector:MsgDataTemplateSelector x:Key="BeautifulFreak.ListBox.MsgTemplateSelector" 
+                                         DateMsgDataTemplate="{StaticResource BeautifulFreak.ListBox.DateMsgDataTemplate}"
+                                         ChatMsgDataTemplate="{StaticResource BeautifulFreak.ListBox.ChatMsgDataTemplate}"
+                                         OpponentMsgDataTemplate="{StaticResource BeautifulFreak.ListBox.OpponentMsgDataTemplate}"/>
+
+    <Style x:Key="BeautifulFreak.ListBox.MsgItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" 
+                            Margin="{TemplateBinding Margin}" SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        </ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BeautifulFreak.ListBox.MsgListStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource BeautifulFreak.ListBox.MsgItemContainerStyle}"/>
+        <Setter Property="ItemsPanel" Value="{StaticResource BeautifulFreak.ListBox.MsgItemsPanelTemplate}"/>
+        <Setter Property="ItemTemplateSelector" Value="{StaticResource BeautifulFreak.ListBox.MsgTemplateSelector}"/>
+        <Setter Property="FontFamily" Value="Gainsboro"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Margin="{TemplateBinding Margin}">
+                        <ScrollViewer x:Name="MsgScrollViewer" Focusable="false" Padding="{TemplateBinding Padding}" Margin="{TemplateBinding Margin}" Template="{StaticResource BeautifulFreak.ScrollViewerControlTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Loaded">
+                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type chattingViews:ChattingView}}, Path=DataContext.DefineScrollingCommand}"
+                                                           CommandParameter="{Binding ElementName=MsgScrollViewer}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="LightGray"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true"/>
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- TabControl -->
+    <Style x:Key="BeautifulFreak.TabControl.TabItemStyle" TargetType="{x:Type TabItem}">
+        <Setter Property="FontFamily" Value="Gainsboro"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Header" Value="{Binding Content.DataContext.HeaderContent, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid  x:Name="TabItemRoot" Margin="20">
+                        <ContentPresenter x:Name="Content" Width="26" Height="26"  ContentSource="Header" RecognizesAccessKey="True"/>
+                        <Border x:Name="ShinyBorder" Height="Auto" Padding="0,0,0,0" Opacity="0">
+                            <Border.Background>
+                                <RadialGradientBrush>
+                                    <GradientStop Color="#A3FFFFFF" Offset="0"/>
+                                    <GradientStop Color="#00FFFFFF" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <Border x:Name="TotalUnReadCountBorder" MinWidth="{Binding ElementName=TotalUnReadCountBorder, Path=ActualHeight}" 
+                                Height="24" CornerRadius="{Binding ElementName=TotalUnReadCountBorder, Path=ActualHeight}" 
+                                Background="{StaticResource BeautifulFreak.Colors.Special}" Margin="20,0,0,20">
+                            <ContentControl Content="{Binding Content.DataContext.HeaderNotification, UpdateSourceTrigger=PropertyChanged}"
+                                            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,0,2,0" Foreground="White"/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="ShinyBorder" Property="Opacity" Value="0.8"/>
+                            <Setter TargetName="Content" Property="Opacity" Value="0.8"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter Property="Header" Value="{Binding Content.DataContext.SelectedHeaderContent}"/>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding Content.DataContext.HeaderNotification}" Value="0">
+                            <Setter TargetName="TotalUnReadCountBorder" Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- Chatting Input Message-->
+    <ControlTemplate x:Key="BeautifulFreak.Control.InputMsgDataTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="32"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="32"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource BeautifulFreak.Button.Attach}" />
+            <TextBox x:Name="InputTextBox" Grid.Column="1" Style="{StaticResource BeautifulFreak.TextBox.Input}" MaxLength="500">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding SendTextCommand}" CommandParameter="{Binding ElementName=InputTextBox, Path=Text}"/>
+                </TextBox.InputBindings>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="TextChanged">
+                        <i:InvokeCommandAction Command="{Binding InputTextChangedCommand}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding InitialFocusCommand}" CommandParameter="{Binding ElementName=InputTextBox}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <Button Grid.Column="2" Style="{StaticResource BeautifulFreak.Button.Emoticon}"/>
+            <Button Grid.Column="3" Command="{Binding SendTextCommand}" CommandParameter="{Binding ElementName=InputTextBox, Path=Text}"
+                        Content="Send" Style="{StaticResource BeautifulFreak.Button.Send}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- Navigation UserControl -->
+    <Style x:Key="NavigatableUserControlStyle" TargetType="{x:Type navigationViews:NavigatableUserControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type UserControl}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="navigationViews:NavigatableUserControl.FadeToLeft">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation From="1" To="0" Duration="0:0:0.3" Storyboard.TargetProperty="Opacity"/>
+                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                                        <EasingThicknessKeyFrame KeyTime="00:00:0" Value="0" />
+                                        <EasingThicknessKeyFrame KeyTime="00:00:0.3" Value="-150,0,0,0">
+                                            <EasingThicknessKeyFrame.EasingFunction>
+                                                <ExponentialEase EasingMode="EaseInOut" Exponent="5"/>
+                                            </EasingThicknessKeyFrame.EasingFunction>
+                                        </EasingThicknessKeyFrame>
+                                    </ThicknessAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="navigationViews:NavigatableUserControl.FadeToRight">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation From="1" To="0" Duration="0:0:0.3" Storyboard.TargetProperty="Opacity"/>
+                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                                        <EasingThicknessKeyFrame KeyTime="00:00:0" Value="0" />
+                                        <EasingThicknessKeyFrame KeyTime="00:00:0.3" Value="150,0,0,0">
+                                            <EasingThicknessKeyFrame.EasingFunction>
+                                                <ExponentialEase EasingMode="EaseInOut" Exponent="5"/>
+                                            </EasingThicknessKeyFrame.EasingFunction>
+                                        </EasingThicknessKeyFrame>
+                                    </ThicknessAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="navigationViews:NavigatableUserControl.AppearToLeft">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation From="0" To="1" Duration="0:0:0.3" Storyboard.TargetProperty="Opacity"/>
+                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                                        <EasingThicknessKeyFrame KeyTime="00:00:00" Value="150,0,0,0"/>
+                                        <EasingThicknessKeyFrame KeyTime="00:00:0.3" Value="0">
+                                            <EasingThicknessKeyFrame.EasingFunction>
+                                                <ExponentialEase EasingMode="EaseInOut" Exponent="5"/>
+                                            </EasingThicknessKeyFrame.EasingFunction>
+                                        </EasingThicknessKeyFrame>
+                                    </ThicknessAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="navigationViews:NavigatableUserControl.AppearToRight">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation From="0" To="1" Duration="0:0:0.3" Storyboard.TargetProperty="Opacity"/>
+                                    <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                                        <EasingThicknessKeyFrame KeyTime="00:00:00" Value="-150,0,0,0"/>
+                                        <EasingThicknessKeyFrame KeyTime="00:00:0.3" Value="0">
+                                            <EasingThicknessKeyFrame.EasingFunction>
+                                                <ExponentialEase EasingMode="EaseInOut" Exponent="5"/>
+                                            </EasingThicknessKeyFrame.EasingFunction>
+                                        </EasingThicknessKeyFrame>
+                                    </ThicknessAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- Window -->
+    <Style x:Key="BeautifulFreak.Window" TargetType="{x:Type Window}">
+        <Setter Property="FontFamily" Value="Gainsboro"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
+        <Setter Property="ResizeMode" Value="NoResize"/>
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Width" Value="360"/>
+        <Setter Property="Height" Value="590"/>
+        <Setter Property="MinWidth" Value="360"/>
+        <Setter Property="MinHeight" Value="590"/>
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CaptionHeight="68" GlassFrameThickness="1,1,1,1" ResizeBorderThickness="5"/>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Border Background="{TemplateBinding Background}">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Gray"/>
+                        </Border.Effect>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="68"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid Background="{TemplateBinding Background}">
+                                <Button x:Name="CloseButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" 
+                                        Width="20" Height="20" Style="{StaticResource BeautifulFreak.Button.Close}" 
+                                        Command="{Binding HideWindowBtnClickedCommand}" WindowChrome.IsHitTestVisibleInChrome="True"/>
+                            </Grid>
+                            <AdornerDecorator Grid.Row="1">
+                                <ContentPresenter/>
+                            </AdornerDecorator>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BusinessWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="FontFamily" Value="Gainsboro"/>
+        <Setter Property="Foreground" Value="#6A91B1"/>
+        <Setter Property="Background" Value="#FFE7E8EA"/>
+        <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
+        <Setter Property="ResizeMode" Value="CanResize"/>
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Width" Value="600"/>
+        <Setter Property="Height" Value="800"/>
+        <Setter Property="MinWidth" Value="360"/>
+        <Setter Property="MinHeight" Value="590"/>
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CaptionHeight="32" GlassFrameThickness="1,1,1,1" ResizeBorderThickness="5"/>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Border BorderBrush="#FF9AA2A8" BorderThickness="1" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <DockPanel  LastChildFill="True" Background="{TemplateBinding Background}">
+                                <TextBlock Padding="10,10,0,0" Foreground="{TemplateBinding Foreground}">
+                                    <Run Text="Beautiful"/>
+                                    <Run Text="Talk" FontWeight="Bold"/>
+                                </TextBlock>
+                                <Button x:Name="CloseButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Width="20" Height="20" 
+                                        Command="{Binding HideWindowBtnClickedCommand}" Style="{StaticResource BeautifulFreak.Button.Close}" 
+                                        WindowChrome.IsHitTestVisibleInChrome="True"/>
+                            </DockPanel>
+                            <AdornerDecorator Grid.Row="1">
+                                <ContentPresenter/>
+                            </AdornerDecorator>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ChattingWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="FontFamily" Value="Gainsboro"/>
+        <Setter Property="Background" Value="#FFE7E8EA"/>
+        <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
+        <Setter Property="ResizeMode" Value="CanResize"/>
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Width" Value="400"/>
+        <Setter Property="Height" Value="740"/>
+        <Setter Property="MinWidth" Value="360"/>
+        <Setter Property="MinHeight" Value="590"/>
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CaptionHeight="32" GlassFrameThickness="1,1,1,1" ResizeBorderThickness="5"/>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Border BorderBrush="#FF9AA2A8" BorderThickness="1" Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32"/>
+                                <RowDefinition Height="20"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <DockPanel  LastChildFill="True">
+                                <Button x:Name="CloseButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Width="20" Height="20" 
+                                        Command="{Binding CloseWindowBtnClickedCommand}" 
+                                        CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                        Style="{StaticResource BeautifulFreak.Button.Close}" 
+                                        WindowChrome.IsHitTestVisibleInChrome="True" DockPanel.Dock="Right"/>
+
+                                <Button x:Name="ExpandCollapseButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Width="20" Height="20" 
+                                        Command="{Binding ExpandCollapseWindowBtnClickedCommand}" 
+                                        CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                        Style="{StaticResource BeautifulFreak.Button.ExpandCollapse}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True" DockPanel.Dock="Right">
+                                </Button>
+
+                                <Button x:Name="MinimizeButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Width="20" Height="20" 
+                                        Command="{Binding MinimizeWindowBtnClickedCommand}"
+                                        CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                        Style="{StaticResource BeautifulFreak.Button.Minimize}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True" DockPanel.Dock="Right"/>
+
+                                <TextBlock Padding="10,10,0,0" Foreground="{TemplateBinding Foreground}" Text="{Binding NickName}" DockPanel.Dock="Left"/>
+                            </DockPanel>
+                            <TextBlock Padding="10,0,0,0" Grid.Row="1" Foreground="{TemplateBinding Foreground}" Text="{Binding StateMessage}"/>
+                            <AdornerDecorator Grid.Row="2">
+                                <ContentPresenter/>
+                            </AdornerDecorator>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

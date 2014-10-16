@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AF271194-F0E7-47CA-A7FA-A2276C1B167C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BeautifulTalk</RootNamespace>
+    <AssemblyName>BeautifulTalk</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <ExpressionBlendVersion>12.0.50716.0</ExpressionBlendVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Hardcodet.Wpf.TaskbarNotification">
+      <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.5\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions" />
+    <Reference Include="Microsoft.Practices.Prism.Composition">
+      <HintPath>..\packages\Prism.Composition.5.0.0\lib\NET45\Microsoft.Practices.Prism.Composition.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Interactivity">
+      <HintPath>..\packages\Prism.Interactivity.5.0.0\lib\NET45\Microsoft.Practices.Prism.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm.Desktop">
+      <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.PubSubEvents">
+      <HintPath>..\packages\Prism.PubSubEvents.1.0.0\lib\portable-sl4+wp7+windows8+net40\Microsoft.Practices.Prism.PubSubEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.SharedInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.UnityExtensions">
+      <HintPath>..\packages\Prism.UnityExtensions.5.0.1\lib\NET45\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="RabbitMQ.Client, Version=3.3.5.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\RabbitMQ.Client.3.3.5\lib\net30\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Compile Include="RealTimeInformationCenter.cs" />
+    <Compile Include="TalkBootstrapper.cs" />
+    <Compile Include="Tray\AppTrayView.xaml.cs">
+      <DependentUpon>AppTrayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tray\AppTrayViewModel.cs" />
+    <Compile Include="ViewModels\BusinessShellViewModel.cs" />
+    <Compile Include="ViewModels\LoginShellViewModel.cs" />
+    <Compile Include="Views\BusinessShellView.xaml.cs">
+      <DependentUpon>BusinessShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginShellView.xaml.cs">
+      <DependentUpon>LoginShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Resources\Themes\BeautifulFreak.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tray\AppTrayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusinessShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BeautifulTalk.Modules.Chatting\BeautifulTalk.Modules.Chatting.csproj">
+      <Project>{d1b88738-6b15-490d-a2be-98f4400ac363}</Project>
+      <Name>BeautifulTalk.Modules.Chatting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautifulTalk.Modules.Configuration\BeautifulTalk.Modules.Configuration.csproj">
+      <Project>{87d2b75c-ed46-4ccf-af3c-1d0b12a2f243}</Project>
+      <Name>BeautifulTalk.Modules.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautifulTalk.Modules.DetailInfo\BeautifulTalk.Modules.DetailInfo.csproj">
+      <Project>{aa1c3497-cf40-4226-8e49-340cbe7b95fd}</Project>
+      <Name>BeautifulTalk.Modules.DetailInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautifulTalk.Modules.Friends\BeautifulTalk.Modules.Friends.csproj">
+      <Project>{f7a5bfb4-09ed-4111-aedb-085660c75e56}</Project>
+      <Name>BeautifulTalk.Modules.Friends</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautifulTalk.Modules.Login\BeautifulTalk.Modules.Login.csproj">
+      <Project>{da331819-8a80-415a-b67e-6d0755e17178}</Project>
+      <Name>BeautifulTalk.Modules.Login</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautifulTalk.Modules.Rooms\BeautifulTalk.Modules.Rooms.csproj">
+      <Project>{dae4bada-deb4-45f0-97a2-b94e5ab8acda}</Project>
+      <Name>BeautifulTalk.Modules.Rooms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautifulTalkInfrastructure\BeautifulTalkInfrastructure.csproj">
+      <Project>{d1531a3d-475b-4031-adea-e53a1e4eafdf}</Project>
+      <Name>BeautifulTalkInfrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonControl\CommonControl.csproj">
+      <Project>{2e28c6f1-2321-488d-8239-f4d3bb7bb7b3}</Project>
+      <Name>CommonControl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\beautifulfreak_logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\beautifulfreak_warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\beautifulfreak_memberscount.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\beautifulfreak_chatting.png" />
+    <Resource Include="Resources\Images\beautifulfreak_chatting_selected.png" />
+    <Resource Include="Resources\Images\beautifulfreak_configuration.png" />
+    <Resource Include="Resources\Images\beautifulfreak_configuration_selected.png" />
+    <Resource Include="Resources\Images\beautifulfreak_friends.png" />
+    <Resource Include="Resources\Images\beautifulfreak_friends_selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\base_close.png" />
+    <Resource Include="Resources\Images\base_collapse.png" />
+    <Resource Include="Resources\Images\base_expand.png" />
+    <Resource Include="Resources\Images\base_minimize.png" />
+    <Resource Include="Resources\Images\mouseover_close.png" />
+    <Resource Include="Resources\Images\mouseover_collapse.png" />
+    <Resource Include="Resources\Images\mouseover_expand.png" />
+    <Resource Include="Resources\Images\mouseover_minimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\base_back.png" />
+    <Resource Include="Resources\Images\base_forward.png" />
+    <Resource Include="Resources\Images\mouseover_back.png" />
+    <Resource Include="Resources\Images\mouseover_forward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\base_refresh.png" />
+    <Resource Include="Resources\Images\mouseover_refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\beautifulfreak_attach.png" />
+    <Resource Include="Resources\Images\beautifulfreak_emoticon.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

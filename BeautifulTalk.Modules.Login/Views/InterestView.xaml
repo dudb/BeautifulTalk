@@ -1,0 +1,57 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" x:Class="BeautifulTalk.Modules.Login.Views.InterestView" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Margin="0,0,0,46">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/BeautifulTalk.Modules.Login;component/Resources/NavigateAnimations.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource FadeIn}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="39"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<TextBlock TextWrapping="Wrap" FontFamily="Gainsboro"><Bold FontSize="14"><Run Text="2. Select your interests."/></Bold><LineBreak/><LineBreak/><Run Text="These kind of information will be used to recommend friends who seem to share similar interests for you."/><LineBreak/><Run Text="Choose interests "/><Bold Foreground="{StaticResource BeautifulFreak.Colors.Special}"><Run Text="more than 5."/></Bold></TextBlock>
+		<ListBox x:Name="InterestsListBox" Grid.Row="1" ItemsSource="{Binding Categories, UpdateSourceTrigger=PropertyChanged}" 
+			Style="{StaticResource BeautifulFreak.ListBox.Interests}" Background="{x:Null}" SelectionMode="Multiple">
+			<ListBox.InputBindings>
+				<KeyBinding Key="Enter" Command="{Binding RegisterCommand}"/>
+			</ListBox.InputBindings>
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="Loaded">
+					<i:InvokeCommandAction Command="{Binding InitialLoadedCommand}" CommandParameter="{Binding ElementName=InterestsListBox}"/>
+				</i:EventTrigger>
+				<i:EventTrigger EventName="SelectionChanged">
+					<i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+		</ListBox>
+		<TextBlock Grid.Row="2" Text="{Binding CurrentMessage, UpdateSourceTrigger=PropertyChanged}" Foreground="{StaticResource BeautifulFreak.Colors.Special}"
+			HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<Grid Grid.Row="3" >
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="1"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<Button Height="28" Content="Previous" Command="{Binding PreviousCommand}" Style="{StaticResource BeautifulFreak.Button}"/>
+			<Button Height="28" Grid.Column="2" Content="Register" Command="{Binding RegisterCommand}" Style="{StaticResource BeautifulFreak.Button}"/>
+		</Grid>
+	</Grid>
+</UserControl>

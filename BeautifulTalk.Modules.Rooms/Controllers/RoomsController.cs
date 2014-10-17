@@ -186,12 +186,12 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
 
                         if (null != FindedChattingRoom)
                         {
-                            bool bIsActivatedView = FindedChattingRoom.IsActiveChattingShellView();
-                            ReceivedMsg rcvMsg = new ReceivedMsg(strMsgId, strSenderSid, strSid, strMsgSid, contentType, strContent,
-                                lLastMsgDate, 0, strThumbnailPath, bIsActivatedView);
-
                             Application.Current.Dispatcher.Invoke(() =>
                             {
+                                bool bIsActivatedView = FindedChattingRoom.IsActiveChattingShellView();
+                                ReceivedMsg rcvMsg = new ReceivedMsg(strMsgId, strSenderSid, strSid, strMsgSid, contentType, strContent,
+                                    lLastMsgDate, 0, strThumbnailPath, bIsActivatedView);
+
                                 FindedChattingRoom.ChattingViewModel.ReceiveChatMsgCommand.Execute(rcvMsg);
 
                                 if (true == bIsActivatedView)

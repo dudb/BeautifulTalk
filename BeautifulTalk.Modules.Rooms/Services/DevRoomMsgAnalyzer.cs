@@ -25,19 +25,7 @@ namespace BeautifulTalk.Modules.Rooms.Services
     public class DevRoomMsgAnalyzer : IRoomMsgAnalyzable
     {
         private ILoggerFacade m_Logger;
-        private const string MSG_SID= "msgsid";
-        private const string NICKNAME = "nickname";
-        private const string PHOTO_PATH = "photopath";
-        private const string MSG_TYPE = "msgtype";
-        private const string SENDER_ID = "senderid";
-        private const string SENDER_SID = "sendersid";
-        private const string CONTENT_TYPE = "contenttype";
-        private const string ROOM_SID = "roomsid";
-        private const string INTERESTS = "interests";
-        private const string SEND_TIME= "sendtime";
-        private const string MEMBER_SIDS = "membersids";
-        private const string ACTIVE_MEMBER_SIDS = "activemembersids";
-
+        
         public IRoomsControlable RoomsController { get; set; }
         public DevRoomMsgAnalyzer(ILoggerFacade logger, IRoomsControlable roomsController)
         {
@@ -76,9 +64,9 @@ namespace BeautifulTalk.Modules.Rooms.Services
             }
         }
 
-        public void AnalyzeRead()
-        { 
-        
+        public void AnalyzeRead(ReceivedReadMsg rcvdReadMsg)
+        {
+            this.RoomsController.ReadMessagesForRoom(rcvdReadMsg);
         }
        
         public void SaveUserIfNotExist(string strUserId, string strUserSid, string strNickName, IList<string> arInterests)

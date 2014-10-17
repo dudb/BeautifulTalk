@@ -186,14 +186,15 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
 
                         if (null != FindedChattingRoom)
                         {
+                            bool bIsActivatedView = FindedChattingRoom.IsActiveChattingShellView();
                             ReceivedMsg rcvMsg = new ReceivedMsg(strMsgId, strSenderSid, strSid, strMsgSid, contentType, strContent,
-                                lLastMsgDate, 0, strThumbnailPath);
+                                lLastMsgDate, 0, strThumbnailPath, bIsActivatedView);
 
                             Application.Current.Dispatcher.Invoke(() =>
                             {
                                 FindedChattingRoom.ChattingViewModel.ReceiveChatMsgCommand.Execute(rcvMsg);
 
-                                if (true == FindedChattingRoom.IsActiveChattingShellView())
+                                if (true == bIsActivatedView)
                                 {
                                     this.ResetUnReadCountForRoom(strSid);
                                 }
@@ -238,6 +239,15 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
                 FindedRoom.LastMsgSummary = strContent;
                 FindedRoom.LastMsgDate = lSendTime;
                 RoomCollection.Update(FindRoomQuery, UpdateRoomQuery);
+            }
+        }
+
+        public void ReadMessagesForRoom(ReceivedReadMsg rcvdReadMsg)
+        {
+            if (true == this.m_ChattingRoomsDictionary.DoesExist(rcvdReadMsg.RoomSid))
+            {
+                var FindedChattingShellView = this.m_ChattingRoomsDictionary.GetValue(rcvdReadMsg.RoomSid);
+                FindedChattingShellView.ChattingViewModel.ReceiveReadMsgCommand.Execute(rcvdReadMsg);
             }
         }
     }

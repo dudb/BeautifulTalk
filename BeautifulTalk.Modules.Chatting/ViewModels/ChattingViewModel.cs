@@ -41,12 +41,14 @@ namespace BeautifulTalk.Modules.Chatting.ViewModels
     public class ChattingViewModel : BindableBase, IChattingViewModel
     {
         private IDictionary<string, Brush> m_AnonymousThumbnailDictionary;
+        private IList<UnReadMsg> m_UnReadMessages;
         private IChattingViewBehavior m_ChattingView;
-        private readonly ILoadMessagesService m_LoadMsgService;
-        private readonly ISendMessageService m_SendMessageService;
+        private IReadMessageService m_ReadMsgService;
+        private ILoadMessagesService m_LoadMsgService;
+        private ISendMessageService m_SendMessageService;
         private IRoomsControlable m_RoomsController;
         private DelegateCommand<ReceivedMsg> m_ReceiveChatMsgCommand;
-        private DelegateCommand<object> m_ReceiveReadMsgCommand;
+        private DelegateCommand<ReceivedReadMsg> m_ReceiveReadMsgCommand;
         public string RoomSID { get; private set; }
         public IActiveChattingShellView ShellView { get; set; }
         public DelegateCommand<IChattingViewBehavior> InitialLoadedCommand { get; private set; }
@@ -57,7 +59,7 @@ namespace BeautifulTalk.Modules.Chatting.ViewModels
         public DelegateCommand<CommunicationMsg> DeletePendingMsgCommand { get; private set; }
         public DelegateCommand<ScrollViewer> DefineScrollingCommand { get; private set; }
         public DelegateCommand<ReceivedMsg> ReceiveChatMsgCommand { get { return this.m_ReceiveChatMsgCommand; } }
-        public DelegateCommand<object> ReceiveReadMsgCommand { get { return this.m_ReceiveReadMsgCommand; } }
+        public DelegateCommand<ReceivedReadMsg> ReceiveReadMsgCommand { get { return this.m_ReceiveReadMsgCommand; } }
         public DelegateCommand AttachFileCommand { get; private set; }
         public MsgCollection Messages { get; private set; }
         public ChattingViewModel(string strRoomSID, IRoomsControlable roomsController)
@@ -72,6 +74,7 @@ namespace BeautifulTalk.Modules.Chatting.ViewModels
             
             this.m_SendMessageService = new SendMessageService();
             this.m_LoadMsgService = new LoadMessagesService(AuthRepository.MQKeyInfo.UserSid, this.m_AnonymousThumbnailDictionary);
+            this.m_ReadMsgService = new ReadMessageService();
 
             this.InitialLoadedCommand = new DelegateCommand<IChattingViewBehavior>(ExecuteInitialLoadedCommand);
             this.InitialFocusCommand = new DelegateCommand<UIElement>(ExecuteInitialFocusCommand);
@@ -82,9 +85,30 @@ namespace BeautifulTalk.Modules.Chatting.ViewModels
             this.DefineScrollingCommand = new DelegateCommand<ScrollViewer>(ExecuteDefineScrollingCommand);
             this.AttachFileCommand = new DelegateCommand(ExecuteAttachFileCommand);
             this.m_ReceiveChatMsgCommand = new DelegateCommand<ReceivedMsg>(ExecuteReceiveChatMsgCommand);
+            this.m_ReceiveReadMsgCommand = new DelegateCommand<ReceivedReadMsg>(ExecuteReceiveReadMsgCommand);
             this.Messages = new MsgCollection(this.m_LoadMsgService.LoadMessages(strRoomSID, 0).Reverse());
+            this.m_UnReadMessages = this.m_LoadMsgService.LoadUnReadMessages(strRoomSID);
+            Task.Run(() => this.RequestReadMsgs());
         }
 
+        private void ExecuteReceiveReadMsgCommand(ReceivedReadMsg rcvdReadMsg)
+        {
+            var ChatMsgs = this.Messages.OfType<ChatMsg>();
+            string[] arMsgSids = rcvdReadMsg.MsgSids.Split(',');
+
+            foreach (string strMsgSid in arMsgSids)
+            {
+                try
+                {
+                    var TargetMessage = ChatMsgs.Single(m => m.Sid == strMsgSid);
+                    TargetMessage.ReadMembersCount += 1;
+                }
+                catch (InvalidOperationException invalidOperException)
+                {
+                    GlobalLogger.Log("Target message doesn't exist.\n" + invalidOperException.Message );
+                }
+            }
+        }
         private void ExecuteAttachFileCommand()
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -252,6 +276,14 @@ namespace BeautifulTalk.Modules.Chatting.ViewModels
 
                 this.Messages.Add(RcvMessage);
                 this.EndReceiveMsgCommand(RcvMessage);
+
+                var WillAddUnReadMsg = new UnReadMsg(NewMessage.Id, NewMessage.ReadMembers, rcvMsg.Sid, rcvMsg.RoomSid, AuthRepository.MQKeyInfo.UserSid);
+                this.m_UnReadMessages.Add(WillAddUnReadMsg);
+
+                if (true == rcvMsg.IsActivatedView)
+                {
+                    this.RequestReadMsgs();
+                }
             }
         }
         private void EndReceiveMsgCommand(object objMsg)
@@ -293,8 +325,40 @@ namespace BeautifulTalk.Modules.Chatting.ViewModels
 
             this.Messages.Remove(deleteMsg);
         }
-        public void ReadMsgs()
+        public void RequestReadMsgs()
         {
+            bool bIsSuccess = this.m_ReadMsgService.ReadMessages(this.m_UnReadMessages);
+            
+            if (true == bIsSuccess)
+            {
+                var MessageCollection = ConnectionHelper.DB.GetCollection<MessageEntity>("MessageEntity");
+                var ChatMsgs = this.Messages.OfType<ChatMsg>();
+
+                foreach (UnReadMsg msg in this.m_UnReadMessages)
+                {
+                    IList<string> ReadMembers = msg.ReadMembers;
+                    if (null == ReadMembers) { ReadMembers = new List<String>(); }
+                    if (false == ReadMembers.Contains(AuthRepository.MQKeyInfo.UserSid)) { ReadMembers.Add(AuthRepository.MQKeyInfo.UserSid); }
+                    var UpdateMessageQuery = Update<MessageEntity>
+                        .Set(m => m.State, (int)MsgStatus.Read)
+                        .Set(m => m.ReadMembers, ReadMembers);
+
+                    var FindMessageQuery = Query<MessageEntity>.EQ(m => m.Id, msg.Id);
+                    MessageCollection.Update(FindMessageQuery, UpdateMessageQuery);
+
+                    try
+                    {
+                        var TargetMessage = ChatMsgs.Single(m => m.Sid == msg.Sid);
+                        TargetMessage.ReadMembersCount += 1;
+                    }
+                    catch (InvalidOperationException invalidOperException)
+                    {
+                        GlobalLogger.Log(invalidOperException.Message);
+                    }
+                }
+                
+                this.m_UnReadMessages.Clear();
+            }
         }
         private void ExecuteDefineScrollingCommand(ScrollViewer scrollViewer)
         {

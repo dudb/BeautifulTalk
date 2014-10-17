@@ -76,8 +76,10 @@
     <Compile Include="AliveInformation\AuthRepository.cs" />
     <Compile Include="AliveInformation\MQKeySet.cs" />
     <Compile Include="DataModels\ReceivedMsg.cs" />
+    <Compile Include="DataModels\ReceivedReadMsg.cs" />
     <Compile Include="DataModels\SendingMsg.cs" />
     <Compile Include="DataModels\SendingMsgResult.cs" />
+    <Compile Include="DataModels\UnReadMsg.cs" />
     <Compile Include="Delegates\DelegateSet.cs" />
     <Compile Include="Generators\ColorGenerator.cs" />
     <Compile Include="Interfaces\IActiveChattingShellView.cs" />

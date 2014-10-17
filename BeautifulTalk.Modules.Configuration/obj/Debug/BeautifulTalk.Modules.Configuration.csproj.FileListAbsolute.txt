@@ -84,3 +84,5 @@ D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\Beauti
 D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\BeautifulTalk.Modules.Configuration.g.resources
 D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\BeautifulTalk.Modules.Configuration.dll
 D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\BeautifulTalk.Modules.Configuration.pdb
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\bin\Debug\MongoDB.Bson.dll
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\bin\Debug\MongoDB.Bson.xml

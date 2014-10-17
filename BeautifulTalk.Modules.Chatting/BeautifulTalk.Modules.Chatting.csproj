@@ -106,10 +106,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Selectors\MsgDataTemplateSelector.cs" />
     <Compile Include="Services\ILoadMessagesService.cs" />
+    <Compile Include="Services\IReadMessageService.cs" />
     <Compile Include="Services\ISendMessageService.cs" />
     <Compile Include="Services\LoadMessagesService.cs" />
     <Compile Include="Services\Mocks\MockLoadMessagesService.cs" />
     <Compile Include="Services\Mocks\MockSendMessageService.cs" />
+    <Compile Include="Services\ReadMessageService.cs" />
     <Compile Include="Services\SendMessageService.cs" />
     <Compile Include="ViewModels\ChattingShellViewModel.cs" />
     <Compile Include="ViewModels\ChattingViewModel.cs" />

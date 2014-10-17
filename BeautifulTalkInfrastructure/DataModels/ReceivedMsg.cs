@@ -18,9 +18,10 @@ namespace BeautifulTalkInfrastructure.DataModels
         public long SendTime { get; set; }
         public int ReadMembersCount { get; set; }
         public string ThumbnailPath { get; set; }
+        public bool IsActivatedView { get; set; }
 
         public ReceivedMsg(string strId, string strSenderSid, string strRoomSid, string strSid, ContentType contentType, string strContent, 
-            long lSendTime, int nReadMembersCount, string strThumbnailPath)
+            long lSendTime, int nReadMembersCount, string strThumbnailPath, bool bIsActivatedView)
         {
             this.Id = strId;
             this.SenderSid = strSenderSid;
@@ -31,6 +32,7 @@ namespace BeautifulTalkInfrastructure.DataModels
             this.SendTime = lSendTime;
             this.ReadMembersCount = nReadMembersCount;
             this.ThumbnailPath = strThumbnailPath;
+            this.IsActivatedView = bIsActivatedView;
         }
     }
 }

@@ -23,12 +23,12 @@ namespace BeautifulTalkInfrastructure.ProtocolFormat
         public static string GetRandomUsersInfoURI = "/api/repository/randuserinfo";
         public static string GetRoomInfoURI = "/api/repository/roominfo";
         public static string SendMsgURI = "/api/mq/send";
+        public static string ReadMsgURI = "api/mq/read";
         public static string GetFriendsInfoURI = "/api/repository/friendsinfo";
         public static string GetUserInfoURI = "/api/repository/userinfo";
         public static string GetMQInfoURI = "/api/auth/mq";
         public static string SignUpURI = "/api/reg/signup";
         public static string AddFriendURI = "/api/update/addfriend";
-        public static string ReadURI = "/api/talk/read";
         public static string ContentType = "application/x-www-form-urlencoded";
         public static string ServerURIwithPort = "http://54.64.156.101:5001";
         public static string ServerURI = "http://54.64.156.101";

@@ -1,6 +1,7 @@
 ﻿using BeautifulDB.Entities;
 using BeautifulDB.Helpers;
 using BeautifulTalk.Modules.Chatting.Models;
+using BeautifulTalkInfrastructure.DataModels;
 using BeautifulTalkInfrastructure.Generators;
 using BeautifulTalkInfrastructure.Logger;
 using BeautifulTalkInfrastructure.ProtocolFormat;
@@ -58,16 +59,16 @@ namespace BeautifulTalk.Modules.Chatting.Services
         {
             var FindSuccessMessagesQuery = Query.And(
                 Query<MessageEntity>.EQ(m => m.RoomSid, strRoomSID),
-                Query<MessageEntity>.NE(m => m.State, 0),
-                Query<MessageEntity>.NE(m => m.State, 1));
+                Query<MessageEntity>.NE(m => m.State, (int)MsgStatus.Failed),
+                Query<MessageEntity>.NE(m => m.State, (int)MsgStatus.Sending));
 
             var FindFailedMessageQuery = Query.And(
                 Query<MessageEntity>.EQ(m => m.RoomSid, strRoomSID),
                 Query.Or(
-                    Query<MessageEntity>.EQ(m => m.State, 0),
-                    Query<MessageEntity>.EQ(m => m.State, 1))
+                    Query<MessageEntity>.EQ(m => m.State, (int)MsgStatus.Received),
+                    Query<MessageEntity>.EQ(m => m.State, (int)MsgStatus.Sending))
                 );
-                
+
             var MessageCollection = ConnectionHelper.DB.GetCollection<MessageEntity>("MessageEntity");
             var FindedSuccessMessages = MessageCollection.Find(FindSuccessMessagesQuery).SetSortOrder(SortBy.Descending("SendTime")).SetLimit(20);
             var FindedFailedMessages = MessageCollection.Find(FindFailedMessageQuery).OrderByDescending(m => m.Id);
@@ -77,8 +78,8 @@ namespace BeautifulTalk.Modules.Chatting.Services
             {
                 Msg WillAddMsg;
                 string strSenderSID = msgEntity.SenderSid;
-                MsgStatus MsgStatus = (MsgStatus)msgEntity.State;
-                if (MsgStatus.Sending == MsgStatus) { MsgStatus = MsgStatus.Failed; }
+                MsgStatus MsgState = (MsgStatus)msgEntity.State;
+                if (MsgStatus.Sending == MsgState) { MsgState = MsgStatus.Failed; }
 
                 ContentType ContentType = (ContentType)msgEntity.Type;
                 int nReadMembersCount = (null == msgEntity.ReadMembers ? 0 : msgEntity.ReadMembers.Count);
@@ -92,7 +93,7 @@ namespace BeautifulTalk.Modules.Chatting.Services
                     if (this.m_strMySid == strSenderSID)
                     {
                         WillAddMsg = new ChatMsg(msgEntity.Id.ToString(), msgEntity.Sid, msgEntity.RoomSid, msgEntity.Content, ContentType,
-                            msgEntity.SendTime, MsgStatus, nReadMembersCount, FindedUser.NickName, null, this.m_AnonymousThumbnailDictionary[this.m_strMySid]);
+                            msgEntity.SendTime, MsgState, nReadMembersCount, FindedUser.NickName, null, this.m_AnonymousThumbnailDictionary[this.m_strMySid]);
                     }
                     else
                     {
@@ -102,7 +103,7 @@ namespace BeautifulTalk.Modules.Chatting.Services
                         }
 
                         WillAddMsg = new OpponentMsg(msgEntity.Id.ToString(), msgEntity.Sid, msgEntity.RoomSid, msgEntity.Content, ContentType,
-                            msgEntity.SendTime, MsgStatus, nReadMembersCount, FindedUser.NickName, null, this.m_AnonymousThumbnailDictionary[strSenderSID]);
+                            msgEntity.SendTime, MsgState, nReadMembersCount, FindedUser.NickName, null, this.m_AnonymousThumbnailDictionary[strSenderSID]);
                     }
 
                     msgs.Add(WillAddMsg);
@@ -125,7 +126,7 @@ namespace BeautifulTalk.Modules.Chatting.Services
             {
                 Msg WillAddMsg;
                 string strSenderSID = msgEntity.SenderSid;
-                MsgStatus MsgStatus = (MsgStatus)msgEntity.State;
+                MsgStatus MsgState = (MsgStatus)msgEntity.State;
                 ContentType ContentType = (ContentType)msgEntity.Type;
                 int nReadMembersCount = (null == msgEntity.ReadMembers ? 0 : msgEntity.ReadMembers.Count);
 
@@ -138,7 +139,7 @@ namespace BeautifulTalk.Modules.Chatting.Services
                     if (this.m_strMySid == strSenderSID)
                     {
                         WillAddMsg = new ChatMsg(msgEntity.Id.ToString(), msgEntity.Sid, msgEntity.RoomSid, msgEntity.Content, ContentType,
-                            msgEntity.SendTime, MsgStatus, nReadMembersCount, FindedUser.NickName, null, this.m_AnonymousThumbnailDictionary[this.m_strMySid]);
+                            msgEntity.SendTime, MsgState, nReadMembersCount, FindedUser.NickName, null, this.m_AnonymousThumbnailDictionary[this.m_strMySid]);
                     }
                     else
                     {
@@ -148,12 +149,30 @@ namespace BeautifulTalk.Modules.Chatting.Services
                         }
 
                         WillAddMsg = new OpponentMsg(msgEntity.Id.ToString(), msgEntity.Sid, msgEntity.RoomSid, msgEntity.Content, ContentType,
-                            msgEntity.SendTime, MsgStatus, nReadMembersCount, FindedUser.NickName, null, this.m_AnonymousThumbnailDictionary[strSenderSID]);
+                            msgEntity.SendTime, MsgState, nReadMembersCount, FindedUser.NickName, null, this.m_AnonymousThumbnailDictionary[strSenderSID]);
                     }
 
                     msgs.Add(WillAddMsg);
                 }
             }
+        }
+
+
+        public IList<UnReadMsg> LoadUnReadMessages(string strRoomSID)
+        {
+            IList<UnReadMsg> UnReadMsgs = new List<UnReadMsg>();
+            var MessageCollection = ConnectionHelper.DB.GetCollection<MessageEntity>("MessageEntity");
+            var FindUnReadMessagesQuery = Query.And(
+                Query<MessageEntity>.EQ(m => m.RoomSid, strRoomSID),
+                Query<MessageEntity>.EQ(m => m.State, (int)MsgStatus.Received));
+
+            var FindedUnReadMessages = MessageCollection.Find(FindUnReadMessagesQuery);
+            foreach (MessageEntity unReadMsg in FindedUnReadMessages)
+            {
+                UnReadMsgs.Add(new UnReadMsg(unReadMsg.Id, unReadMsg.ReadMembers, unReadMsg.Sid, unReadMsg.RoomSid, this.m_strMySid));
+            }
+
+            return UnReadMsgs;
         }
     }
 }

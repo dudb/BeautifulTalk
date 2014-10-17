@@ -11,7 +11,7 @@ namespace BeautifulTalkInfrastructure.Interfaces
     public interface IChattingViewModel
     {
         DelegateCommand<ReceivedMsg> ReceiveChatMsgCommand { get; }
-        DelegateCommand<object> ReceiveReadMsgCommand { get; }
-        void ReadMsgs();
+        DelegateCommand<ReceivedReadMsg> ReceiveReadMsgCommand { get; }
+        void RequestReadMsgs();
     }
 }

@@ -1,7 +1,11 @@
-﻿using BeautifulTalkInfrastructure.AliveInformation;
+﻿using BeautifulDB.Entities;
+using BeautifulDB.Helpers;
+using BeautifulTalkInfrastructure.AliveInformation;
+using BeautifulTalkInfrastructure.DataModels;
 using BeautifulTalkInfrastructure.Logger;
 using BeautifulTalkInfrastructure.ProtocolFormat;
 using Microsoft.Practices.Unity;
+using MongoDB.Driver.Builders;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RabbitMQ.Client;
@@ -18,6 +22,7 @@ namespace BeautifulTalk.Modules.Rooms.Services
 {
     public class DevRoomMsgListener : IRoomMsgListener
     {
+        private const string MSG_SIDS = "msgsids";
         private const string MSG_SID = "msgsid";
         private const string NICKNAME = "nickname";
         private const string PHOTO_PATH = "photopath";
@@ -117,6 +122,29 @@ namespace BeautifulTalk.Modules.Rooms.Services
                                             }
                                         case MsgType.Read:
                                             {
+                                                var MessageCollection = ConnectionHelper.DB.GetCollection<MessageEntity>("MessageEntity");
+                                                string strMsgSids = Encoding.UTF8.GetString((byte[])MQHeaders[MSG_SIDS]);
+                                                string[] arMsgSids = strMsgSids.Split(',');
+
+                                                foreach (string msgSid in arMsgSids)
+                                                {
+                                                    var FindMessageQuery = Query<MessageEntity>.EQ(m => m.Sid, msgSid);
+                                                    var FindedMessage = MessageCollection.FindOne(FindMessageQuery);
+
+                                                    if (null != FindedMessage)
+                                                    {
+                                                        IList<string> ReadMembers = FindedMessage.ReadMembers;
+                                                        if (null == ReadMembers) { ReadMembers = new List<string>(); }
+                                                        if (false == ReadMembers.Contains(strSenderSid)) { ReadMembers.Add(strSenderSid); }
+                                                        var UpdateMessageQuery = Update<MessageEntity>
+                                                            .Set(m => m.State, (int)MsgStatus.Read)
+                                                            .Set(m => m.ReadMembers, ReadMembers);
+                                                        MessageCollection.Update(FindMessageQuery, UpdateMessageQuery);
+                                                    }
+                                                }
+
+                                                var RcvdReadMsg = new ReceivedReadMsg(strRoomSid, strMsgSids, strSenderSid);
+                                                Task.Run(() => { this.Analyzer.AnalyzeRead(RcvdReadMsg); });
                                                 break;
                                             }
                                         default: break;

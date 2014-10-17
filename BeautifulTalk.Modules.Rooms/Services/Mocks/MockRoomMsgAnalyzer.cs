@@ -13,17 +13,17 @@ namespace BeautifulTalk.Modules.Rooms.Services.Mocks
             throw new NotImplementedException();
         }
 
-        public void AnalyzeRead()
-        {
-            throw new NotImplementedException();
-        }
-
         public string CreateRecordForChatData(string strMsgSid, string strSenderSid, string strRoomSid, BeautifulTalkInfrastructure.ProtocolFormat.ContentType contentType, string strContent, long lSendTime)
         {
             throw new NotImplementedException();
         }
 
         public void SaveUserIfNotExist(string strUserId, string strUserSid, string strNickName, IList<string> arInterests)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AnalyzeRead(BeautifulTalkInfrastructure.DataModels.ReceivedReadMsg rcvdReadMsg)
         {
             throw new NotImplementedException();
         }

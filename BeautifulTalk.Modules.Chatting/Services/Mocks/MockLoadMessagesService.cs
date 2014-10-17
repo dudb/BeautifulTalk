@@ -1,4 +1,5 @@
 ﻿using BeautifulTalk.Modules.Chatting.Models;
+using BeautifulTalkInfrastructure.DataModels;
 using CommonUtility;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,11 @@ namespace BeautifulTalk.Modules.Chatting.Services.Mocks
                 ToBitmapImgConverter.LoadImage(@"pack://application:,,,/BeautifulTalk.Modules.Rooms;component/Resources/Images/Mocks/2.png")));
             */
             return null;
+        }
+
+        public IList<UnReadMsg> LoadUnReadMessages(string strRoomSID)
+        {
+            return new List<UnReadMsg>();
         }
     }
 }

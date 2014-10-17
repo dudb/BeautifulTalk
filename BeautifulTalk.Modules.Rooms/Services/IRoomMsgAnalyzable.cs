@@ -1,4 +1,5 @@
-﻿using BeautifulTalkInfrastructure.ProtocolFormat;
+﻿using BeautifulTalkInfrastructure.DataModels;
+using BeautifulTalkInfrastructure.ProtocolFormat;
 using MongoDB.Bson;
 using RabbitMQ.Client.Events;
 using System;
@@ -13,7 +14,7 @@ namespace BeautifulTalk.Modules.Rooms.Services
     {
         void AnalyzeChatData(string strMsgId, string strMsgSid, string strSenderSid, string strRoomSid, string strContent,
             long lSendTime, IList<string> arMemberSids, IList<string> arActiveMemberSids, ContentType contentType);
-        void AnalyzeRead();
+        void AnalyzeRead(ReceivedReadMsg rcvdReadMsg);
         string CreateRecordForChatData(string strMsgSid, string strSenderSid, string strRoomSid, ContentType contentType,
             string strContent, long lSendTime);
         void SaveUserIfNotExist(string strUserId, string strUserSid, string strNickName, IList<string> arInterests);

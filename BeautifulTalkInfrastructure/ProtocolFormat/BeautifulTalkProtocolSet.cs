@@ -30,9 +30,9 @@ namespace BeautifulTalkInfrastructure.ProtocolFormat
         public static string SignUpURI = "/api/reg/signup";
         public static string AddFriendURI = "/api/update/addfriend";
         public static string ContentType = "application/x-www-form-urlencoded";
-        public static string ServerURIwithPort = "http://localhost:5001";
-        public static string ServerURI = "http://localhost";
-        public static string MQServerIP = "localhost";
+        public static string ServerURIwithPort = "http://54.64.156.101:5001";
+        public static string ServerURI = "http://54.64.156.101";
+        public static string MQServerIP = "54.64.156.101";
         public static string ServerPort = "5001";
 
         public static string ApplicationId = "clfkml2k4f04gj90erj034j";

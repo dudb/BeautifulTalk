@@ -31,6 +31,7 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
         private IUnityContainer m_Container;
         private IEventAggregator m_EventAggregator;
         private ITabHeaderNotificationProvider<Int32> m_TabHeaderNotification;
+        private readonly object locker = new object();
 
         public RoomsController(IUnityContainer container, IEventAggregator eventAggregator,
             RoomCollection rooms, ITabHeaderNotificationProvider<Int32> tabHeaderNotification)
@@ -134,7 +135,11 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
                 {
                     this.m_Rooms.Add(new Room(strSid, MemberNickNames, nUnReadMsgCount, strLastMsgSummary, lLastMsgDate, strThumbnailPath));
-                    this.m_TabHeaderNotification.HeaderNotification += nUnReadMsgCount;
+
+                    lock (locker)
+                    {
+                        this.m_TabHeaderNotification.HeaderNotification += nUnReadMsgCount;
+                    }
                 }));
             }
         }
@@ -164,11 +169,14 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
 
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
                     {
-                        FindedRoom.UnReadMsgCount = nNewUnReadMsgCount;
-                        FindedRoom.LastMsgSummary = strContent;
-                        FindedRoom.LastMsgDate = lLastMsgDate;
-                        FindedRoom.ThumbnailPath = strThumbnailPath;
-                        this.m_TabHeaderNotification.HeaderNotification += nUnReadMsgCount;
+                        lock (locker)
+                        {
+                            FindedRoom.UnReadMsgCount = nNewUnReadMsgCount;
+                            FindedRoom.LastMsgSummary = strContent;
+                            FindedRoom.LastMsgDate = lLastMsgDate;
+                            FindedRoom.ThumbnailPath = strThumbnailPath;
+                            this.m_TabHeaderNotification.HeaderNotification += nUnReadMsgCount;
+                        }
                     }));
 
                     var UpdateRoomQuery = Update<RoomEntity>

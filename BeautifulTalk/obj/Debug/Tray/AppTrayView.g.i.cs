@@ -9,8 +9,22 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using BeautifulTalk.Modules.Chatting.Converters;
+using BeautifulTalk.Modules.Chatting.Infrastructures;
+using BeautifulTalk.Modules.Chatting.Selectors;
+using BeautifulTalk.Modules.Chatting.Views;
+using BeautifulTalk.Modules.Friends.Converters;
+using BeautifulTalk.Modules.Friends.Views;
+using BeautifulTalk.Modules.Rooms.Converters;
 using BeautifulTalk.Tray;
+using BeautifulTalkInfrastructure.ProtocolFormat;
+using CommonControl.BusyIndicator;
+using CommonControl.Navigation;
 using Hardcodet.Wpf.TaskbarNotification;
+using Microsoft.Expression.Interactivity.Core;
+using Microsoft.Expression.Interactivity.Input;
+using Microsoft.Expression.Interactivity.Layout;
+using Microsoft.Expression.Interactivity.Media;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -21,6 +35,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
+using System.Windows.Interactivity;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;

@@ -56,7 +56,7 @@ namespace BeautifulTalk.Modules.Rooms.Services
                     factory.Password = "dhqudrnjs";
                     factory.VirtualHost = "obkhost";
                     factory.Port = 5672;
-                    factory.RequestedHeartbeat = 15;
+                    factory.RequestedHeartbeat = 600;
                     factory.RequestedConnectionTimeout = 10000;
 
                     using (var connection = factory.CreateConnection())

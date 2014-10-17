@@ -1972,7 +1972,7 @@
                                         Style="{StaticResource BeautifulFreak.Button.Minimize}"
                                         WindowChrome.IsHitTestVisibleInChrome="True" DockPanel.Dock="Right"/>
 
-                                <TextBlock Padding="10,10,0,0" Foreground="{TemplateBinding Foreground}" Text="{Binding NickName}" DockPanel.Dock="Left"/>
+                                <TextBlock Padding="10,10,0,0" Foreground="{TemplateBinding Foreground}" Text="{Binding ShellTitle}" DockPanel.Dock="Left"/>
                             </DockPanel>
                             <TextBlock Padding="10,0,0,0" Grid.Row="1" Foreground="{TemplateBinding Foreground}" Text="{Binding StateMessage}"/>
                             <AdornerDecorator Grid.Row="2">

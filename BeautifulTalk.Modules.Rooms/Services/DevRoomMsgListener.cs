@@ -83,24 +83,24 @@ namespace BeautifulTalk.Modules.Rooms.Services
                                     if (null != arBodyData) { strContent = Encoding.UTF8.GetString(arBodyData); }
 
                                     MsgType msgType             = (MsgType)(MQHeaders[MSG_TYPE]);
-                                    ContentType contentType     = (ContentType)MQHeaders[CONTENT_TYPE];
-                                    string strMsgSid            = Encoding.UTF8.GetString((byte[])MQHeaders[MSG_SID]);
-                                    string strSenderId          = Encoding.UTF8.GetString((byte[])MQHeaders[SENDER_ID]);
                                     string strSenderSid         = Encoding.UTF8.GetString((byte[])MQHeaders[SENDER_SID]);
                                     string strRoomSid           = Encoding.UTF8.GetString((byte[])MQHeaders[ROOM_SID]);
-                                    string strNickName          = Encoding.UTF8.GetString((byte[])MQHeaders[NICKNAME]);
-                                    string strPhotoPath         = Encoding.UTF8.GetString((byte[])MQHeaders[PHOTO_PATH]);
-                                    long lSendTime              = (long)MQHeaders[SEND_TIME];
-                                    var bInterests              = MQHeaders[INTERESTS] as List<object>;
-                                    IList<string> arInterests   = new List<string>(bInterests.Count);
-                                    foreach (byte[] bInterest in bInterests) { arInterests.Add(Encoding.UTF8.GetString(bInterest)); }
-
-                                    this.Analyzer.SaveUserIfNotExist(strSenderId, strSenderSid, strNickName, arInterests);
 
                                     switch (msgType)
                                     {
                                         case MsgType.ChatData:
                                             {
+                                                ContentType contentType = (ContentType)MQHeaders[CONTENT_TYPE];
+                                                string strMsgSid = Encoding.UTF8.GetString((byte[])MQHeaders[MSG_SID]);
+                                                string strSenderId = Encoding.UTF8.GetString((byte[])MQHeaders[SENDER_ID]);
+                                                string strNickName = Encoding.UTF8.GetString((byte[])MQHeaders[NICKNAME]);
+                                                string strPhotoPath = Encoding.UTF8.GetString((byte[])MQHeaders[PHOTO_PATH]);
+                                                long lSendTime = (long)MQHeaders[SEND_TIME];
+                                                var bInterests = MQHeaders[INTERESTS] as List<object>;
+                                                IList<string> arInterests = new List<string>(bInterests.Count);
+                                                foreach (byte[] bInterest in bInterests) { arInterests.Add(Encoding.UTF8.GetString(bInterest)); }
+                                                this.Analyzer.SaveUserIfNotExist(strSenderId, strSenderSid, strNickName, arInterests);
+
                                                 string strMsgId = this.Analyzer.CreateRecordForChatData(strMsgSid, strSenderSid, strRoomSid, contentType, strContent, lSendTime);
 
                                                 Task.Run(() =>

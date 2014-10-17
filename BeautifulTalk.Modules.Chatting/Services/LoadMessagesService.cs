@@ -65,7 +65,7 @@ namespace BeautifulTalk.Modules.Chatting.Services
             var FindFailedMessageQuery = Query.And(
                 Query<MessageEntity>.EQ(m => m.RoomSid, strRoomSID),
                 Query.Or(
-                    Query<MessageEntity>.EQ(m => m.State, (int)MsgStatus.Received),
+                    Query<MessageEntity>.EQ(m => m.State, (int)MsgStatus.Failed),
                     Query<MessageEntity>.EQ(m => m.State, (int)MsgStatus.Sending))
                 );
 

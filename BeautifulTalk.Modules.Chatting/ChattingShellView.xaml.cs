@@ -35,7 +35,7 @@ namespace BeautifulTalk.Modules.Chatting
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);
-            this.ChattingViewModel.RequestReadMsgs();
+            Task.Run(() => this.ChattingViewModel.RequestReadMsgs());
         }
         public bool IsActiveChattingShellView()
         {

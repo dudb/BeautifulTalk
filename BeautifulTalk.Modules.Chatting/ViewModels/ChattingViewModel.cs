@@ -248,16 +248,14 @@ namespace BeautifulTalk.Modules.Chatting.ViewModels
         private void ExecuteReceiveChatMsgCommand(ReceivedMsg rcvMsg)
         {
             var MessageCollection = ConnectionHelper.DB.GetCollection<MessageEntity>("MessageEntity");
-            var NewMessage = new MessageEntity(rcvMsg.Sid, rcvMsg.RoomSid, rcvMsg.Content, (int)MsgStatus.Received, (int)rcvMsg.ContentType,
-                rcvMsg.SenderSid, rcvMsg.SendTime, null);
-
-            MessageCollection.Save(NewMessage);
+            var FindMessageQuery = Query<MessageEntity>.EQ(m => m.Id, new ObjectId(rcvMsg.Id));
+            var FindedMessage = MessageCollection.FindOne(FindMessageQuery);
 
             var UserCollection = ConnectionHelper.DB.GetCollection<UserEntity>("UserEntity");
             var FindUserQuery = Query<UserEntity>.EQ(u => u.Sid, rcvMsg.SenderSid);
             var FindedUser = UserCollection.FindOne(FindUserQuery);
 
-            if (null != FindedUser)
+            if (null != FindedUser && null != FindedMessage)
             {
                 string strFindedUserSid = FindedUser.Sid;
 
@@ -269,14 +267,14 @@ namespace BeautifulTalk.Modules.Chatting.ViewModels
                     }
                 }
 
-                var RcvMessage = new OpponentMsg(NewMessage.Id.ToString(), rcvMsg.Sid, rcvMsg.RoomSid, rcvMsg.Content, rcvMsg.ContentType,
+                var RcvMessage = new OpponentMsg(rcvMsg.Id, rcvMsg.Sid, rcvMsg.RoomSid, rcvMsg.Content, rcvMsg.ContentType,
                     rcvMsg.SendTime, MsgStatus.Received, rcvMsg.ReadMembersCount, FindedUser.NickName, rcvMsg.ThumbnailPath,
                     this.m_AnonymousThumbnailDictionary[strFindedUserSid]);
 
                 this.Messages.Add(RcvMessage);
                 this.EndReceiveMsgCommand(RcvMessage);
 
-                var WillAddUnReadMsg = new UnReadMsg(NewMessage.Id, NewMessage.ReadMembers, rcvMsg.Sid, rcvMsg.RoomSid, AuthRepository.MQKeyInfo.UserSid);
+                var WillAddUnReadMsg = new UnReadMsg(FindedMessage.Id, FindedMessage.ReadMembers, rcvMsg.Sid, rcvMsg.RoomSid, AuthRepository.MQKeyInfo.UserSid);
                 this.m_UnReadMessages.Add(WillAddUnReadMsg);
 
                 if (true == rcvMsg.IsActivatedView)

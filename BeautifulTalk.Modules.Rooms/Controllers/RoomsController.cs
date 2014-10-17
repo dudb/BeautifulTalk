@@ -31,7 +31,6 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
         private IUnityContainer m_Container;
         private IEventAggregator m_EventAggregator;
         private ITabHeaderNotificationProvider<Int32> m_TabHeaderNotification;
-        private readonly object locker = new object();
 
         public RoomsController(IUnityContainer container, IEventAggregator eventAggregator,
             RoomCollection rooms, ITabHeaderNotificationProvider<Int32> tabHeaderNotification)
@@ -85,7 +84,7 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
                 var ChattingViewModel = new ChattingViewModel(strRoomSID, this);
                 var ChattingView = new ChattingView(ChattingViewModel);
 
-                var ChattingShellViewModel = new ChattingShellViewModel(strRoomSID, "", "", this);
+                var ChattingShellViewModel = new ChattingShellViewModel(strRoomSID, this);
                 var ChattingShellView = new ChattingShellView(ChattingShellViewModel);
                 ChattingShellView.ChattingViewModel = ChattingViewModel;
                 ChattingShellView.Content = ChattingView;
@@ -132,14 +131,10 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
                     if (null != FindedUser) { MemberNickNames.Add(FindedUser.NickName); }
                 }
 
-                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new ThreadStart(() =>
                 {
                     this.m_Rooms.Add(new Room(strSid, MemberNickNames, nUnReadMsgCount, strLastMsgSummary, lLastMsgDate, strThumbnailPath));
-
-                    lock (locker)
-                    {
-                        this.m_TabHeaderNotification.HeaderNotification += nUnReadMsgCount;
-                    }
+                    this.m_TabHeaderNotification.HeaderNotification += nUnReadMsgCount;
                 }));
             }
         }
@@ -167,16 +162,13 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
                 {
                     int nNewUnReadMsgCount = (FindedRoom.UnReadMsgCount + nUnReadMsgCount);
 
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new ThreadStart(() =>
                     {
-                        lock (locker)
-                        {
-                            FindedRoom.UnReadMsgCount = nNewUnReadMsgCount;
-                            FindedRoom.LastMsgSummary = strContent;
-                            FindedRoom.LastMsgDate = lLastMsgDate;
-                            FindedRoom.ThumbnailPath = strThumbnailPath;
-                            this.m_TabHeaderNotification.HeaderNotification += nUnReadMsgCount;
-                        }
+                        FindedRoom.UnReadMsgCount = nNewUnReadMsgCount;
+                        FindedRoom.LastMsgSummary = strContent;
+                        FindedRoom.LastMsgDate = lLastMsgDate;
+                        FindedRoom.ThumbnailPath = strThumbnailPath;
+                        this.m_TabHeaderNotification.HeaderNotification += nUnReadMsgCount;
                     }));
 
                     var UpdateRoomQuery = Update<RoomEntity>
@@ -194,19 +186,18 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
 
                         if (null != FindedChattingRoom)
                         {
-                            Application.Current.Dispatcher.Invoke(() =>
+                            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new ThreadStart(() =>
                             {
                                 bool bIsActivatedView = FindedChattingRoom.IsActiveChattingShellView();
                                 ReceivedMsg rcvMsg = new ReceivedMsg(strMsgId, strSenderSid, strSid, strMsgSid, contentType, strContent,
                                     lLastMsgDate, 0, strThumbnailPath, bIsActivatedView);
-
                                 FindedChattingRoom.ChattingViewModel.ReceiveChatMsgCommand.Execute(rcvMsg);
 
                                 if (true == bIsActivatedView)
                                 {
                                     this.ResetUnReadCountForRoom(strSid);
                                 }
-                            });
+                            }));
                         }
                     }
                 }

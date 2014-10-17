@@ -1553,6 +1553,18 @@
                 <Setter TargetName="SendingTail" Property="Visibility" Value="Collapsed"/>
                 <Setter TargetName="SendingTail" Property="IsBusy" Value="False"/>
             </DataTrigger>
+            <DataTrigger Binding="{Binding MsgStatus}"  Value="{x:Static msgStatus:MsgStatus.Received}">
+                <Setter TargetName="DateTail" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="RetryTail" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="SendingTail" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="SendingTail" Property="IsBusy" Value="False"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding MsgStatus}"  Value="{x:Static msgStatus:MsgStatus.Read}">
+                <Setter TargetName="DateTail" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="RetryTail" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="SendingTail" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="SendingTail" Property="IsBusy" Value="False"/>
+            </DataTrigger>
             <DataTrigger Binding="{Binding MsgStatus}"  Value="{x:Static msgStatus:MsgStatus.Sending}">
                 <Setter TargetName="DateTail" Property="Visibility" Value="Collapsed"/>
                 <Setter TargetName="RetryTail" Property="Visibility" Value="Collapsed"/>
@@ -1928,6 +1940,7 @@
 
     <Style x:Key="ChattingWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="FontFamily" Value="Gainsboro"/>
+        <Setter Property="Foreground" Value="#6A91B1"/>
         <Setter Property="Background" Value="#FFE7E8EA"/>
         <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
         <Setter Property="ResizeMode" Value="CanResize"/>
@@ -1972,7 +1985,8 @@
                                         Style="{StaticResource BeautifulFreak.Button.Minimize}"
                                         WindowChrome.IsHitTestVisibleInChrome="True" DockPanel.Dock="Right"/>
 
-                                <TextBlock Padding="10,10,0,0" Foreground="{TemplateBinding Foreground}" Text="{Binding ShellTitle}" DockPanel.Dock="Left"/>
+                                <TextBlock Padding="10,10,0,0" Foreground="{TemplateBinding Foreground}" Text="{Binding ShellTitle}" DockPanel.Dock="Left"
+                                           FontWeight="Bold"/>
                             </DockPanel>
                             <TextBlock Padding="10,0,0,0" Grid.Row="1" Foreground="{TemplateBinding Foreground}" Text="{Binding StateMessage}"/>
                             <AdornerDecorator Grid.Row="2">

@@ -88,7 +88,6 @@ namespace BeautifulTalk.Modules.Chatting.ViewModels
             this.m_ReceiveReadMsgCommand = new DelegateCommand<ReceivedReadMsg>(ExecuteReceiveReadMsgCommand);
             this.Messages = new MsgCollection(this.m_LoadMsgService.LoadMessages(strRoomSID, 0).Reverse());
             this.m_UnReadMessages = this.m_LoadMsgService.LoadUnReadMessages(strRoomSID);
-            Task.Run(() => this.RequestReadMsgs());
         }
 
         private void ExecuteReceiveReadMsgCommand(ReceivedReadMsg rcvdReadMsg)

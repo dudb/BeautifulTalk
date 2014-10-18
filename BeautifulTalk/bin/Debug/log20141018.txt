@@ -16,3 +16,15 @@ Target message doesn't exist.
 Target message doesn't exist.
 시퀀스에 일치하는 요소가 없습니다.
 
+OBK.ohbyungkwon.BeautifulTalk, bCreateNew : True
+
+OBK.ohbyungkwon.BeautifulTalk, bCreateNew : True
+
+OBK.ohbyungkwon.BeautifulTalk, bCreateNew : True
+
+OBK.ohbyungkwon.BeautifulTalk, bCreateNew : True
+
+OBK.ohbyungkwon.BeautifulTalk, bCreateNew : True
+
+OBK.ohbyungkwon.BeautifulTalk, bCreateNew : False
+

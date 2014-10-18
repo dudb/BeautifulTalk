@@ -16,5 +16,5 @@ DEBUG;TRACE
 381631621105
 Resources\NavigateAnimations.xaml;Views\InterestView.xaml;Views\LoginView.xaml;Views\RequiredInfoView.xaml;
 
-False
+True
 

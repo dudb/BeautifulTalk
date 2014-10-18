@@ -30,24 +30,10 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
         private RoomCollection m_Rooms;
         private IUnityContainer m_Container;
         private IEventAggregator m_EventAggregator;
-        private ITabHeaderNotificationProvider<Int32> m_TabHeaderNotification;
+        private ITabHeaderNotificationProvider<IEnumerable<Room>> m_TabHeaderNotification;
 
         public RoomsController(IUnityContainer container, IEventAggregator eventAggregator,
-            RoomCollection rooms)
-        {
-            if (null == container) throw new ArgumentNullException("container");
-            if (null == eventAggregator) throw new ArgumentNullException("eventAggregator");
-            if (null == rooms) throw new ArgumentNullException("rooms");
-            
-            this.m_Rooms = rooms;
-            this.m_Container = container;
-            this.m_EventAggregator = eventAggregator;
-            this.m_ChattingRoomsDictionary = new RoomsDictionary();
-            this.SubscribeEvents();
-        }
-        /*
-        public RoomsController(IUnityContainer container, IEventAggregator eventAggregator,
-            RoomCollection rooms, ITabHeaderNotificationProvider<Int32> tabHeaderNotification)
+            RoomCollection rooms, ITabHeaderNotificationProvider<IEnumerable<Room>> tabHeaderNotification)
         {
             if (null == container) throw new ArgumentNullException("container");
             if (null == eventAggregator) throw new ArgumentNullException("eventAggregator");
@@ -61,7 +47,7 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
             this.m_ChattingRoomsDictionary = new RoomsDictionary();
             this.SubscribeEvents();
         }
-        */
+        
         private void SubscribeEvents()
         {
             var FriendDoubleClickedEvt = this.m_EventAggregator.GetEvent<FriendDoubleClickedEvent>();
@@ -148,7 +134,7 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new ThreadStart(() =>
                 {
                     this.m_Rooms.Add(new Room(strSid, MemberNickNames, nUnReadMsgCount, strLastMsgSummary, lLastMsgDate, strThumbnailPath));
-                    //this.m_TabHeaderNotification.HeaderNotification += nUnReadMsgCount;
+                    this.m_TabHeaderNotification.UpdateTarget();
                 }));
             }
         }
@@ -182,7 +168,7 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
                         FindedRoom.LastMsgSummary = strContent;
                         FindedRoom.LastMsgDate = lLastMsgDate;
                         FindedRoom.ThumbnailPath = strThumbnailPath;
-                        //this.m_TabHeaderNotification.HeaderNotification += nUnReadMsgCount;
+                        this.m_TabHeaderNotification.UpdateTarget();
                     }));
 
                     var UpdateRoomQuery = Update<RoomEntity>
@@ -230,7 +216,7 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
             if (null != FindedRoom && null != FindedRoomEntity)
             {
                 FindedRoom.UnReadMsgCount = 0;
-                //this.m_TabHeaderNotification.HeaderNotification -= FindedRoomEntity.UnReadMsgCount;
+                this.m_TabHeaderNotification.UpdateTarget();
                 RoomCollection.Update(FindRoomQuery, UpdateRoomQuery);
             }
         }

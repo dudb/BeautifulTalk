@@ -9,5 +9,9 @@ namespace BeautifulTalk.Modules.Rooms.Models
 {
     public class RoomCollection : ObservableCollection<Room>
     {
+        protected override void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+        }
     }
 }

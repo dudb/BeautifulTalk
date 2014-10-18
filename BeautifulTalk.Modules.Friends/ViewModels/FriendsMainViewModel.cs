@@ -63,5 +63,9 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
                 throw argsException;
             }
         }
+        public void UpdateTarget()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

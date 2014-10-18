@@ -9,5 +9,6 @@ namespace BeautifulTalkInfrastructure.Interfaces
     public interface ITabHeaderNotificationProvider<T>
     {
         T HeaderNotification { get; set; }
+        void UpdateTarget();
     }
 }

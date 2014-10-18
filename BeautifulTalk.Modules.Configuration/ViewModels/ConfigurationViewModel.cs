@@ -69,5 +69,9 @@ namespace BeautifulTalk.Modules.Configuration.ViewModels
             }
         }
 
+        public void UpdateTarget()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

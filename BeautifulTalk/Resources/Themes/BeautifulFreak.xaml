@@ -1725,9 +1725,14 @@
                         <Border x:Name="TotalUnReadCountBorder" MinWidth="{Binding ElementName=TotalUnReadCountBorder, Path=ActualHeight}" 
                                 Height="24" CornerRadius="{Binding ElementName=TotalUnReadCountBorder, Path=ActualHeight}" 
                                 Background="{StaticResource BeautifulFreak.Colors.Special}" Margin="20,0,0,20">
-                            <ContentControl Content="{Binding Content.DataContext.HeaderNotification, Converter={StaticResource RoomTabHeaderNotiCvt}
-                                , UpdateSourceTrigger=PropertyChanged}"
-                                            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,0,2,0" Foreground="White"/>
+                            <ContentControl x:Name="TotalUnReadCountContentControl" Content="{Binding Content.DataContext.HeaderNotification, Mode=OneWay, Converter={StaticResource RoomTabHeaderNotiCvt}
+                                , UpdateSourceTrigger=Explicit}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,0,2,0" Foreground="White">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Loaded">
+                                        <i:InvokeCommandAction Command="{Binding Content.DataContext.InitialLoadedCommand}" CommandParameter="{Binding ElementName=TotalUnReadCountContentControl}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ContentControl>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>

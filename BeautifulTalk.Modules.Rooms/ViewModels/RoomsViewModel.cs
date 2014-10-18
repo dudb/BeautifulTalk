@@ -32,7 +32,7 @@ namespace BeautifulTalk.Modules.Rooms.ViewModels
 {
     public class RoomsViewModel : BindableBase, IRoomsTabHeaderInfoProvider
     {
-        private Int32 m_HeaderNotification;
+        private IEnumerable<Room> m_HeaderNotification;
         private DependencyObject m_TabHeaderImage;
         private DependencyObject m_SelectedTabHeaderImage;
         private ILoggerFacade m_Logger;
@@ -46,7 +46,7 @@ namespace BeautifulTalk.Modules.Rooms.ViewModels
         public RoomCollection Rooms { get; private set; }
         public DependencyObject HeaderContent { get { return m_TabHeaderImage; } }
         public DependencyObject SelectedHeaderContent { get { return m_SelectedTabHeaderImage; } }
-        public Int32 HeaderNotification 
+        public IEnumerable<Room> HeaderNotification 
         {
             get { return this.m_HeaderNotification; }
             set { SetProperty(ref this.m_HeaderNotification, value); }
@@ -61,14 +61,19 @@ namespace BeautifulTalk.Modules.Rooms.ViewModels
             this.m_UnityContainer = unityContainer;
             this.m_EventAggregator = eventAggregator;
 
-            this.Rooms = new RoomCollection();
+            this.HeaderNotification = this.Rooms = new RoomCollection();
             
-            this.m_CollectRoomService = this.m_UnityContainer.Resolve<ICollectRoomsService>
-                (new ParameterOverride("tabHeaderNotification", this));
-
+            //this.m_CollectRoomService = this.m_UnityContainer.Resolve<ICollectRoomsService>
+              //  (new ParameterOverride("tabHeaderNotification", this));
+            this.m_CollectRoomService = this.m_UnityContainer.Resolve<ICollectRoomsService>();
+                  /*
             this.m_RoomsController = this.m_UnityContainer.Resolve<IRoomsControlable>
                 (new ParameterOverride("rooms", this.Rooms),
                     new ParameterOverride("tabHeaderNotification", this));
+            */
+            this.m_RoomsController = this.m_UnityContainer.Resolve<IRoomsControlable>
+                (new ParameterOverride("rooms", this.Rooms));
+              
             
             m_CollectRoomService.CollectRooms(this.Rooms, AuthRepository.MQKeyInfo.UserSid);
 

@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AF271194-F0E7-47CA-A7FA-A2276C1B167C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BeautifulTalk</RootNamespace>
+    <AssemblyName>BeautifulTalk</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <ExpressionBlendVersion>12.0.50716.0</ExpressionBlendVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RealTimeInformationCenter.cs" />
+    <Compile Include="TalkBootstrapper.cs" />
+    <Compile Include="Tray\AppTrayView.xaml.cs">
+      <DependentUpon>AppTrayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tray\AppTrayViewModel.cs" />
+    <Compile Include="ViewModels\BusinessShellViewModel.cs" />
+    <Compile Include="ViewModels\LoginShellViewModel.cs" />
+    <Compile Include="Views\BusinessShellView.xaml.cs">
+      <DependentUpon>BusinessShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoginShellView.xaml.cs">
+      <DependentUpon>LoginShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BeautifulTalk.Modules.Chatting\BeautifulTalk.Modules.Chatting.csproj">
+      <Project>{d1b88738-6b15-490d-a2be-98f4400ac363}</Project>
+      <Name>BeautifulTalk.Modules.Chatting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautifulTalk.Modules.Configuration\BeautifulTalk.Modules.Configuration.csproj">
+      <Project>{87d2b75c-ed46-4ccf-af3c-1d0b12a2f243}</Project>
+      <Name>BeautifulTalk.Modules.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautifulTalk.Modules.DetailInfo\BeautifulTalk.Modules.DetailInfo.csproj">
+      <Project>{aa1c3497-cf40-4226-8e49-340cbe7b95fd}</Project>
+      <Name>BeautifulTalk.Modules.DetailInfo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautifulTalk.Modules.Friends\BeautifulTalk.Modules.Friends.csproj">
+      <Project>{f7a5bfb4-09ed-4111-aedb-085660c75e56}</Project>
+      <Name>BeautifulTalk.Modules.Friends</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautifulTalk.Modules.Login\BeautifulTalk.Modules.Login.csproj">
+      <Project>{da331819-8a80-415a-b67e-6d0755e17178}</Project>
+      <Name>BeautifulTalk.Modules.Login</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautifulTalk.Modules.Rooms\BeautifulTalk.Modules.Rooms.csproj">
+      <Project>{dae4bada-deb4-45f0-97a2-b94e5ab8acda}</Project>
+      <Name>BeautifulTalk.Modules.Rooms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BeautifulTalkInfrastructure\BeautifulTalkInfrastructure.csproj">
+      <Project>{d1531a3d-475b-4031-adea-e53a1e4eafdf}</Project>
+      <Name>BeautifulTalkInfrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonControl\CommonControl.csproj">
+      <Project>{2e28c6f1-2321-488d-8239-f4d3bb7bb7b3}</Project>
+      <Name>CommonControl</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ItemGroup>
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Chatting\bin\Debug\BeautifulTalk.Modules.Chatting.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\bin\Debug\BeautifulTalk.Modules.Configuration.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.DetailInfo\bin\Debug\BeautifulTalk.Modules.DetailInfo.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Friends\bin\Debug\BeautifulTalk.Modules.Friends.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Login\bin\Debug\BeautifulTalk.Modules.Login.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Rooms\bin\Debug\BeautifulTalk.Modules.Rooms.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\BeautifulTalkInfrastructure\bin\Debug\BeautifulTalkInfrastructure.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\CommonControl\bin\Debug\CommonControl.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\Hardcodet.NotifyIcon.Wpf.1.0.5\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Microsoft.CSharp.dll" />
+    <ReferencePath Include="C:\Program Files\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\Microsoft.Expression.Interactions.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\Prism.Composition.5.0.0\lib\NET45\Microsoft.Practices.Prism.Composition.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\Prism.Interactivity.5.0.0\lib\NET45\Microsoft.Practices.Prism.Interactivity.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.Desktop.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.Mvvm.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\Prism.PubSubEvents.1.0.0\lib\portable-sl4+wp7+windows8+net40\Microsoft.Practices.Prism.PubSubEvents.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\Prism.Mvvm.1.0.0\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\Prism.UnityExtensions.5.0.1\lib\NET45\Microsoft.Practices.Prism.UnityExtensions.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\CommonServiceLocator.1.2\lib\portable-windows8+net40+sl5+windowsphone8\Microsoft.Practices.ServiceLocation.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\mscorlib.dll" />
+    <ReferencePath Include="C:\Program Files\Microsoft Visual Studio 12.0\Blend\Newtonsoft.Json.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\PresentationCore.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\PresentationFramework.Aero.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\PresentationFramework.Aero2.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\PresentationFramework.dll" />
+    <ReferencePath Include="D:\Opnesource\BeautifulTalk\packages\RabbitMQ.Client.3.3.5\lib\net30\RabbitMQ.Client.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\System.Core.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\System.Data.DataSetExtensions.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\System.Data.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\System.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\System.Runtime.Serialization.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\System.ServiceModel.dll" />
+    <ReferencePath Include="C:\Program Files\Microsoft SDKs\Expression\Blend\.NETFramework\v4.5\Libraries\System.Windows.Interactivity.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\System.Xaml.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\System.Xml.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\System.Xml.Linq.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\WindowsBase.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Collections.Concurrent.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Collections.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.ComponentModel.Annotations.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.ComponentModel.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.ComponentModel.EventBasedAsync.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Diagnostics.Contracts.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Diagnostics.Debug.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Diagnostics.Tools.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Diagnostics.Tracing.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Dynamic.Runtime.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Globalization.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.IO.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Linq.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Linq.Expressions.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Linq.Parallel.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Linq.Queryable.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Net.NetworkInformation.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Net.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Net.Requests.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.ObjectModel.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Reflection.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Reflection.Emit.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Reflection.Emit.ILGeneration.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Reflection.Emit.Lightweight.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Reflection.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Reflection.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Resources.ResourceManager.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Runtime.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Runtime.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Runtime.InteropServices.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Runtime.InteropServices.WindowsRuntime.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Runtime.Numerics.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Runtime.Serialization.Json.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Runtime.Serialization.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Runtime.Serialization.Xml.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Security.Principal.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.ServiceModel.Duplex.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.ServiceModel.Http.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.ServiceModel.NetTcp.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.ServiceModel.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.ServiceModel.Security.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Text.Encoding.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Text.Encoding.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Text.RegularExpressions.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Threading.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Threading.Tasks.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Threading.Tasks.Parallel.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Threading.Timer.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Xml.ReaderWriter.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Xml.XDocument.dll" />
+    <ReferencePath Include="C:\Program Files\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.1\Facades\System.Xml.XmlSerializer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="D:\Opnesource\BeautifulTalk\BeautifulTalk\obj\Debug\Tray\AppTrayView.g.cs" />
+    <Compile Include="D:\Opnesource\BeautifulTalk\BeautifulTalk\obj\Debug\Views\BusinessShellView.g.cs" />
+    <Compile Include="D:\Opnesource\BeautifulTalk\BeautifulTalk\obj\Debug\Views\LoginShellView.g.cs" />
+    <Compile Include="D:\Opnesource\BeautifulTalk\BeautifulTalk\obj\Debug\App.g.cs" />
+    <Compile Include="D:\Opnesource\BeautifulTalk\BeautifulTalk\obj\Debug\GeneratedInternalTypeHelper.g.cs" />
+  </ItemGroup>
+</Project>

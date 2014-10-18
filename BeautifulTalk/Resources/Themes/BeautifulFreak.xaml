@@ -1700,6 +1700,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <roomsCvts:RoomTabHeaderNotificationConverter x:Key="RoomTabHeaderNotiCvt"/>
     
     <!-- TabControl -->
     <Style x:Key="BeautifulFreak.TabControl.TabItemStyle" TargetType="{x:Type TabItem}">
@@ -1723,7 +1725,8 @@
                         <Border x:Name="TotalUnReadCountBorder" MinWidth="{Binding ElementName=TotalUnReadCountBorder, Path=ActualHeight}" 
                                 Height="24" CornerRadius="{Binding ElementName=TotalUnReadCountBorder, Path=ActualHeight}" 
                                 Background="{StaticResource BeautifulFreak.Colors.Special}" Margin="20,0,0,20">
-                            <ContentControl Content="{Binding Content.DataContext.HeaderNotification, UpdateSourceTrigger=PropertyChanged}"
+                            <ContentControl Content="{Binding Content.DataContext.HeaderNotification, Converter={StaticResource RoomTabHeaderNotiCvt}
+                                , UpdateSourceTrigger=PropertyChanged}"
                                             HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,0,2,0" Foreground="White"/>
                         </Border>
                     </Grid>
@@ -1735,7 +1738,7 @@
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Header" Value="{Binding Content.DataContext.SelectedHeaderContent}"/>
                         </Trigger>
-                        <DataTrigger Binding="{Binding Content.DataContext.HeaderNotification}" Value="0">
+                        <DataTrigger Binding="{Binding Content.DataContext.HeaderNotification, Converter={StaticResource RoomTabHeaderNotiCvt}}" Value="0">
                             <Setter TargetName="TotalUnReadCountBorder" Property="Visibility" Value="Hidden"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>

@@ -17,12 +17,16 @@ namespace BeautifulTalk.Modules.Rooms.Services
     public class CollectRoomsService : ICollectRoomsService
     {
         private ITabHeaderNotificationProvider<Int32> m_TabHeaderNotification;
+        public CollectRoomsService()
+        {
+        }
+        /*
         public CollectRoomsService(ITabHeaderNotificationProvider<Int32> tabHeaderNotification)
         {
             if (null == tabHeaderNotification) throw new ArgumentNullException("tabHeaderNotification");
 
             this.m_TabHeaderNotification = tabHeaderNotification;
-        }
+        }*/
         public void CollectRooms(RoomCollection rooms, string strMySid)
         {
             var RoomCollection = ConnectionHelper.DB.GetCollection<RoomEntity>("RoomEntity");
@@ -45,7 +49,7 @@ namespace BeautifulTalk.Modules.Rooms.Services
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
                 {
                     rooms.Add(new Room(r.Sid, ActiveMemberNickNames, r.UnReadMsgCount, r.LastMsgSummary, r.LastMsgDate, r.ThumbnailPath));
-                    this.m_TabHeaderNotification.HeaderNotification += r.UnReadMsgCount;
+                    //this.m_TabHeaderNotification.HeaderNotification += r.UnReadMsgCount;
                 }));
             });
         }

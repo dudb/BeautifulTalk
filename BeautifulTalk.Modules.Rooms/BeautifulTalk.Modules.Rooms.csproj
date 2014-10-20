@@ -97,7 +97,6 @@
     <Compile Include="Converters\RoomLastMsgDateConverter.cs" />
     <Compile Include="Converters\RoomMembersCountConverter.cs" />
     <Compile Include="Converters\RoomMembersNameConverter.cs" />
-    <Compile Include="Converters\RoomTabHeaderNotificationConverter.cs" />
     <Compile Include="Converters\RoomThumbnailConverter.cs" />
     <Compile Include="Models\Room.cs" />
     <Compile Include="Models\RoomCollection.cs" />

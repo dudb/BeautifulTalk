@@ -22,6 +22,6 @@
         </DockPanel>
         <Rectangle Grid.Row="1" Height="1" Fill="#FFDADBDD"/>
         <Rectangle Grid.Row="2" Height="1" Fill="#FFE6E7E9"/>
-        <ListBox Grid.Row="3" ItemsSource="{Binding Friends, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BeautifulFreak.ListBox.Friends}"/>
+        <ListBox Grid.Row="3" ItemsSource="{Binding FriendsMainViewModel.Friends, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BeautifulFreak.ListBox.Friends}"/>
     </Grid>
 </NavigatableCtl:NavigatableUserControl>

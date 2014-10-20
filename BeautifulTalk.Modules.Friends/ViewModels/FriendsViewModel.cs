@@ -36,39 +36,35 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
 {
     public class FriendsViewModel : BindableBase, INavigationAware
     {
-        private FriendCollection m_Friends;
         private readonly ILoggerFacade m_Logger;
         private readonly IRegionManager m_RegionManager;
         private readonly IEventAggregator m_EventAggregator;
         private readonly ICollectFriendsService m_CollectFriendsService;
         private IGetRoomInfoService m_GetRoomInfoService;
+        public IFriendsMainViewModel FriendsMainViewModel { get; private set; }
         public DelegateCommand NavigateToForwardCommand { get; private set; }
         public DelegateCommand<Friend> ItemDoubleClickedCommand { get; private set; }
-        public FriendCollection Friends 
-        {
-            get { return this.m_Friends; }
-            set { SetProperty(ref this.m_Friends, value); }
-        }
-        public FriendsViewModel(ILoggerFacade logger, IRegionManager regionManager, IEventAggregator eventAggregator, 
-            ICollectFriendsService collectFriendsService, IGetRoomInfoService getRoomInfoService)
+        public FriendsViewModel(ILoggerFacade logger, IRegionManager regionManager, IEventAggregator eventAggregator,
+            ICollectFriendsService collectFriendsService, IGetRoomInfoService getRoomInfoService, IFriendsMainViewModel friendsMainViewModel)
         {
             if (null == logger) throw new ArgumentNullException("logger");
             if (null == regionManager) throw new ArgumentNullException("regionManager");
             if (null == eventAggregator) throw new ArgumentNullException("eventAggregator");
             if (null == collectFriendsService) throw new ArgumentNullException("collectFriendsService");
             if (null == getRoomInfoService) throw new ArgumentNullException("getRoomInfoService");
+            if (null == friendsMainViewModel) throw new ArgumentNullException("friendsMainViewModel");
 
             this.m_Logger = logger;
             this.m_RegionManager = regionManager;
             this.m_EventAggregator = eventAggregator;
             this.m_CollectFriendsService = collectFriendsService;
             this.m_GetRoomInfoService = getRoomInfoService;
+            this.FriendsMainViewModel = friendsMainViewModel;
 
             this.NavigateToForwardCommand = new DelegateCommand(ExecuteNavigateToForwardCommand);
             this.ItemDoubleClickedCommand = new DelegateCommand<Friend>(ExecuteItemDoubleClickedCommand);
-            this.Friends = new FriendCollection();
 
-            Task.Run(() => m_CollectFriendsService.CollectFriends(AuthRepository.MQKeyInfo.UserSid, this.Friends));
+            Task.Run(() => m_CollectFriendsService.CollectFriends(AuthRepository.MQKeyInfo.UserSid, friendsMainViewModel.Friends));
         }
 
         private void ExecuteItemDoubleClickedCommand(Friend friend)
@@ -98,14 +94,6 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
             }
         }
 
-        public void LoadFriends()
-        {
-            Task.Run(() =>
-            {
-                this.m_CollectFriendsService.CollectFriends(AuthRepository.MQKeyInfo.UserSid, this.Friends);
-            });
-        }
-
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
             return true;
@@ -113,29 +101,12 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            navigationContext.Parameters.Add(this.GetType().GetHashCode().ToString(), this.FriendsMainViewModel);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            var AddedFriends = (List<RecommendFriendSummary>)navigationContext.Parameters[typeof(RecommendViewModel).GetHashCode().ToString()];
-
-            Task.Run(() =>
-            {
-                foreach (RecommendFriendSummary AddedFriend in AddedFriends)
-                {
-                    var UserCollection = ConnectionHelper.DB.GetCollection<UserEntity>("UserEntity");
-                    var FindUserQuery = Query<UserEntity>.EQ(u => u.Sid, AddedFriend.UserSID);
-                    var FindedUser = UserCollection.FindOne(FindUserQuery);
-
-                    if (null != FindedUser)
-                    {
-                        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
-                        {
-                            this.Friends.Add(new Friend(FindedUser.ThumbnailPath, FindedUser.UserId, FindedUser.Sid, FindedUser.NickName, FindedUser.Comment));
-                        }));
-                    }
-                }
-            });
+            this.FriendsMainViewModel.Friends.TotalUnReadCount = 0;
         }
 
         private void ExecuteNavigateToForwardCommand()

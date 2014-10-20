@@ -1,4 +1,5 @@
-﻿using BeautifulTalk.Modules.Configuration.Services;
+﻿using BeautifulTalk.Modules.Configuration.Models;
+using BeautifulTalk.Modules.Configuration.Services;
 using BeautifulTalkInfrastructure.Interfaces;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Mvvm;
@@ -22,6 +23,7 @@ namespace BeautifulTalk.Modules.Configuration.ViewModels
         private ILoggerFacade m_Logger;
         private IUnityContainer m_UnityContainer;
         private IEventAggregator m_EventAggregator;
+        private ICollectConfigurationInfo m_CollectConfigurationInfo;
         public DependencyObject HeaderContent { get { return m_TabHeaderImage; } }
         public DependencyObject SelectedHeaderContent { get { return m_SelectedTabHeaderImage; } }
         public int HeaderNotification
@@ -29,15 +31,23 @@ namespace BeautifulTalk.Modules.Configuration.ViewModels
             get;
             set;
         }
-        public ConfigurationViewModel(ILoggerFacade logger, IUnityContainer unityContainer, IEventAggregator eventAggregator)
+        public ConfigurationCategoryCollection ConfigurationCategories { get; private set; }
+        public ConfigurationViewModel(ILoggerFacade logger, IUnityContainer unityContainer, IEventAggregator eventAggregator,
+            ICollectConfigurationInfo collectConfigurationInfo)
         {
             if (null == logger) throw new ArgumentNullException("logger");
             if (null == unityContainer) throw new ArgumentNullException("unityContainer");
             if (null == eventAggregator) throw new ArgumentNullException("eventAggregator");
+            if (null == collectConfigurationInfo) throw new ArgumentNullException("collectConfigurationInfo");
 
             this.m_Logger = logger;
             this.m_UnityContainer = unityContainer;
             this.m_EventAggregator = eventAggregator;
+            this.m_CollectConfigurationInfo = collectConfigurationInfo;
+
+            this.ConfigurationCategories = new ConfigurationCategoryCollection();
+            collectConfigurationInfo.Collect(this.ConfigurationCategories);
+            
             this.InitializeHeaderImages();
         }
         private void InitializeHeaderImages()
@@ -67,11 +77,6 @@ namespace BeautifulTalk.Modules.Configuration.ViewModels
                 m_Logger.Log("UriKind is invalid inside RecommendModule\n" + argsException.Message, Category.Exception, Priority.Medium);
                 throw argsException;
             }
-        }
-
-        public void UpdateTarget()
-        {
-            throw new NotImplementedException();
         }
     }
 }

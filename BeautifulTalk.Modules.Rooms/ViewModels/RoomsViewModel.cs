@@ -33,7 +33,6 @@ namespace BeautifulTalk.Modules.Rooms.ViewModels
 {
     public class RoomsViewModel : BindableBase, IRoomsTabHeaderInfoProvider
     {
-        private ContentControl m_HeaderControl;
         private IEnumerable<Room> m_HeaderNotification;
         private DependencyObject m_TabHeaderImage;
         private DependencyObject m_SelectedTabHeaderImage;
@@ -45,7 +44,6 @@ namespace BeautifulTalk.Modules.Rooms.ViewModels
         private IRoomsControlable m_RoomsController;
         private ICollectRoomsService m_CollectRoomService;
         public DelegateCommand<Room> ItemDoubleClickedCommand { get; private set; }
-        public DelegateCommand<ContentControl> InitialLoadedCommand { get; private set; }
         public RoomCollection Rooms { get; private set; }
         public DependencyObject HeaderContent { get { return m_TabHeaderImage; } }
         public DependencyObject SelectedHeaderContent { get { return m_SelectedTabHeaderImage; } }
@@ -75,22 +73,10 @@ namespace BeautifulTalk.Modules.Rooms.ViewModels
                     (new ParameterOverride("msgAnalyzer", this.m_UnityContainer.Resolve<IRoomMsgAnalyzable>
                         (new ParameterOverride("roomsController", this.m_RoomsController))));
 
-            this.m_CollectRoomService.CollectRooms(this.Rooms, AuthRepository.MQKeyInfo.UserSid);
+            
             this.ItemDoubleClickedCommand = new DelegateCommand<Room>(ItemDoubleClickRaised);
-            this.InitialLoadedCommand = new DelegateCommand<ContentControl>(ExecuteInitialLoadedCommand);
             this.InitializeHeaderImages();
-        }
-
-        public void UpdateTarget()
-        {
-            if (null != this.m_HeaderControl)
-            {
-                this.m_HeaderControl.GetBindingExpression(ContentControl.ContentProperty).UpdateTarget();
-            }
-        }
-        private void ExecuteInitialLoadedCommand(ContentControl source)
-        {
-            this.m_HeaderControl = source;
+            this.m_CollectRoomService.CollectRooms(this.Rooms, AuthRepository.MQKeyInfo.UserSid);
             Task.Run(() => this.m_RoomMsgListener.StartListen());
         }
         private void InitializeHeaderImages()

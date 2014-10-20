@@ -133,8 +133,7 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
 
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Send, new ThreadStart(() =>
                 {
-                    this.m_Rooms.Add(new Room(strSid, MemberNickNames, nUnReadMsgCount, strLastMsgSummary, lLastMsgDate, strThumbnailPath));
-                    this.m_TabHeaderNotification.UpdateTarget();
+                    this.m_Rooms.Add(new Room(strSid, MemberNickNames, nUnReadMsgCount, strLastMsgSummary, lLastMsgDate, strThumbnailPath, this.m_Rooms));
                 }));
             }
         }
@@ -168,7 +167,6 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
                         FindedRoom.LastMsgSummary = strContent;
                         FindedRoom.LastMsgDate = lLastMsgDate;
                         FindedRoom.ThumbnailPath = strThumbnailPath;
-                        this.m_TabHeaderNotification.UpdateTarget();
                     }));
 
                     var UpdateRoomQuery = Update<RoomEntity>
@@ -216,7 +214,6 @@ namespace BeautifulTalk.Modules.Rooms.Controllers
             if (null != FindedRoom && null != FindedRoomEntity)
             {
                 FindedRoom.UnReadMsgCount = 0;
-                this.m_TabHeaderNotification.UpdateTarget();
                 RoomCollection.Update(FindRoomQuery, UpdateRoomQuery);
             }
         }

@@ -86,10 +86,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\AddRecommendFriendParamsConverter.cs" />
     <Compile Include="Converters\FriendThumbnailConverter.cs" />
     <Compile Include="Converters\RecommendSummaryThumbnailConverter.cs" />
     <Compile Include="FriendsModuleInit.cs" />
+    <Compile Include="ViewModels\IFriendsMainViewModel.cs" />
     <Compile Include="Models\Friend.cs" />
     <Compile Include="Models\FriendCollection.cs" />
     <Compile Include="Models\RecommendFriendSummary.cs" />

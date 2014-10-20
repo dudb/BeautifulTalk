@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -39,7 +40,7 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
         private ICollectRecommendUsers m_CollectRecommendUsers;
         private IAddFriendService m_AddFriendService;
         private IGetUserInfoService m_GetUserInfoService;
-        private RecommendFriendSummaryCollection m_AddedFriendsCache;
+        private IFriendsMainViewModel m_FriendsMainViewModel;
         private RecommendFriendSummaryCollection m_RecommendFriends;
 
         public RecommendFriendSummaryCollection RecommendFriends
@@ -47,7 +48,7 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
             get { return this.m_RecommendFriends; }
             set { SetProperty(ref this.m_RecommendFriends, value); }
         }
-        public DelegateCommand<AddRecommendFriendParams> AddFriendCommand { get; private set; }
+        public DelegateCommand<string> AddFriendCommand { get; private set; }
         public DelegateCommand<SmoothBusyIndicator> RefreshCommand { get; private set; }
         public DelegateCommand NavigateToBackCommand { get; private set; }
         public RecommendViewModel(ILoggerFacade logger, IRegionManager regionManager, IEventAggregator eventAggregator, 
@@ -65,9 +66,8 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
             this.m_CollectRecommendUsers = collectRecommendUsers;
             this.m_AddFriendService = addFriendService;
             this.m_GetUserInfoService = getUserInfoService;
-            this.m_AddedFriendsCache = new RecommendFriendSummaryCollection();
 
-            this.AddFriendCommand = new DelegateCommand<AddRecommendFriendParams>(ExecuteAddFriendCommand);
+            this.AddFriendCommand = new DelegateCommand<string>(ExecuteAddFriendCommand);
             this.NavigateToBackCommand = new DelegateCommand(ExecuteNavigateToBackCommand);
             this.RefreshCommand = new DelegateCommand<SmoothBusyIndicator>(ExecuteRefreshCommand);
             this.RecommendFriends = new RecommendFriendSummaryCollection();
@@ -87,27 +87,28 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
                 busyIndicator.IsBusy = false;
             });
         }
-        private void ExecuteAddFriendCommand(AddRecommendFriendParams recommendParams)
+        private void ExecuteAddFriendCommand(string strRecommendUserSid)
         {
-            if (null == recommendParams) return;
+            if (true == string.IsNullOrEmpty(strRecommendUserSid)) return;
 
             Task.Run(() =>
             {
-                if (true == this.m_AddFriendService.AddFriend(AuthRepository.MQKeyInfo.UserSid, recommendParams.RecommendUserSid))
+                var TargetFriend = this.m_RecommendFriends.FirstOrDefault(r => r.UserSID == strRecommendUserSid);
+                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
+                {
+                    RecommendFriends.Remove(TargetFriend);
+                }));
+
+                if (true == this.m_AddFriendService.AddFriend(AuthRepository.MQKeyInfo.UserSid, strRecommendUserSid))
                 {
                     try
                     {
-                        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
-                        {
-                            recommendParams.Source.IsEnabled = false;
-                        }));
-
-                        var AddFriend = this.m_GetUserInfoService.GetUserInfo(recommendParams.RecommendUserSid);
+                        var AddFriend = this.m_GetUserInfoService.GetUserInfo(strRecommendUserSid);
 
                         if (null != AddFriend)
                         {
                             var UserCollection = ConnectionHelper.DB.GetCollection<UserEntity>("UserEntity");
-                            var FindUserQuery = Query<UserEntity>.EQ(u => u.Sid, recommendParams.RecommendUserSid);
+                            var FindUserQuery = Query<UserEntity>.EQ(u => u.Sid, strRecommendUserSid);
                             var FindedUser = UserCollection.FindOne(FindUserQuery);
 
                             if (null == FindedUser) { UserCollection.Save(AddFriend); }
@@ -119,18 +120,15 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
 
                         if (null != FindedFriend)
                         {
-                            if (false == FindedFriend.FriendSIDs.Contains(recommendParams.RecommendUserSid))
+                            if (false == FindedFriend.FriendSIDs.Contains(strRecommendUserSid))
                             {
-                                FindedFriend.FriendSIDs.Add(recommendParams.RecommendUserSid);
+                                FindedFriend.FriendSIDs.Add(strRecommendUserSid);
                                 var UpdateQuery = Update<FriendsEntity>.Set(f => f.FriendSIDs, FindedFriend.FriendSIDs);
                                 FriendsCollection.Update(FindFriendQuery, UpdateQuery);
 
-                                var TargetFriend = this.m_RecommendFriends.FirstOrDefault(r => r.UserSID == recommendParams.RecommendUserSid);
-                                this.m_AddedFriendsCache.Add(TargetFriend);
-
                                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
                                 {
-                                    RecommendFriends.Remove(TargetFriend);
+                                    this.m_FriendsMainViewModel.Friends.Add(new Friend(AddFriend.ThumbnailPath, AddFriend.UserId, AddFriend.Sid, AddFriend.NickName, AddFriend.Comment));
                                 }));
                             }
                         }
@@ -138,13 +136,6 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
                     catch (Exception unExpectedException)
                     {
                         GlobalLogger.Log(unExpectedException.Message);
-                    }
-                    finally
-                    {
-                        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(() =>
-                        {
-                            recommendParams.Source.IsEnabled = true;
-                        }));
                     }
                 }
             });
@@ -172,12 +163,36 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            navigationContext.Parameters.Add(this.GetType().GetHashCode().ToString(), new List<RecommendFriendSummary>(this.m_AddedFriendsCache));
-            this.m_AddedFriendsCache.Clear();
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            try
+            {
+                this.m_FriendsMainViewModel = navigationContext.Parameters[typeof(FriendsViewModel).GetHashCode().ToString()] as IFriendsMainViewModel;
+                this.m_FriendsMainViewModel.Friends.CollectionChanged -= Friends_CollectionChanged;
+                this.m_FriendsMainViewModel.Friends.CollectionChanged += Friends_CollectionChanged;
+            }
+            catch (ArgumentNullException argsNullException)
+            {
+                GlobalLogger.Log(argsNullException.Message);
+            }
+            catch (NullReferenceException nullRefException)
+            {
+                GlobalLogger.Log(nullRefException.Message);
+            }
+            catch (InvalidCastException invalidCastException)
+            {
+                GlobalLogger.Log(invalidCastException.Message);
+            }
+        }
+
+        private void Friends_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (NotifyCollectionChangedAction.Add == e.Action)
+            {
+                this.m_FriendsMainViewModel.Friends.TotalUnReadCount += 1;
+            }
         }
     }
 }

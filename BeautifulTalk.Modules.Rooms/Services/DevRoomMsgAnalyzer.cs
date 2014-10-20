@@ -25,6 +25,7 @@ namespace BeautifulTalk.Modules.Rooms.Services
     public class DevRoomMsgAnalyzer : IRoomMsgAnalyzable
     {
         private ILoggerFacade m_Logger;
+        private object locker = new object();
         
         public IRoomsControlable RoomsController { get; set; }
         public DevRoomMsgAnalyzer(ILoggerFacade logger, IRoomsControlable roomsController)
@@ -50,17 +51,20 @@ namespace BeautifulTalk.Modules.Rooms.Services
         public void AnalyzeChatData(string strMsgId, string strMsgSid, string strSenderSid, string strRoomSid, string strContent,
             long lSendTime, IList<string> arMemberSids, IList<string> arActiveMemberSids, ContentType contentType)
         {
-            if (false == this.RoomsController.ExistsRoom(strRoomSid))
+            lock (locker)
             {
-                var RoomCollection = ConnectionHelper.DB.GetCollection<RoomEntity>("RoomEntity");
-                var NewRoom = new RoomEntity(strRoomSid, AuthRepository.MQKeyInfo.UserSid, arMemberSids, arActiveMemberSids, 1, strContent, lSendTime, null);
-                RoomCollection.Save(NewRoom);
+                if (false == this.RoomsController.ExistsRoom(strRoomSid))
+                {
+                    var RoomCollection = ConnectionHelper.DB.GetCollection<RoomEntity>("RoomEntity");
+                    var NewRoom = new RoomEntity(strRoomSid, AuthRepository.MQKeyInfo.UserSid, arMemberSids, arActiveMemberSids, 1, strContent, lSendTime, null);
+                    RoomCollection.Save(NewRoom);
 
-                this.RoomsController.AddRoom(strRoomSid, arMemberSids, 1, strContent, lSendTime, null);
-            }
-            else
-            {
-                this.RoomsController.UpdateRoom(strMsgId, strSenderSid, strMsgSid, arActiveMemberSids, strRoomSid, 1, contentType, strContent, lSendTime, null);
+                    this.RoomsController.AddRoom(strRoomSid, arMemberSids, 1, strContent, lSendTime, null);
+                }
+                else
+                {
+                    this.RoomsController.UpdateRoom(strMsgId, strSenderSid, strMsgSid, arActiveMemberSids, strRoomSid, 1, contentType, strContent, lSendTime, null);
+                }
             }
         }
 

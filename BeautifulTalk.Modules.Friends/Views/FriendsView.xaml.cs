@@ -25,10 +25,10 @@ namespace BeautifulTalk.Modules.Friends.Views
     /// </summary>
     public partial class FriendsView : NavigatableUserControl
     {
-        public FriendsView(FriendsViewModel viewModel)
+        public FriendsView(FriendsViewModel friendsViewModel)
         {
             InitializeComponent();
-            this.DataContext = viewModel; 
+            this.DataContext = friendsViewModel; 
         }
     }
 }

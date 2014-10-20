@@ -18,6 +18,7 @@ namespace BeautifulTalk.Modules.Rooms.Models
         private string m_LastMsgSummary;
         private long m_LastMsgDate;
         private string m_ThumbnailPath;
+        private ITotalUnReadCount m_TotalUnReadCount;
 
         public string Sid { get; set; }
         public IList<string> ActiveMemberNames 
@@ -28,7 +29,11 @@ namespace BeautifulTalk.Modules.Rooms.Models
         public Int32 UnReadMsgCount 
         {
             get { return this.m_UnReadMsgCount; }
-            set { SetProperty(ref this.m_UnReadMsgCount, value); }
+            set
+            {
+                this.m_TotalUnReadCount.TotalUnReadCount += (value - this.m_UnReadMsgCount);
+                SetProperty(ref this.m_UnReadMsgCount, value); 
+            }
         }
         public string LastMsgSummary 
         {
@@ -52,8 +57,9 @@ namespace BeautifulTalk.Modules.Rooms.Models
             set { SetProperty(ref this.m_AnonymousThumbnail, value); }
         }
         public Room(string strSid, IList<string> arActiveMemberNames, int nUnReadMsgCount, 
-            string strLastMsgSummary, long lLastMsgDate, string strThumbnailPath)
+            string strLastMsgSummary, long lLastMsgDate, string strThumbnailPath, ITotalUnReadCount totalUnReadCount)
         {
+            this.m_TotalUnReadCount = totalUnReadCount;
             this.Sid = strSid;
             this.ActiveMemberNames = arActiveMemberNames;
             this.UnReadMsgCount = nUnReadMsgCount;

@@ -93,6 +93,7 @@
     <Compile Include="Interfaces\IHideWindow.cs" />
     <Compile Include="Interfaces\IMinExpColCloseWindow.cs" />
     <Compile Include="Interfaces\IRoomsControlable.cs" />
+    <Compile Include="Interfaces\ITotalUnReadCount.cs" />
     <Compile Include="Interfaces\IWindowBehavior.cs" />
     <Compile Include="Logger\GlobalLogger.cs" />
     <Compile Include="Logger\TimeBasedLoggerAdapter.cs" />

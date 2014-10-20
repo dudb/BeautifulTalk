@@ -1131,6 +1131,7 @@
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="True"/>
                             </MultiTrigger.Conditions>
+                            <Setter Property="Cursor" Value="Hand"/>
                             <Setter Property="Background" TargetName="Bd" Value="{StaticResource BeautifulFreak.Colors.RoomItemContainer.MouseOver}"/>
                         </MultiTrigger>
                         <MultiTrigger>
@@ -1192,7 +1193,6 @@
 
     <friendsCvts:RecommendSummaryThumbnailConverter x:Key="BeautifulFreak.ListBox.RecommendSummaryThumbnailCvt"/>
     <friendsCvts:FriendThumbnailConverter x:Key="BeautifulFreak.ListBox.FriendThumbnailCvt"/>
-    <friendsCvts:AddRecommendFriendParamsConverter x:Key="BeautifulFreak.ListBox.AddRecommendFriendParamsCvt"/>
 
     <ItemsPanelTemplate x:Key="BeautifulFreak.ListBox.RecommendItemsPanelTemplate">
         <WrapPanel IsItemsHost="True">
@@ -1236,13 +1236,7 @@
                     </Grid>
                 </StackPanel>
                 <Button x:Name="AddButton" Content="Add" Command="{Binding DataContext.AddFriendCommand, RelativeSource={RelativeSource AncestorType={x:Type friendsViews:RecommendView}}}" 
-                           Style="{StaticResource BeautifulFreak.Button}" Visibility="Collapsed" VerticalAlignment="Bottom">
-                    <Button.CommandParameter>
-                        <MultiBinding Converter="{StaticResource BeautifulFreak.ListBox.AddRecommendFriendParamsCvt}">
-                            <Binding ElementName="AddButton"/>
-                            <Binding Path="UserSID"/>
-                        </MultiBinding>
-                    </Button.CommandParameter>
+                           CommandParameter="{Binding UserSID}" Style="{StaticResource BeautifulFreak.Button}" Visibility="Collapsed" VerticalAlignment="Bottom" Cursor="Hand">
                     <i:Interaction.Behaviors>
                         <ei:FluidMoveBehavior Duration="0:0:0.2" InitialTag="DataContext" AppliesTo="Self">
                             <ei:FluidMoveBehavior.EaseY>
@@ -1370,6 +1364,12 @@
             </Grid>
         </StackPanel>
         <DataTemplate.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Cursor" Value="Hand"/>
+            </MultiTrigger>
             <DataTrigger Binding="{Binding ThumbnailPath}" Value="{x:Null}">
                 <Setter TargetName="ThumbnailImage" Property="Visibility" Value="Hidden"/>
             </DataTrigger>
@@ -1701,7 +1701,97 @@
         </Setter>
     </Style>
 
-    <roomsCvts:RoomTabHeaderNotificationConverter x:Key="RoomTabHeaderNotiCvt"/>
+    <ItemsPanelTemplate x:Key="BeautifulFreak.ListBox.ConfigurationItemsPanelTemplate">
+        <WrapPanel Orientation="Horizontal" IsItemsHost="True"/>
+    </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="BeautifulFreak.ListBox.ConfigurationDataTemplate">
+        <StackPanel x:Name="ConfigurationBackPanel" Orientation="Vertical" Background="{Binding CategoryBackground}" Margin="12,12,0,0" Width="150" Height="150">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="48"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="48"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Title}" FontWeight="Bold" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="12,0,0,0"/>
+                <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Description}" Margin="12"
+                           Foreground="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"/>
+                <Image x:Name="ThumbnailImage" Grid.Column="1" Source="{Binding ThumbnailPath}" Stretch="Uniform" Margin="0,12,12,0"/>
+            </Grid>
+        </StackPanel>
+    </DataTemplate>
+    
+    <Style x:Key="BeautifulFreak.ListBox.ConfigurationItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=OneWayToSource}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" 
+                            Margin="{TemplateBinding Margin}" SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        </ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BeautifulFreak.ListBox.Configuration" TargetType="{x:Type ListBox}">
+        <Setter Property="ItemContainerStyle" Value="{StaticResource BeautifulFreak.ListBox.ConfigurationItemContainerStyle}"/>
+        <Setter Property="ItemsPanel" Value="{StaticResource BeautifulFreak.ListBox.ConfigurationItemsPanelTemplate}"/>
+        <Setter Property="ItemTemplate" Value="{StaticResource BeautifulFreak.ListBox.ConfigurationDataTemplate}"/>
+        <Setter Property="FontFamily" Value="Gainsboro"/>
+        <Setter Property="Foreground" Value="#FF373737"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Margin="{TemplateBinding Margin}">
+                        <ScrollViewer Focusable="false" Padding="{TemplateBinding Padding}" Margin="{TemplateBinding Margin}" Template="{StaticResource BeautifulFreak.ScrollViewerControlTemplate}">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="LightGray"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true"/>
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
     <!-- TabControl -->
     <Style x:Key="BeautifulFreak.TabControl.TabItemStyle" TargetType="{x:Type TabItem}">
@@ -1725,14 +1815,8 @@
                         <Border x:Name="TotalUnReadCountBorder" MinWidth="{Binding ElementName=TotalUnReadCountBorder, Path=ActualHeight}" 
                                 Height="24" CornerRadius="{Binding ElementName=TotalUnReadCountBorder, Path=ActualHeight}" 
                                 Background="{StaticResource BeautifulFreak.Colors.Special}" Margin="20,0,0,20">
-                            <ContentControl x:Name="TotalUnReadCountContentControl" Content="{Binding Content.DataContext.HeaderNotification, Mode=OneWay, Converter={StaticResource RoomTabHeaderNotiCvt}
-                                , UpdateSourceTrigger=Explicit}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,0,2,0" Foreground="White">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Loaded">
-                                        <i:InvokeCommandAction Command="{Binding Content.DataContext.InitialLoadedCommand}" CommandParameter="{Binding ElementName=TotalUnReadCountContentControl}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </ContentControl>
+                            <ContentControl x:Name="TotalUnReadCountContentControl" Content="{Binding Content.DataContext.HeaderNotification.TotalUnReadCount}" 
+                                            HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,0,2,0" Foreground="White"/>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -1743,7 +1827,10 @@
                         <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Header" Value="{Binding Content.DataContext.SelectedHeaderContent}"/>
                         </Trigger>
-                        <DataTrigger Binding="{Binding Content.DataContext.HeaderNotification, Converter={StaticResource RoomTabHeaderNotiCvt}}" Value="0">
+                        <DataTrigger Binding="{Binding Content.DataContext.HeaderNotification.TotalUnReadCount}" Value="0">
+                            <Setter TargetName="TotalUnReadCountBorder" Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Content.DataContext.HeaderNotification.TotalUnReadCount}" Value="{x:Null}">
                             <Setter TargetName="TotalUnReadCountBorder" Property="Visibility" Value="Hidden"/>
                         </DataTrigger>
                     </ControlTemplate.Triggers>

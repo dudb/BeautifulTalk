@@ -1,4 +1,5 @@
-﻿using BeautifulTalk.Modules.Friends.Services;
+﻿using BeautifulTalk.Modules.Friends.Models;
+using BeautifulTalk.Modules.Friends.Services;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Mvvm;
 using System;
@@ -12,26 +13,27 @@ using System.Windows.Media.Imaging;
 
 namespace BeautifulTalk.Modules.Friends.ViewModels
 {
-    public class FriendsMainViewModel : BindableBase, IFriendsTabHeaderInfoProvider
+    public class FriendsMainViewModel : BindableBase, IFriendsMainViewModel, IFriendsTabHeaderInfoProvider
     {
         private readonly ILoggerFacade m_Logger;
         private DependencyObject m_TabHeaderImage;
         private DependencyObject m_SelectedTabHeaderImage;
+        private IEnumerable<Friend> m_HeaderNotification;
 
         public DependencyObject HeaderContent { get { return m_TabHeaderImage; } }
         public DependencyObject SelectedHeaderContent { get { return m_SelectedTabHeaderImage; } }
-
-        public int HeaderNotification
+        public IEnumerable<Friend> HeaderNotification 
         {
-            get;
-            set;
+            get { return this.m_HeaderNotification; }
+            set { SetProperty(ref this.m_HeaderNotification, value); }
         }
-
+        public FriendCollection Friends { get; set; }
         public FriendsMainViewModel(ILoggerFacade logger)
         {
             if (null == logger) throw new ArgumentNullException("logger");
 
             this.m_Logger = logger;
+            this.HeaderNotification = this.Friends = new FriendCollection();
             this.InitializeHeaderImages();
         }
 
@@ -62,10 +64,6 @@ namespace BeautifulTalk.Modules.Friends.ViewModels
                 m_Logger.Log("UriKind is invalid inside FriendsModule\n" + argsException.Message, Category.Exception, Priority.Medium);
                 throw argsException;
             }
-        }
-        public void UpdateTarget()
-        {
-            throw new NotImplementedException();
         }
     }
 }

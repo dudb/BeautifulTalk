@@ -1,4 +1,5 @@
-﻿using BeautifulTalk.Modules.Configuration.Views;
+﻿using BeautifulTalk.Modules.Configuration.Services;
+using BeautifulTalk.Modules.Configuration.Views;
 using BeautifulTalkInfrastructure.RegionNames;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
@@ -23,6 +24,7 @@ namespace BeautifulTalk.Modules.Configuration
         }
         public void Initialize()
         {
+            this.m_Container.RegisterType<ICollectConfigurationInfo, CollectConfigurationInfo>();
             this.m_RegionManager.RegisterViewWithRegion(BusinessRegionNames.TabbingRegion, () => this.m_Container.Resolve<ConfigurationView>());
         }
     }

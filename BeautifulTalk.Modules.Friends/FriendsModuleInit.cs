@@ -1,5 +1,6 @@
 ﻿using BeautifulTalk.Modules.Friends.Services;
 using BeautifulTalk.Modules.Friends.Services.Mocks;
+using BeautifulTalk.Modules.Friends.ViewModels;
 using BeautifulTalk.Modules.Friends.Views;
 using BeautifulTalkInfrastructure.RegionNames;
 using BeautifulTalkInfrastructure.ViewNames;
@@ -39,11 +40,17 @@ namespace BeautifulTalk.Modules.Friends
 
             this.m_Container.RegisterType<IGetUserInfoService, GetUserInfoService>();
             this.m_Container.RegisterType<IGetRoomInfoService, GetRoomInfoService>();
+            this.m_Container.RegisterType<IFriendsMainViewModel, FriendsMainViewModel>();
             this.m_Container.RegisterType<object, FriendsView>(FriendsViewNames.FriendsView);
             this.m_Container.RegisterType<object, RecommendView>(FriendsViewNames.RecommendView);
             
-            this.m_RegionManager.RegisterViewWithRegion(BusinessRegionNames.TabbingRegion, () => this.m_Container.Resolve<FriendsMainView>());
-            this.m_RegionManager.RegisterViewWithRegion(FriendsRegionNames.NavigationRegion, () => this.m_Container.Resolve<FriendsView>());
+            var FriendsMainView = this.m_Container.Resolve<FriendsMainView>();
+            var FriendsMainViewModel = FriendsMainView.DataContext as IFriendsMainViewModel;
+            this.m_RegionManager.RegisterViewWithRegion(BusinessRegionNames.TabbingRegion, () => FriendsMainView);
+
+            var FriendsViewModel = this.m_Container.Resolve<FriendsViewModel>(new ParameterOverride("friendsMainViewModel", FriendsMainViewModel));
+            this.m_RegionManager.RegisterViewWithRegion(FriendsRegionNames.NavigationRegion, () =>
+                this.m_Container.Resolve<FriendsView>(new ParameterOverride("friendsViewModel", FriendsViewModel)));
         }
     }
 }

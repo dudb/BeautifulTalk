@@ -77,7 +77,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationModuleInit.cs" />
+    <Compile Include="Models\ConfigurationCategory.cs" />
+    <Compile Include="Models\ConfigurationCategoryCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CollectConfigurationInfo.cs" />
+    <Compile Include="Services\ICollectConfigurationInfo.cs" />
     <Compile Include="Services\IConfigurationTabHeaderInfoProvider.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="Views\ConfigurationView.xaml.cs">
@@ -98,6 +102,10 @@
       <Project>{d1531a3d-475b-4031-adea-e53a1e4eafdf}</Project>
       <Name>BeautifulTalkInfrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CommonUtility\CommonUtility.csproj">
+      <Project>{57aedec7-ed07-4339-8b97-e90ed5199ad4}</Project>
+      <Name>CommonUtility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\base_configuration.png" />
@@ -105,6 +113,15 @@
   <ItemGroup>
     <Resource Include="Resources\Images\beautifulfreak_configuration.png" />
     <Resource Include="Resources\Images\beautifulfreak_configuration_selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\beautifultalkfreak_edituser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\beautifultalkfreak_notification.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\beautifultalkfreak_settings.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

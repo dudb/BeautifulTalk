@@ -35,7 +35,7 @@ namespace BeautifulTalk.Modules.Rooms.Services
                     if (null != FindedUser) { ActiveMemberNickNames.Add(FindedUser.NickName); }
                 }
 
-                rooms.Add(new Room(r.Sid, ActiveMemberNickNames, r.UnReadMsgCount, r.LastMsgSummary, r.LastMsgDate, r.ThumbnailPath));
+                rooms.Add(new Room(r.Sid, ActiveMemberNickNames, r.UnReadMsgCount, r.LastMsgSummary, r.LastMsgDate, r.ThumbnailPath, rooms));
             }
         }
     }

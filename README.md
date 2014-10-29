@@ -1,5 +1,6 @@
 BeautifulTalk
 =============
+http://youtu.be/hS5Q_iaRiBI
 
 It is a messanger that can talk or discuss with.
 you can take part in a discussion like social problem, hot issue or chat with your friends as usual.

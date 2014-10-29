@@ -82,6 +82,7 @@
     <Compile Include="DataModels\UnReadMsg.cs" />
     <Compile Include="Delegates\DelegateSet.cs" />
     <Compile Include="Generators\ColorGenerator.cs" />
+    <Compile Include="Helpers\PasswordBoxAssistant.cs" />
     <Compile Include="Interfaces\IActiveChattingShellView.cs" />
     <Compile Include="Interfaces\IChattingShellView.cs" />
     <Compile Include="Interfaces\IChattingViewModel.cs" />

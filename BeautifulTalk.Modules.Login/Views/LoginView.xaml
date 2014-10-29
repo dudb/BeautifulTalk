@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:converters="clr-namespace:BeautifulTalk.Modules.Login.Converters"
              xmlns:BusyIndicator="clr-namespace:CommonControl.BusyIndicator;assembly=CommonControl"
+             xmlns:pwdHelper="clr-namespace:BeautifulTalkInfrastructure.Helpers;assembly=BeautifulTalkInfrastructure"
              xmlns:region="http://www.codeplex.com/CompositeWPF"
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" x:Class="BeautifulTalk.Modules.Login.Views.LoginView"
              mc:Ignorable="d" 
@@ -26,9 +26,11 @@
     </UserControl.Triggers>
     
     <Grid>
-        <Grid.Resources>
-            <converters:LoginParamsConverter x:Key="loginParamsConverter"/>
-        </Grid.Resources>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding InitialLoadedCommand}" CommandParameter="{Binding ElementName=BusyIndicator}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <Grid.RowDefinitions>
 			<RowDefinition/>
 			<RowDefinition Height="38"/>
@@ -52,15 +54,7 @@
 			ItemsSource="{Binding ConnectedIdentifications}" Grid.Row="1" IsEditable="True" 
 			SelectedIndex="0" Style="{StaticResource BeautifulFreak.ComboBox}">
 			<ComboBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding LoginCommand}">
-                    <KeyBinding.CommandParameter>
-                        <MultiBinding Converter="{StaticResource loginParamsConverter}">
-                            <Binding ElementName="IdCombobox" Path="Text"/>
-                            <Binding ElementName="PwdTextbox" Path="Text"/>
-                            <Binding ElementName="BusyIndicator"/>
-                        </MultiBinding>
-                    </KeyBinding.CommandParameter>
-                </KeyBinding>
+                <KeyBinding Key="Enter" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=LoginButton}"/>
             </ComboBox.InputBindings>
 			<i:Interaction.Triggers>
                 <i:EventTrigger EventName="KeyUp">
@@ -72,35 +66,24 @@
 			</i:Interaction.Triggers>
 		</ComboBox>
 		<Rectangle Grid.Row="2"/>
-		<TextBox x:Name="PwdTextbox" Grid.Row="3" Text="{Binding LoginModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                 Style="{StaticResource BeautifulFreak.TextBox}">
-			<TextBox.InputBindings>
-                <KeyBinding Key="Enter" Command="{Binding LoginCommand}">
-                    <KeyBinding.CommandParameter>
-                        <MultiBinding Converter="{StaticResource loginParamsConverter}">
-                            <Binding ElementName="IdCombobox" Path="Text"/>
-                            <Binding ElementName="PwdTextbox" Path="Text"/>
-                            <Binding ElementName="BusyIndicator"/>
-                        </MultiBinding>
-                    </KeyBinding.CommandParameter>
-                </KeyBinding>
-            </TextBox.InputBindings>
-			<i:Interaction.Triggers>
-                <i:EventTrigger EventName="TextChanged">
-					<i:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
-				</i:EventTrigger>
-				<i:EventTrigger EventName="Loaded">
-					<i:InvokeCommandAction Command="{Binding InitialFocusCommand}" CommandParameter="{Binding ElementName=PwdTextbox}"/>
-				</i:EventTrigger>
-			</i:Interaction.Triggers>
-        </TextBox>
-        <Button Content="Login" Grid.Row="4" Command="{Binding LoginCommand}" Margin="0,6,0,6" Style="{StaticResource BeautifulFreak.Button}">
+        <PasswordBox x:Name="PwdTextbox" Grid.Row="3" pwdHelper:PasswordBoxAssistant.BindPassword="True"
+                     pwdHelper:PasswordBoxAssistant.BoundPassword="{Binding LoginModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                 Style="{StaticResource BeautifulFreak.PasswordBox}">
+            <PasswordBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=LoginButton}"/>
+            </PasswordBox.InputBindings>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PasswordChanged">
+                    <i:InvokeCommandAction Command="{Binding TextChangedCommand}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding InitialFocusCommand}" CommandParameter="{Binding ElementName=PwdTextbox}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </PasswordBox>
+        <Button x:Name="LoginButton" Content="Login" Grid.Row="4" Command="{Binding LoginCommand}" Margin="0,6,0,6" Style="{StaticResource BeautifulFreak.Button}">
             <Button.CommandParameter>
-                <MultiBinding Converter="{StaticResource loginParamsConverter}">
-                    <Binding ElementName="IdCombobox" Path="Text"/>
-                    <Binding ElementName="PwdTextbox" Path="Text"/>
-                    <Binding ElementName="BusyIndicator"/>
-                </MultiBinding>
+                <Binding ElementName="LoginButton"/>
             </Button.CommandParameter>
         </Button>
         <CheckBox x:Name="AutoLoginCheckbox" IsChecked="{Binding LoginModel.IsAutoLogin, Mode=TwoWay}" Style="{StaticResource BeautifulFreak.CheckBox}"

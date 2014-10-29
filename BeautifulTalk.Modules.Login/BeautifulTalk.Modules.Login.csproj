@@ -92,8 +92,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\LoginParamsConverter.cs" />
-    <Compile Include="Converters\RequiredInfoParamsConverter.cs" />
     <Compile Include="Makers\AccessInfoRequestMaker.cs" />
     <Compile Include="Makers\MQKeyRequestMaker.cs" />
     <Compile Include="LoginModuleInit.cs" />

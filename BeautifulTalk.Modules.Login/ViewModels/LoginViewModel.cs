@@ -4,6 +4,7 @@ using BeautifulTalk.Modules.Login.Services.Client;
 using BeautifulTalkInfrastructure.Logger;
 using BeautifulTalkInfrastructure.PubSubEvents;
 using BeautifulTalkInfrastructure.RegionNames;
+using BeautifulTalkInfrastructure.Validator;
 using BeautifulTalkInfrastructure.ViewNames;
 using CommonControl.BusyIndicator;
 using Microsoft.Practices.Prism.Commands;
@@ -31,7 +32,7 @@ namespace BeautifulTalk.Modules.Login.ViewModels
         /// <summary>
         /// Try Login with three Parameters(Id, Password and IsAutoLogin Properties).
         /// </summary>
-        public DelegateCommand<SmoothBusyIndicator> LoginCommand { get; private set; }
+        public DelegateCommand<UIElement> LoginCommand { get; private set; }
 
         /// <summary>
         /// Whenever characters is changing on LoginCombobox and PwdTextbox, it occurs to re-evaluate CanExecuteLogin Method.
@@ -47,6 +48,7 @@ namespace BeautifulTalk.Modules.Login.ViewModels
         /// Focus on targetElement which is PasswordBox after loading about LoginView.
         /// </summary>
         public DelegateCommand<UIElement> InitialFocusCommand { get; private set; }
+        public DelegateCommand<SmoothBusyIndicator> InitialLoadedCommand { get; private set; }
         public DelegateCommand NavigateRequiredInfoViewCommand { get; private set; }
 
         private LoginModel m_LoginModel;
@@ -55,6 +57,7 @@ namespace BeautifulTalk.Modules.Login.ViewModels
         private IUnityContainer m_UnityContainer;
         private IEventAggregator m_EventAggregator;
         private IRegionManager m_RegionManager;
+        private SmoothBusyIndicator m_BusyIndicator;
         private Identifications m_ConnectedIdentifications;
 
         public LoginModel LoginModel
@@ -78,22 +81,26 @@ namespace BeautifulTalk.Modules.Login.ViewModels
             if (null == regionManager) throw new ArgumentNullException("regionManager");
             if (null == eventAggregator) throw new ArgumentNullException("eventAggregator");
             if (null == trackService) throw new ArgumentNullException("trackService");
-
+            
             this.m_Logger = logger;
             this.m_UnityContainer = unityContainer;
             this.m_RegionManager = regionManager;
             this.m_EventAggregator = eventAggregator;
             
             this.LoginModel = new LoginModel();
-            this.LoginCommand = new DelegateCommand<SmoothBusyIndicator>(ExecuteLogin, CanExecuteLogin);
+            this.LoginCommand = new DelegateCommand<UIElement>(ExecuteLogin, CanExecuteLogin);
             this.TextChangedCommand = new DelegateCommand(ExecuteTextChanged);
             this.NavigateToCommand = new DelegateCommand<Uri>(ExecuteNavigateTo);
             this.InitialFocusCommand = new DelegateCommand<UIElement>(ExecuteInitialFocusCommand);
+            this.InitialLoadedCommand = new DelegateCommand<SmoothBusyIndicator>(ExecuteInitialLoadedCommand);
             this.NavigateRequiredInfoViewCommand = new DelegateCommand(ExecuteNavigateRequiredInfoViewCommand);
 
             this.ConnectedIdentifications = trackService.GetListOfSuccessConnections();
         }
-
+        private void ExecuteInitialLoadedCommand(SmoothBusyIndicator busyIndicator)
+        {
+            this.m_BusyIndicator = busyIndicator;
+        }
         private void ExecuteNavigateRequiredInfoViewCommand()
         {
             var RequiredInfoViewUri = new Uri(LoginViewNames.RequiredInfoView, UriKind.Relative);
@@ -111,26 +118,28 @@ namespace BeautifulTalk.Modules.Login.ViewModels
             this.LoginCommand.RaiseCanExecuteChanged();
         }
 
-        private bool CanExecuteLogin(object objParam)
+        private bool CanExecuteLogin(UIElement loginButton)
         {
             this.m_Logger.Log("CanExecuteLogin Raised", Category.Info, Priority.None);
 
-            if (null == objParam) return false;
-            if (!(objParam is SmoothBusyIndicator)) return false;
-            if (true == (objParam as SmoothBusyIndicator).IsBusy) return false;
-            return true;
+            bool bValidateID = IDvalidator.Validate(this.m_LoginModel.Id);
+            bool bValidatePwd = PasswordValidator.Validate(this.m_LoginModel.Password);
+            bool bIsBusy = true;
+            if (null != this.m_BusyIndicator) { bIsBusy = this.m_BusyIndicator.IsBusy; }
+
+            return (bValidateID && bValidatePwd && !bIsBusy);
         }
 
         /// <summary>
         /// StartPoint to request login
         /// </summary>
-        private void ExecuteLogin(SmoothBusyIndicator busyIndicator)
+        private void ExecuteLogin(UIElement loginButton)
         {
             this.m_Logger.Log("ExecuteLogin Raised", Category.Info, Priority.None);
 
             if (null == m_LoginRequester) { m_LoginRequester = this.m_UnityContainer.Resolve<LoginRequestService>(); }
-
-            Task.Run(() => m_LoginRequester.TryLogin(this.LoginCommand, busyIndicator, m_LoginModel))
+            
+            Task.Run(() => m_LoginRequester.TryLogin(this.LoginCommand, this.m_BusyIndicator, loginButton, m_LoginModel))
                 .ContinueWith(t => 
                 {
                     if (true == t.Result) { this.m_EventAggregator.GetEvent<StartupBusinessShellEvent>().Publish(null); }

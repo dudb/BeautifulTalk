@@ -1,5 +1,6 @@
 ﻿using BeautifulTalk.Modules.Login.Models;
 using BeautifulTalkInfrastructure.RegionNames;
+using BeautifulTalkInfrastructure.Validator;
 using BeautifulTalkInfrastructure.ViewNames;
 using CommonControl.BusyIndicator;
 using Microsoft.Practices.Prism.Commands;
@@ -24,7 +25,7 @@ namespace BeautifulTalk.Modules.Login.ViewModels
         private IRegionManager m_RegionManager;
 
         public DelegateCommand PreviousCommand { get; private set; }
-        public DelegateCommand<object> NextCommand { get; private set; }
+        public DelegateCommand NextCommand { get; private set; }
         public DelegateCommand<UIElement> InitialFocusCommand { get; private set; }
         public DelegateCommand TextChangedCommand { get; private set; }
         public RequiredInfoModel RequiredInfoModel
@@ -39,7 +40,7 @@ namespace BeautifulTalk.Modules.Login.ViewModels
 
             this.RequiredInfoModel = new RequiredInfoModel();
             this.PreviousCommand = new DelegateCommand(ExecutePreviousCommand);
-            this.NextCommand = new DelegateCommand<object>(ExecuteNextCommand, CanExecuteNextCommand);
+            this.NextCommand = new DelegateCommand(ExecuteNextCommand, CanExecuteNextCommand);
             this.InitialFocusCommand = new DelegateCommand<UIElement>(ExecuteInitialFocusCommand);
             this.TextChangedCommand = new DelegateCommand(ExecuteTextChangedCommand);
         }
@@ -60,17 +61,19 @@ namespace BeautifulTalk.Modules.Login.ViewModels
         }
 
         #region NextCommand
-        private void ExecuteNextCommand(object objParam)
+        private void ExecuteNextCommand()
         {
             var InterestViewUri = new Uri(LoginViewNames.InterestView, UriKind.Relative);
             this.m_RegionManager.RequestNavigate(LoginRegionNames.LoginRegion, InterestViewUri);
         }
 
-        private bool CanExecuteNextCommand(object objParam)
+        private bool CanExecuteNextCommand()
         {
-            if (null == objParam) return false;
+            bool bValidateID = IDvalidator.Validate(this.m_RequiredInfoModel.Id);
+            bool bValidatePwd = PasswordValidator.Validate(this.m_RequiredInfoModel.Password);
+            bool bValidateNickName = !string.IsNullOrEmpty(this.m_RequiredInfoModel.NickName);
 
-            return (bool)objParam;
+            return (bValidateID && bValidatePwd && bValidateNickName);
         }
         #endregion NextCommand
 

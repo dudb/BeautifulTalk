@@ -58,16 +58,16 @@ namespace BeautifulTalk.Modules.Login.Services.Client
             this.m_RequestMQKeysService = requestMQKeysService;
         }
 
-        public bool TryLogin(DelegateCommand<SmoothBusyIndicator> loginCommand, SmoothBusyIndicator busyIndicator, LoginModel loginModel)
+        public bool TryLogin(DelegateCommand<UIElement> loginCommand, SmoothBusyIndicator busyIndicator, UIElement loginButton, LoginModel loginModel)
         {
             bool bIsSuccessAuth = false;
             this.m_Logger.Log("TryLogin Raised", Category.Info, Priority.None);
 
             try
             {
+                Application.Current.Dispatcher.Invoke(() => { loginButton.IsEnabled = false; });
                 busyIndicator.IsBusy = true;
-                loginCommand.RaiseCanExecuteChanged();
-
+                
                 AuthRepository.AccessInfo = this.m_RequestAccessInfoService.RequestAccessInfo(loginModel.Id, loginModel.Password);
 
                 if (null != AuthRepository.AccessInfo)
@@ -111,7 +111,7 @@ namespace BeautifulTalk.Modules.Login.Services.Client
             finally
             {
                 busyIndicator.IsBusy = false;
-                loginCommand.RaiseCanExecuteChanged();
+                Application.Current.Dispatcher.Invoke(() => { loginButton.IsEnabled = true; });
             }
 
             return bIsSuccessAuth;

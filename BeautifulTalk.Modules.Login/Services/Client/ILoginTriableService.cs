@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BeautifulTalk.Modules.Login.Services.Client
 {
     public interface ILoginTriableService
     {
-        bool TryLogin(DelegateCommand<SmoothBusyIndicator> loginCommand, SmoothBusyIndicator busyIndicator, LoginModel loginModel);
+        bool TryLogin(DelegateCommand<UIElement> loginCommand, SmoothBusyIndicator busyIndicator, UIElement loginButton, LoginModel loginModel);
     }
 }

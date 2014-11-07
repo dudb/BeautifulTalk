@@ -20,6 +20,7 @@ namespace CommonControl.Navigation
     public class NavigatableUserControl : UserControl
     {
         public NavigationDirection LoadDirection { get; set; }
+        public NavigationDirection UnLoadDirection { get; set; }
         public static readonly RoutedEvent FadeToLeftEvent = EventManager.RegisterRoutedEvent(
             "FadeToLeft", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(NavigatableUserControl));
 
@@ -35,20 +36,31 @@ namespace CommonControl.Navigation
         public NavigatableUserControl() 
         {
             this.Style = (Style)this.TryFindResource("NavigatableUserControlStyle");
-            this.Loaded += NavigatableUserControl_Loaded;
+            this.IsVisibleChanged += NavigatableUserControl_IsVisibleChanged;
         }
 
-        private void NavigatableUserControl_Loaded(object sender, RoutedEventArgs e)
+        private void NavigatableUserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            switch (this.LoadDirection)
+            if (true == (bool)e.NewValue)
             {
-                case NavigationDirection.FadeToLeft: this.RaiseFadeToLeftEvent(); break;
-                case NavigationDirection.FadeToRight: this.RaiseFadeToRightEvent(); break;
-                case NavigationDirection.AppearToLeft: this.RaiseAppearToLeftEvent(); break;
-                case NavigationDirection.AppearToRight: this.RaiseAppearToRightEvent(); break;
-                default: break;
+                switch (this.LoadDirection)
+                {
+                    case NavigationDirection.AppearToLeft: this.RaiseAppearToLeftEvent(); break;
+                    case NavigationDirection.AppearToRight: this.RaiseAppearToRightEvent(); break;
+                    default: break;
+                }
+            }
+            else
+            {
+                switch (this.UnLoadDirection)
+                {
+                    case NavigationDirection.FadeToLeft: this.RaiseFadeToLeftEvent(); break;
+                    case NavigationDirection.FadeToRight: this.RaiseFadeToRightEvent(); break;
+                    default: break;
+                }
             }
         }
+
         public event RoutedEventHandler FadeToLeft
         {
             add { AddHandler(FadeToLeftEvent, value); }

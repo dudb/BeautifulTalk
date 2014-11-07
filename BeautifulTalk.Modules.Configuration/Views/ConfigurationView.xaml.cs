@@ -1,4 +1,5 @@
 ﻿using BeautifulTalk.Modules.Configuration.ViewModels;
+using CommonControl.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

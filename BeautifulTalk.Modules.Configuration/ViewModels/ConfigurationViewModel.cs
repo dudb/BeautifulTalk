@@ -1,6 +1,7 @@
 ﻿using BeautifulTalk.Modules.Configuration.Models;
 using BeautifulTalk.Modules.Configuration.Services;
 using BeautifulTalkInfrastructure.Interfaces;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Mvvm;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -18,6 +19,7 @@ namespace BeautifulTalk.Modules.Configuration.ViewModels
 {
     public class ConfigurationViewModel : BindableBase, IConfigurationTabHeaderInfoProvider
     {
+        private ConfigurationCategoryType m_CategoryType;
         private DependencyObject m_TabHeaderImage;
         private DependencyObject m_SelectedTabHeaderImage;
         private ILoggerFacade m_Logger;
@@ -31,7 +33,13 @@ namespace BeautifulTalk.Modules.Configuration.ViewModels
             get;
             set;
         }
+        public ConfigurationCategoryType CategoryType 
+        {
+            get { return this.m_CategoryType; }
+            set { this.SetProperty(ref this.m_CategoryType, value); }
+        }
         public ConfigurationCategoryCollection ConfigurationCategories { get; private set; }
+        public DelegateCommand<ConfigurationCategoryType?> SubjectChangedCommand { get; private set; }
         public ConfigurationViewModel(ILoggerFacade logger, IUnityContainer unityContainer, IEventAggregator eventAggregator,
             ICollectConfigurationInfo collectConfigurationInfo)
         {
@@ -39,16 +47,24 @@ namespace BeautifulTalk.Modules.Configuration.ViewModels
             if (null == unityContainer) throw new ArgumentNullException("unityContainer");
             if (null == eventAggregator) throw new ArgumentNullException("eventAggregator");
             if (null == collectConfigurationInfo) throw new ArgumentNullException("collectConfigurationInfo");
-
+            
             this.m_Logger = logger;
             this.m_UnityContainer = unityContainer;
             this.m_EventAggregator = eventAggregator;
             this.m_CollectConfigurationInfo = collectConfigurationInfo;
+            this.SubjectChangedCommand = new DelegateCommand<ConfigurationCategoryType?>(ExecuteSubjectChangedCommand);
 
             this.ConfigurationCategories = new ConfigurationCategoryCollection();
             collectConfigurationInfo.Collect(this.ConfigurationCategories);
             
             this.InitializeHeaderImages();
+        }
+        private void ExecuteSubjectChangedCommand(ConfigurationCategoryType? type)
+        {
+            if (type.HasValue)
+            {
+                this.CategoryType = type.Value;
+            }
         }
         private void InitializeHeaderImages()
         {

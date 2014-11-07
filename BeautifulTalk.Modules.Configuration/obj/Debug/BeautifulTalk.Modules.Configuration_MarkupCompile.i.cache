@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 
-1-162432751
+5125828531
 
-13-2065462676
-25-1268307907
-Views\ConfigurationView.xaml;
+1927189741
+26-1100165104
+Views\ConfigurationView.xaml;Views\MenuView.xaml;Views\NotificationView.xaml;Views\ProfileView.xaml;Views\SettingView.xaml;
 
-False
+True
 

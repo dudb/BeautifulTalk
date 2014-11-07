@@ -13,6 +13,7 @@ using BeautifulTalk.Modules.Chatting.Converters;
 using BeautifulTalk.Modules.Chatting.Infrastructures;
 using BeautifulTalk.Modules.Chatting.Selectors;
 using BeautifulTalk.Modules.Chatting.Views;
+using BeautifulTalk.Modules.Configuration.Views;
 using BeautifulTalk.Modules.Friends.Converters;
 using BeautifulTalk.Modules.Friends.Views;
 using BeautifulTalk.Modules.Rooms.Converters;

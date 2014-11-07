@@ -6,3 +6,12 @@ D:\VS_Workspace\BeautifulTalk\CommonControl\obj\Debug\CommonControl_MarkupCompil
 D:\VS_Workspace\BeautifulTalk\CommonControl\obj\Debug\CommonControl.g.resources
 D:\VS_Workspace\BeautifulTalk\CommonControl\obj\Debug\CommonControl.dll
 D:\VS_Workspace\BeautifulTalk\CommonControl\obj\Debug\CommonControl.pdb
+D:\Opnesource\BeautifulTalk\CommonControl\bin\Debug\CommonControl.dll
+D:\Opnesource\BeautifulTalk\CommonControl\bin\Debug\CommonControl.pdb
+D:\Opnesource\BeautifulTalk\CommonControl\obj\Debug\CommonControl.csprojResolveAssemblyReference.cache
+D:\Opnesource\BeautifulTalk\CommonControl\obj\Debug\BusyIndicator\SmoothBusyIndicator.baml
+D:\Opnesource\BeautifulTalk\CommonControl\obj\Debug\BusyIndicator\SmoothBusyIndicator.g.cs
+D:\Opnesource\BeautifulTalk\CommonControl\obj\Debug\CommonControl_MarkupCompile.cache
+D:\Opnesource\BeautifulTalk\CommonControl\obj\Debug\CommonControl.g.resources
+D:\Opnesource\BeautifulTalk\CommonControl\obj\Debug\CommonControl.dll
+D:\Opnesource\BeautifulTalk\CommonControl\obj\Debug\CommonControl.pdb

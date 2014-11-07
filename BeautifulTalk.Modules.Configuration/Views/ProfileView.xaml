@@ -1,0 +1,54 @@
+﻿<navigation:NavigatableUserControl x:Class="BeautifulTalk.Modules.Configuration.Views.ProfileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:BeautifulTalk.Modules.Configuration.Views"
+             xmlns:viewModels="clr-namespace:BeautifulTalk.Modules.Configuration.ViewModels"
+             xmlns:navigation="clr-namespace:CommonControl.Navigation;assembly=CommonControl"
+             xmlns:categoryType="clr-namespace:BeautifulTalk.Modules.Configuration.Models;assembly=BeautifulTalk.Modules.Configuration"
+             xmlns:busyIndicators="clr-namespace:CommonControl.BusyIndicator;assembly=CommonControl"
+             mc:Ignorable="d" 
+             LoadDirection="AppearToLeft" UnLoadDirection="FadeToRight">
+    <Grid>
+        <Grid.DataContext>
+            <viewModels:ProfileViewModel/>
+        </Grid.DataContext>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DockPanel LastChildFill="True">
+            <Button DockPanel.Dock="Left" Style="{StaticResource BeautifulFreak.Button.Back}" Width="24" Height="24" Margin="12,0,0,0"
+                    Command="{Binding DataContext.SubjectChangedCommand, RelativeSource={RelativeSource AncestorType=views:ConfigurationView}}"
+                    CommandParameter="{x:Static categoryType:ConfigurationCategoryType.Default}"/>
+            <busyIndicators:SmoothBusyIndicator x:Name="BusyIndicator" DockPanel.Dock="Right" Width="40"/>
+            <TextBlock Text="My Profile" FontWeight="Bold" VerticalAlignment="Center" Margin="12,0,0,0" Foreground="#6A91B1"/>
+        </DockPanel>
+        <Grid Background="White" Grid.Row="1">
+            <Grid HorizontalAlignment="Center" Margin="0,30,0,0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="206"/>
+                </Grid.ColumnDefinitions>
+                <Viewbox Grid.RowSpan="3" Stretch="Fill">
+                    <Canvas Height="237.998" Width="237.998">
+                        <Path x:Name="ProfileMan" Data="F1M237.998,237.998L0,237.998 0,0 237.998,0z" Fill="#FF4BD6C1" Height="237.998" Width="237.998"/>
+                        <Path x:Name="ManFace" Data="F1M56.464,66.835C55.875,66.595 55.508,66.446 55.508,66.446 55.508,66.446 38.695,58.04 47.102,49.634 50.503,46.237 52.487,40.073 53.692,33.403 55.653,33.353 58.253,29.124 59.666,23.454 61.17,17.446 60.771,12.173 58.764,11.675L58.167,11.7C57.22,21.776 53.688,32.937 53.311,24.153 52.736,11.144 47.853,1.519 43.913,0.251 39.954,-1.022 36.671,2.954 30.732,2.954 24.808,2.954 21.52,-1.022 17.57,0.251 13.639,1.519 8.747,11.144 8.195,24.153 7.8,32.935 3.797,21.782 2.551,11.71L1.818,11.675C-0.193,12.173 -0.593,17.446 0.907,23.454 2.324,29.124 4.925,33.353 6.881,33.403 8.09,40.073 10.074,46.237 13.476,49.634 21.882,58.04 5.069,66.446 5.069,66.446 5.069,66.446 4.702,66.595 4.114,66.835 11.573,72.774 20.582,76.257 30.288,76.257 39.995,76.257 49.004,72.774 56.464,66.835" Fill="#FF404041" Height="76.257" Canvas.Left="88.711" Canvas.Top="76.983" Width="60.576"/>
+                        <Path x:Name="ManHead" Data="F1M44.933,0C44.933,0 16.774,0.779 10.778,10.771 7.258,16.615 5.551,18.543 1.202,24.693 -0.197,26.691 -0.229,31.303 0.369,36.158 0.373,36.188 0.376,36.217 0.38,36.246 0.385,36.275 0.387,36.307 0.391,36.336 0.405,36.451 0.422,36.566 0.437,36.68 0.437,36.686 0.437,36.693 0.44,36.697 0.441,36.717 0.444,36.738 0.446,36.756 0.455,36.83 0.466,36.902 0.476,36.979 0.477,36.992 0.48,37.002 0.482,37.016 0.484,37.031 0.484,37.045 0.487,37.061 0.489,37.078 0.492,37.094 0.494,37.111 1.27,42.664 2.817,48.346 4.081,50.678 4.083,50.684 4.088,50.689 4.09,50.697 4.095,50.703 4.097,50.711 4.101,50.717 4.106,50.727 4.11,50.732 4.115,50.742 4.138,50.783 4.161,50.822 4.183,50.861 4.455,51.33 4.713,51.633 4.944,51.738 4.955,51.744 4.966,51.748 4.978,51.752 4.989,51.756 4.998,51.76 5.009,51.762 5.009,51.762 5.009,51.764 5.012,51.764 5.012,51.764 5.018,51.766 5.023,51.766 5.03,51.77 5.037,51.771 5.043,51.771 5.052,51.773 5.064,51.775 5.073,51.775 5.087,51.777 5.102,51.777 5.116,51.777L5.119,51.777C5.576,51.775 5.904,50.852 6.009,48.678 6.01,48.666 6.01,48.652 6.01,48.641 6.01,48.627 6.013,48.613 6.013,48.602 6.565,35.592 11.457,25.967 15.389,24.699 15.932,24.523 16.464,24.447 16.992,24.447L16.994,24.447 17.003,24.447C18.355,24.449 19.68,24.945 21.124,25.533 23.208,26.375 25.539,27.402 28.55,27.402 31.536,27.402 33.85,26.398 35.916,25.563 37.39,24.963 38.738,24.449 40.112,24.447L40.123,24.447 40.126,24.447C40.653,24.447 41.185,24.523 41.731,24.699 45.671,25.967 50.555,35.592 51.129,48.602 51.129,48.613 51.132,48.625 51.132,48.639 51.132,48.652 51.132,48.67 51.134,48.686L51.134,48.711C51.136,48.729 51.136,48.746 51.136,48.764 51.24,50.877 51.535,51.775 51.932,51.777L51.934,51.777C51.947,51.777 51.958,51.777 51.972,51.775 51.983,51.775 51.994,51.773 52.006,51.77 52.137,51.736 52.28,51.611 52.429,51.408 52.436,51.398 52.443,51.391 52.45,51.381 52.454,51.375 52.458,51.365 52.464,51.359L52.466,51.359C52.479,51.338 52.491,51.32 52.504,51.299 52.509,51.295 52.511,51.289 52.516,51.283L52.516,51.281C53.691,49.477,55.269,43.027,55.919,36.814L55.919,36.805C55.924,36.773 55.926,36.74 55.93,36.709 55.933,36.689 55.933,36.672 55.935,36.656 55.937,36.639 55.94,36.623 55.94,36.605 55.942,36.598 55.942,36.586 55.944,36.576 55.951,36.51 55.958,36.441 55.965,36.373 55.967,36.334 55.972,36.297 55.976,36.258 55.978,36.221 55.983,36.186 55.985,36.148 56.438,31.297 56.297,26.697 54.902,24.699 50.555,18.547 50.183,13.129 43.598,10.785 37.026,8.434 44.933,0 44.933,0" Fill="#FF404041" Height="51.777" Canvas.Left="90.893" Canvas.Top="53.867" Width="56.215"/>
+                        <Path x:Name="ManTop" Data="F1M98.31,0L96.317,1.588C87.752,8.412 77.697,12.021 67.251,12.021 56.808,12.021 46.752,8.412 38.187,1.588L36.194,0C28.037,3.473 13.579,9.957 8.407,14.387 1.051,20.691 0,39.605 0,39.605L67.251,39.605 134.504,39.605C134.504,39.605 133.453,20.691 126.098,14.387 120.925,9.953 106.467,3.473 98.31,0" Fill="#FF404041" Height="39.605" Canvas.Left="51.748" Canvas.Top="145.857" Width="134.504"/>
+                    </Canvas>
+                </Viewbox>
+                <TextBlock Cursor="Hand" Text="{Binding ProfileModel.Message}" Grid.Column="2" VerticalAlignment="Center" FontSize="24" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left"/>
+                <TextBlock Cursor="Hand" Text="{Binding ProfileModel.NickName}" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" FontSize="16" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" HorizontalAlignment="Left"/>
+                <Button Grid.Row="2" Grid.Column="2" Cursor="Hand" Content="Set Profile Photo" Style="{StaticResource BeautifulFreak.Button}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</navigation:NavigatableUserControl>

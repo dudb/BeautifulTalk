@@ -13,16 +13,16 @@ namespace BeautifulTalk.Modules.Configuration.Services
     {
         public void Collect(ConfigurationCategoryCollection categories)
         {
-            BitmapImage EditImg = new BitmapImage(new Uri(@"/BeautifulTalk.Modules.Configuration;component/Resources/Images/beautifultalkfreak_edituser.png", UriKind.Relative));
-            categories.Add(new ConfigurationCategory(EditImg, "Profile",
+            BitmapImage ProfileImg = new BitmapImage(new Uri(@"/BeautifulTalk.Modules.Configuration;component/Resources/Images/beautifultalkfreak_edituser.png", UriKind.Relative));
+            categories.Add(new ConfigurationCategory(ProfileImg, ConfigurationCategoryType.Profile, "Profile",
                 "Edit your information.", ""));
 
             BitmapImage NotificationImg = new BitmapImage(new Uri(@"/BeautifulTalk.Modules.Configuration;component/Resources/Images/beautifultalkfreak_notification.png", UriKind.Relative));
-            categories.Add(new ConfigurationCategory(NotificationImg, "Notification",
+            categories.Add(new ConfigurationCategory(NotificationImg, ConfigurationCategoryType.Notification, "Notification",
                 "Check new notices.", ""));
 
             BitmapImage SettingsImg = new BitmapImage(new Uri(@"/BeautifulTalk.Modules.Configuration;component/Resources/Images/beautifultalkfreak_settings.png", UriKind.Relative));
-            categories.Add(new ConfigurationCategory(SettingsImg, "Settings",
+            categories.Add(new ConfigurationCategory(SettingsImg, ConfigurationCategoryType.Setting, "Settings",
                 "Make your environment.", ""));
         }
     }

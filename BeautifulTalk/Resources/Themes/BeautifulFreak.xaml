@@ -5,6 +5,7 @@
                     xmlns:navigationViews="clr-namespace:CommonControl.Navigation;assembly=CommonControl"
                     xmlns:friendsViews="clr-namespace:BeautifulTalk.Modules.Friends.Views;assembly=BeautifulTalk.Modules.Friends"
                     xmlns:chattingViews="clr-namespace:BeautifulTalk.Modules.Chatting.Views;assembly=BeautifulTalk.Modules.Chatting"
+                    xmlns:configurationViews="clr-namespace:BeautifulTalk.Modules.Configuration.Views;assembly=BeautifulTalk.Modules.Configuration"
                     xmlns:roomsCvts="clr-namespace:BeautifulTalk.Modules.Rooms.Converters;assembly=BeautifulTalk.Modules.Rooms"
                     xmlns:friendsCvts="clr-namespace:BeautifulTalk.Modules.Friends.Converters;assembly=BeautifulTalk.Modules.Friends"
                     xmlns:chattingCvts="clr-namespace:BeautifulTalk.Modules.Chatting.Converters;assembly=BeautifulTalk.Modules.Chatting"
@@ -1773,6 +1774,8 @@
             </TextBlock>
             <Image x:Name="ThumbnailImage" Grid.Column="1" Source="{Binding ThumbnailPath}" Stretch="Uniform" Margin="0,12,12,0"/>
             <Button x:Name="DetailButton" Grid.RowSpan="2" Grid.ColumnSpan="2" Content="Edit" 
+                    Command="{Binding DataContext.SubjectChangedCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                    CommandParameter="{Binding CategoryType}"
                         Style="{StaticResource BeautifulFreak.Button}" Visibility="Collapsed" VerticalAlignment="Bottom" Cursor="Hand">
             </Button>
         </Grid>

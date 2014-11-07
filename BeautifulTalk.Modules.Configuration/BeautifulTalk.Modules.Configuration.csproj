@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationModuleInit.cs" />
+    <Compile Include="Converters\CategoryTypeConverter.cs" />
     <Compile Include="Models\ConfigurationCategory.cs" />
     <Compile Include="Models\ConfigurationCategoryCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,8 +85,21 @@
     <Compile Include="Services\ICollectConfigurationInfo.cs" />
     <Compile Include="Services\IConfigurationTabHeaderInfoProvider.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenuView.xaml.cs">
+      <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NotificationView.xaml.cs">
+      <DependentUpon>NotificationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProfileView.xaml.cs">
+      <DependentUpon>ProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingView.xaml.cs">
+      <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -96,11 +110,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NotificationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProfileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BeautifulTalkInfrastructure\BeautifulTalkInfrastructure.csproj">
       <Project>{d1531a3d-475b-4031-adea-e53a1e4eafdf}</Project>
       <Name>BeautifulTalkInfrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonControl\CommonControl.csproj">
+      <Project>{2e28c6f1-2321-488d-8239-f4d3bb7bb7b3}</Project>
+      <Name>CommonControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\CommonUtility\CommonUtility.csproj">
       <Project>{57aedec7-ed07-4339-8b97-e90ed5199ad4}</Project>

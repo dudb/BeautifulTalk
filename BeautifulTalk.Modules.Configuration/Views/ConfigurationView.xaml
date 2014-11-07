@@ -3,7 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:subViews="clr-namespace:BeautifulTalk.Modules.Configuration.Views"
+             xmlns:converter="clr-namespace:BeautifulTalk.Modules.Configuration.Converters"
+             xmlns:categoryType="clr-namespace:BeautifulTalk.Modules.Configuration.Models"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <ListBox ItemsSource="{Binding ConfigurationCategories, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BeautifulFreak.ListBox.Configuration}"/>
+    <UserControl.Resources>
+        <converter:CategoryTypeConverter x:Key="CategoryTypeCvt"/>
+    </UserControl.Resources>
+    <Grid>
+        <subViews:MenuView Visibility="{Binding CategoryType, Converter={StaticResource CategoryTypeCvt}, ConverterParameter={x:Static categoryType:ConfigurationCategoryType.Default}}"/>
+        <subViews:ProfileView Visibility="{Binding CategoryType, Converter={StaticResource CategoryTypeCvt}, ConverterParameter={x:Static categoryType:ConfigurationCategoryType.Profile}}"/>
+        <subViews:NotificationView Visibility="{Binding CategoryType, Converter={StaticResource CategoryTypeCvt}, ConverterParameter={x:Static categoryType:ConfigurationCategoryType.Notification}}"/>
+        <subViews:SettingView Visibility="{Binding CategoryType, Converter={StaticResource CategoryTypeCvt}, ConverterParameter={x:Static categoryType:ConfigurationCategoryType.Setting}}"/>
+    </Grid>
 </UserControl>

@@ -88,3 +88,15 @@ D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\bin\Debug\MongoD
 D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\bin\Debug\MongoDB.Bson.xml
 D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\bin\Debug\CommonUtility.dll
 D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\bin\Debug\CommonUtility.pdb
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\bin\Debug\CommonControl.dll
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\bin\Debug\CommonControl.pdb
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\Views\ProfileView.baml
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\Views\ProfileView.g.cs
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\BeautifulTalk.Modules.Configuration_MarkupCompile.lref
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\Views\NotificationView.baml
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\Views\SettingView.baml
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\Views\NotificationView.g.cs
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\Views\SettingView.g.cs
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\Views\MenuView.baml
+D:\Opnesource\BeautifulTalk\BeautifulTalk.Modules.Configuration\obj\Debug\Views\MenuView.g.cs
